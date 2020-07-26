@@ -1,0 +1,55 @@
+#progressBar {
+  width: 90%;
+  margin: 10px auto;
+  height: 50px;
+  text-align: center;
+  background-color: #cfd6d9;
+  color: black;
+}
+.App {
+  background-image: url("../background.jpg");
+  background-repeat: no-repeat, repeat;
+  background-color: #cccccc;
+}
+.score {
+  font-size: 50px;
+}
+#progressBar div {
+  height: 50px;
+  text-align: center;
+  font-size: 35px;
+  padding: 10px 10px;
+  line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+  width: 0;
+  background-color: #428bca;
+  box-sizing: border-box;
+}
+.questions {
+  height: 100px;
+}
+.question {
+  height: 100px;
+}
+/* Do not take in account */
+html {
+  padding-top: 30px;
+}
+a.solink {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  background: #f3f5f6;
+  color: #cfd6d9;
+  border: 1px solid #cfd6d9;
+  line-height: 30px;
+  text-decoration: none;
+  transition: all 0.3s;
+  z-index: 999;
+}
+a.solink::first-letter {
+  text-transform: capitalize;
+}
+a.solink:hover {
+  color: #428bca;
+}

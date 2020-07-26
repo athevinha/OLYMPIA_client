@@ -1,7 +1,10 @@
 .App {
   text-align: center;
 }
-
+body,
+html {
+  height: 100%;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -14,7 +17,9 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-image: url("./Components/background.jpg");
+  background-repeat: repeat;
+  background-color: #cccccc;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,12 +27,43 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  width: 100%;
+}
+
+.row {
+  width: 101%;
+}
+
+.active {
+  background-color: black;
+}
+#NameList,
+.names {
+  border: 1px white solid;
+}
+.names {
+  padding-right: 10px;
+  padding-left: 10px;
+  transition: 0.3s;
+}
+.CrName {
+  background-color: teal;
+  color: black;
+}
+::-webkit-scrollbar {
+  width: 1px;
+  display: none;
+}
+.question {
+  border: 1px white solid;
 }
 
 .App-link {
   color: #61dafb;
 }
-
+.current {
+  background-color: black;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
