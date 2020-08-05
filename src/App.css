@@ -17,7 +17,7 @@ html {
 }
 
 .App-header {
-  background-image: url("./Components/background.jpg");
+  background-image: url("./Components/Background.jpg");
   background-repeat: repeat;
   background-color: #cccccc;
   min-height: 100vh;

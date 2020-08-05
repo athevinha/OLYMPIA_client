@@ -6,13 +6,25 @@
   background-color: #cfd6d9;
   color: black;
 }
+#NameList {
+  background-color: black;
+  opacity: 0.9;
+}
 .App {
-  background-image: url("../background.jpg");
+  background-image: url("../Background.jpg");
   background-repeat: no-repeat, repeat;
   background-color: #cccccc;
 }
 .score {
+  border: 1px white solid;
+  text-align: center;
   font-size: 50px;
+  position: absolute;
+  bottom: 7%;
+  left: 80%;
+  width: 20%;
+  height: 200px;
+  font-size: 105px;
 }
 #progressBar div {
   height: 50px;
@@ -25,10 +37,19 @@
   box-sizing: border-box;
 }
 .questions {
-  height: 100px;
+  height: 200px !important;
+  text-align: left;
+  background-color: black;
+  opacity: 0.9;
+}
+.quess {
+  font-size: 35px;
 }
 .question {
-  height: 100px;
+  width: 80%;
+  height: 200px;
+  background-color: black;
+  opacity: 0.9;
 }
 /* Do not take in account */
 html {

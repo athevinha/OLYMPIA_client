@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import logo from "../logo.svg";
 import io from "socket.io-client";
+import port from "../port.json";
 import "../App.css";
 // import { BrowserRouter, Route, Link, NavLink } from "react-router-dom";
-const socket = io.connect("http://192.168.1.151:5000"); //change when change wifi
+const socket = io.connect(port.port); //change when change wifi
 class Signup extends Component {
   constructor(props) {
     super(props);

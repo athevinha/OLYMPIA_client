@@ -3,7 +3,8 @@ import logo from "../logo.svg";
 import io from "socket.io-client";
 import "../App.css";
 import $ from "jquery";
-const socket = io.connect("http://192.168.1.151:5000"); //change when change wifi
+import port from "../port.json";
+const socket = io.connect(port.port); //change when change wifi
 class Admin extends Component {
   constructor(props) {
     super(props);

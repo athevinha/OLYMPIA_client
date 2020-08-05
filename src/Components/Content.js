@@ -4,8 +4,9 @@ import io from "socket.io-client";
 import "../App.css";
 import $ from "jquery";
 import "./css/Content.css";
+import port from "../port.json";
 import { BrowserRouter, Route, Link } from "react-router-dom";
-const socket = io.connect("http://192.168.1.151:5000"); //change when change wifi
+const socket = io.connect(port.port); //change when change wifi
 let check = true;
 class Content extends Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class Content extends Component {
       });
       if (data.data != null) this.setState({ data: data.data });
     });
+
     socket.on("change pp", (qwef) => {
       if (check == true) {
         $("#progressBar").css("background-color", "#cfd6d9");
@@ -66,16 +68,18 @@ class Content extends Component {
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <table id="NameList">
-            <tr>
-              {this.state.data.map((user, id) => {
-                if (id != 0)
-                  return (
-                    <td className="names" key={id}>
-                      {user.name} ({user.score})
-                    </td>
-                  );
-              })}
-            </tr>
+            <tbody>
+              <tr>
+                {this.state.data.map((user, id) => {
+                  if (id != 0)
+                    return (
+                      <td className="names" key={id}>
+                        {user.name} ({user.score})
+                      </td>
+                    );
+                })}
+              </tr>
+            </tbody>
           </table>
           {/* <p>
             {this.state.data[this.state.current]
@@ -83,11 +87,14 @@ class Content extends Component {
               : "ngu"}
           </p> */}
           <div className="questions col-11">
-            <p className="question">{this.state.question}</p>
+            <div>
+              <p className="question quess">{this.state.question} </p>
+            </div>
+            <div className="score col-4">{this.state.score}</div>
           </div>
-          <div className="question score col-4">{this.state.score}</div>
+
           <div id="progressBar">
-            <div class="bar"></div>
+            <div className="bar"></div>
           </div>
         </div>
       </div>
