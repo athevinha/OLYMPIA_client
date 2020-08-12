@@ -4,6 +4,9 @@
   list-style-type: none;
   display: inline;
 }
+.smallVCNV {
+  font-size: 80%;
+}
 .nothing {
   display: block;
 }
@@ -152,7 +155,7 @@
 }
 .sttVCNV {
   position: absolute;
-  left: 8%;
+  left: 0% !important;
   top: 25%;
 }
 .UserCircle {
@@ -162,7 +165,7 @@
   position: relative;
   left: -18%;
   height: 50%;
-  width: 40%;
+  width: 50% !important;
   display: inline;
   background-color: black;
   opacity: 0.9;

@@ -3,6 +3,7 @@ import logo from "../../logo.svg";
 import io from "socket.io-client";
 import "../../App.css";
 import "./VCNV.css";
+
 import port from "../../port.json";
 import $ from "jquery";
 const socket = io.connect(port.port); //change when change wifi

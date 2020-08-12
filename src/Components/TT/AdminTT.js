@@ -4,12 +4,12 @@ import io from "socket.io-client";
 import "../../App.css";
 import $, { data } from "jquery";
 import port from "../../port.json";
-import "./VCNV.css";
+import "./TT.css";
 const socket = io.connect(port.port); //change when change wifi
 let checks = 0,
   check1 = 0;
 
-class AdminVCNV extends Component {
+class AdminTT extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,7 +20,7 @@ class AdminVCNV extends Component {
       currentQues: 0,
       currentUser: 0,
       ListShowContentVCNV: [],
-      problem: 100,
+      problem: 40,
     };
   }
   //==================================================================================================================
@@ -34,16 +34,17 @@ class AdminVCNV extends Component {
     });
     socket.on("on send answer", (UserAns) => {
       let { ListShowContentVCNV } = this.state;
-      console.log(ListShowContentVCNV.length);
+      //console.log(ListShowContentVCNV.length);
       if (ListShowContentVCNV.length == 0) {
-        for (let i = 1; i < this.state.data.length; i++) {
+        for (let i = 0; i < this.state.data.length; i++) {
           ListShowContentVCNV.push({
             name: this.state.data[i].name,
             answer: "",
+            time: 0,
           });
         }
         this.setState({ ListShowContentVCNV: ListShowContentVCNV });
-        console.log(ListShowContentVCNV);
+        //if (UserAns) console.log(UserAns.time);
       }
 
       let Ans = this.state.questions[this.state.currentQues]
@@ -61,10 +62,10 @@ class AdminVCNV extends Component {
           for (let i = 0; i < ListShowContentVCNV.length; i++) {
             if (ListShowContentVCNV[i].name == name) {
               ListShowContentVCNV[i].answer = UserAns.answer;
+              ListShowContentVCNV[i].time = UserAns.time;
             }
           }
-          console.log(ListShowContentVCNV);
-          this.AddScore(name, 10, UserAns.id);
+          //  this.AddScore(name, 10, UserAns.id);
           //====
           this.setState({
             ListShowContentVCNV: ListShowContentVCNV,
@@ -81,8 +82,10 @@ class AdminVCNV extends Component {
           for (let i = 0; i < ListShowContentVCNV.length; i++) {
             if (ListShowContentVCNV[i].name == name) {
               ListShowContentVCNV[i].answer = UserAns.answer;
+              ListShowContentVCNV[i].time = UserAns.time;
             }
           }
+
           //this.AddScore(name, 20, UserAns.id);
           //====
           this.setState({
@@ -93,31 +96,22 @@ class AdminVCNV extends Component {
       }
       //===========================================
     });
-    socket.on("on VCNV", (data) => {
-      if (check1 == 0) {
-        // if (localStorage.DisListVCNV) {
-        //   localStorage.setItem("DisListVCNV", []);
-        // }
-        localStorage.setItem("name", data.name);
-        localStorage.setItem("id", data.id);
-      }
-    });
   }
 
-  AddScore = (name, scoreAdd, id) => {
-    let data = this.state.data;
-    if (data[id]) {
-      data[id].score += scoreAdd;
-      console.log(data);
-      this.setState({ data: data });
-      socket.emit("Add score", {
-        name: name,
-        score: data[id].score,
-        data: data,
-      });
-    }
-  };
-  //==================================================================================================================
+  // AddScore = (name, scoreAdd, id) => {
+  //   let data = this.state.data;
+  //   if (data[id]) {
+  //     data[id].score += scoreAdd;
+  //     console.log(data);
+  //     this.setState({ data: data });
+  //     socket.emit("Add score", {
+  //       name: name,
+  //       score: data[id].score,
+  //       data: data,
+  //     });
+  //   }
+  // };
+  // //==================================================================================================================
   checkKey = (e) => {
     e.preventDefault();
     let { problem } = this.state;
@@ -135,41 +129,77 @@ class AdminVCNV extends Component {
     } else if (e.keyCode == "53") {
       socket.emit("Open Picture", ".pieCen");
     } else if (e.keyCode == "112") {
-      this.ChooseQuesVCNV(1);
+      this.ChooseQuesTT(1, ".Ques1");
     } //==============================================================================================================
     else if (e.keyCode == "113") {
-      this.ChooseQuesVCNV(2);
+      this.ChooseQuesTT(2, ".Ques2");
     } //==============================================================================================================
     else if (e.keyCode == "114") {
       // right arrow
-      this.ChooseQuesVCNV(3);
+      this.ChooseQuesTT(3, ".Ques31");
     } //==============================================================================================================
     else if (e.keyCode == "115") {
       // right arrow
-      this.ChooseQuesVCNV(4);
+      this.ChooseQuesTT(4, ".Ques4");
       // this.setState({ problem: problem - 20 });
     } else if (e.keyCode == "116") {
       // right arrow
-      this.ChooseQuesVCNV(5);
+      this.ChooseQuesTT(5);
       //this.setState({ problem: 10 });
     } else if (e.keyCode == "46") {
       // delete to show list
-      // right arrow
       let { ListShowContentVCNV } = this.state;
-      if (ListShowContentVCNV[0]) {
-        if (data[0]) {
-          for (let i = 0; i < this.state.data.length(); i++)
-            ListShowContentVCNV.push({
-              name: data[i].name,
-              answer: data[i].answer,
-            });
+      if (ListShowContentVCNV.length != 0) {
+        let SortArr = [];
+        for (let i = 0; i < ListShowContentVCNV.length; i++) {
+          SortArr.push(ListShowContentVCNV[i].time);
+          console.log(SortArr);
         }
-      }
+        //===========================================
+        let tg;
+        for (let i = 0; i < SortArr.length - 1; i++) {
+          for (let j = i + 1; j < SortArr.length; j++) {
+            if (SortArr[i] > SortArr[j]) {
+              // HoSortArrn vi 2 so SortArr[i] vSortArr SortArr[j]
+              tg = SortArr[i];
+              SortArr[i] = SortArr[j];
+              SortArr[j] = tg;
+            }
+          }
+        }
 
-      socket.emit("show list VCNV", {
-        list: this.state.ListShowContentVCNV
-          ? this.state.ListShowContentVCNV
-          : [],
+        //=========================================================
+        console.log(SortArr);
+        let { data } = this.state;
+        for (let i = 0; i < ListShowContentVCNV.length; i++) {
+          for (let k = 0; k < ListShowContentVCNV.length; k++) {
+            if (SortArr[i] == ListShowContentVCNV[k].time) {
+              let tog = ListShowContentVCNV[k];
+              let Togdata = data[k];
+              ListShowContentVCNV[k] = ListShowContentVCNV[i];
+              ListShowContentVCNV[i] = tog;
+              data[k] = data[i];
+              data[i] = Togdata;
+            }
+          }
+        }
+
+        this.setState({
+          ListShowContentVCNV: ListShowContentVCNV,
+          data: data,
+        });
+        console.log(data);
+        console.log(ListShowContentVCNV);
+        //==========================================Add=====
+
+        //this.AddScore("admin", 0, 0);
+      }
+      // let arr = [];
+      // for (let i = 0; i < ListShowContentVCNV.length; i++) {
+      //   arr.push(ListShowContentVCNV[i]);
+      // }
+      socket.emit("show list TT", {
+        list: ListShowContentVCNV ? ListShowContentVCNV : [],
         answer: this.state.questions[this.state.currentQues]
           ? this.state.questions[this.state.currentQues].answer
           : "",
@@ -179,11 +209,11 @@ class AdminVCNV extends Component {
   };
   //==================================================================================================================
   AddScore = (name, scoreAdd, id) => {
-    let data = this.state.data;
+    let { data } = this.state;
     if (data[id]) {
       data[id].score += scoreAdd;
       this.setState({ data: data });
-      socket.emit("Add score", {
+      socket.emit("Add score TT", {
         name: name,
         score: data[id].score,
         data: data,
@@ -192,14 +222,16 @@ class AdminVCNV extends Component {
   };
 
   //==================================================================================================================
-  ChooseQuesVCNV = (stt) => {
+  ChooseQuesTT = (stt, ShowImg) => {
     this.setState({
       currentQues: stt,
       ListShowContentVCNV: [],
+      problem: 40,
     });
     socket.emit("choose ques", {
       ques: this.state.questions[stt],
       id: stt,
+      src: ShowImg,
     });
   };
   //==================================================================================================================
@@ -209,17 +241,24 @@ class AdminVCNV extends Component {
   };
   //==================================================================================================================
   OnAddPoint = (e) => {
-    this.setState({ problem: e.target.value });
+    e.preventDefault();
+    let Ans = this.state.questions[this.state.currentQues]
+      ? this.state.questions[this.state.currentQues].answer
+      : "??";
+    let { problem } = this.state;
+    for (let i = 0; i < this.state.ListShowContentVCNV.length; i++) {
+      if (this.state.ListShowContentVCNV[i].answer == Ans) {
+        this.AddScore(this.state.ListShowContentVCNV[i].name, problem, i);
+        console.log(
+          "Đã Cộng " + this.state.ListShowContentVCNV[i].name + " " + problem
+        );
+        problem -= 10;
+        this.setState({ problem: problem });
+      }
+    }
   };
   //==================================================================================================================
-  AddGrantedPoint = (e) => {
-    e.preventDefault();
-    this.AddScore(
-      localStorage.name,
-      parseInt(this.state.problem),
-      localStorage.id
-    );
-  };
+
   //==================================================================================================================
   //True answer VCNV
   DisableUser = (e) => {
@@ -260,7 +299,7 @@ class AdminVCNV extends Component {
               ? this.state.ListShowContentVCNV.map((user, id) => {
                   return (
                     <p key={id}>
-                      {user.name} : {user.answer}
+                      {user.name} : {user.answer} = {user.time}
                     </p>
                   );
                 })
@@ -268,22 +307,12 @@ class AdminVCNV extends Component {
           </div>
           <div className="SubmitAdminVCNV">
             <input onKeyDown={this.handleKeyDown} />
-            <input
-              onChange={this.OnAddPoint}
-              type="text"
-              placeholder="Add Point"
-            />
-            <button
-              className="btn btn-primary btn-block nothing"
-              onClick={this.AddGrantedPoint}
-            >
-              ADD POINT
-            </button>
+
             <button
               className="btn btn-danger btn-block  nothing"
-              onClick={this.DisableUser}
+              onClick={this.OnAddPoint}
             >
-              BLOCK USER
+              Add Point
             </button>
             <button
               className="btn btn-success btn-block  nothing"
@@ -314,4 +343,4 @@ class AdminVCNV extends Component {
   }
 }
 
-export default AdminVCNV;
+export default AdminTT;

@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import logo from "../logo.svg";
+import logo from "../../logo.svg";
 import io from "socket.io-client";
-import "../App.css";
+import "../../App.css";
 import $ from "jquery";
-import "./css/Content.css";
-import port from "../port.json";
+import port from "../../port.json";
+import "./VD.css";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
-class Content extends Component {
+class ContentVD extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -96,7 +96,7 @@ class Content extends Component {
   }
 }
 
-export default Content;
+export default ContentVD;
 function progress(timeleft, timetotal, $element) {
   var progressBarWidth = (timeleft * $element.width()) / timetotal;
   $element

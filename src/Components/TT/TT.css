@@ -1,0 +1,97 @@
+.backgroundTT {
+  position: absolute;
+  z-index: 0;
+}
+
+.ContentTTprogress {
+  z-index: 1 !important;
+  transform: rotate(-90deg);
+  width: 50% !important;
+  position: relative;
+  left: -35%;
+  height: 60px !important;
+}
+.barTTprogress {
+  height: 60px !important;
+}
+.questionsTT {
+  position: absolute;
+  top: 22%;
+  left: 10%;
+}
+.aroundTT {
+  position: absolute;
+  width: 64% !important;
+  height: 77% !important;
+  top: 31%;
+  left: -5%;
+}
+.QuesImgTT {
+  position: absolute;
+  width: 100% !important;
+  height: 100% !important;
+}
+.ShowAnsTT {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1;
+  list-style-type: none;
+  font-size: 80% !important;
+}
+
+.eTT23,
+.eTT33,
+.eTT13,
+.eTT03 {
+  position: relative;
+  top: -25px;
+  right: 75%;
+  font-size: 300%;
+}
+.eTT02,
+.eTT12,
+.eTT22,
+.eTT32 {
+  position: relative;
+  top: -10%;
+  left: 30%;
+}
+.eTT01,
+.eTT11,
+.eTT21,
+.eTT31 {
+  position: relative;
+  color: orange;
+  font-weight: bold;
+  left: 5%;
+}
+.diffTT0 {
+  position: absolute;
+  top: 10%;
+  right: 35%;
+  width: 25% !important;
+  height: 25% !important;
+}
+.diffTT1 {
+  position: absolute;
+  top: 31%;
+  right: 35%;
+  width: 25% !important;
+  height: 25% !important;
+}
+.diffTT2 {
+  position: absolute;
+  top: 50%;
+  right: 35%;
+  width: 25% !important;
+  height: 25% !important;
+}
+.diffTT3 {
+  position: absolute;
+  top: 72%;
+  right: 35%;
+  width: 25% !important;
+  height: 25% !important;
+}

@@ -3,25 +3,27 @@ import logo from "../../logo.svg";
 import { Howl, Howler } from "howler";
 import io from "socket.io-client";
 import "../../App.css";
-import "./VCNV.css";
+import "./TT.css";
 import port from "../../port.json";
 import OnVCNV from "./Music/ObstacleRowRightAnswer.mp3";
-import second from "./Music/15sAdven.wav";
+import second from "./Music/30sAdven.mp3";
 import ObsGranted from "./Music/ObsGranted.wav";
-import RowShow from "./Music/ObstacleRowShow.mp3";
+import RowShow from "./Music/OpenRow.mp3";
 import ImgShow from "./Music/ObstacleShowImage.mp3";
-import Img from "./Img/VCNVIMG.png";
-import Show from "./Img/show.png";
+import FormQues from "./Img/FormQuestion.png";
+import Show from "./Img/ShowPoint.png";
 import $, { data } from "jquery";
+import Ques1 from "./Img/Ques1.PNG";
+import Ques2 from "./Img/Ques2.PNG";
+import Ques31 from "./Img/Ques31.PNG";
+import Ques32 from "./Img/Ques32.PNG";
+import Ques33 from "./Img/Ques33.PNG";
+import Ques4 from "./Img/Ques4.PNG";
 //==============import img============================
-import Pie1 from "./Img/Pie1.png";
-import Pie2 from "./Img/Pie2.png";
-import Pie3 from "./Img/Pie3.png";
-import Pie4 from "./Img/Pie4.png";
-import PieCen from "./Img/PieCen.png";
+
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
-class ContentVCNV extends Component {
+class ContentTT extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,6 +40,7 @@ class ContentVCNV extends Component {
   }
   soundPlay = (src) => {
     const sound = new Howl({ src });
+    sound.volume = 0.1;
     sound.play();
   };
   soundStop = (src) => {
@@ -45,21 +48,23 @@ class ContentVCNV extends Component {
     sound.stop();
   };
   componentDidMount() {
-    $(".ShowAns").hide();
+    $(".ShowAnsTT").hide();
+    $(".QuesImgTT").hide();
     this.setState({
       data: this.props.data,
       questions: this.props.questions,
     });
 
-    socket.on("show list VCNV", (show) => {
+    socket.on("show list TT", (show) => {
       if (this.state.toogle == 0) {
-        $(".ShowAns").show(1000);
+        $(".ShowAnsTT").show(1000);
         this.setState({ toogle: 1 });
+        this.soundPlay(RowShow);
       } else {
-        $(".ShowAns").hide(1000);
+        $(".ShowAnsTT").hide(1000);
         this.setState({ toogle: 0 });
       }
-      this.soundPlay(RowShow);
+
       this.setState({ ListShowContentVCNV: show.list });
     });
     socket.on("show answervcnv", (show) => {
@@ -80,6 +85,8 @@ class ContentVCNV extends Component {
     });
 
     socket.on("choose ques", (ques) => {
+      $(".QuesImgTT").hide();
+      $(ques.src).show(500);
       this.soundPlay(ImgShow);
       let thisd = this;
       this.setState({
@@ -95,8 +102,9 @@ class ContentVCNV extends Component {
         if (check) {
           $("#progressBar").css("background-color", "#cfd6d9");
           $(".bar").css("background-color", "#428bca");
+
+          progress(30, 30, $("#progressBar"));
           thisd.soundPlay(second);
-          progress(15, 15, $("#progressBar"));
           check = false;
         }
       }, 5000);
@@ -125,51 +133,9 @@ class ContentVCNV extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <ul className="circle">
-            <div className="around">
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-            </div>
-            <div className="around">
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-            </div>
-            <div className="around">
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-            </div>
+          <img src={FormQues} className="backgroundTT"></img>
+          {/* <ul className="circle"></ul>
 
-            <div className="around">
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-            </div>
-          </ul>
-          <div>
-            <img className="VCNVimgContent" src={Img}></img>
-            <img className="pie1 pie" src={Pie1}></img>
-            <img className="pie2 pie" src={Pie2}></img>
-            <img className="pie3 pie" src={Pie3}></img>
-            <img className="pie4 pie" src={Pie4}></img>
-            <img className="pieCen pie" src={PieCen}></img>
-          </div>
-          <div className="sttVCNV">
-            <button className="btn btn-success buttonVCNV">1</button>
-            <button className="btn btn-primary buttonVCNV">2</button>
-            <button className="btn btn-danger buttonVCNV">3</button>
-            <button className="btn btn-light buttonVCNV">4</button>
-          </div>
           <table id="NameList">
             <tbody>
               <tr>
@@ -184,36 +150,49 @@ class ContentVCNV extends Component {
               </tr>
             </tbody>
           </table>
-          {/* <p>
+           <p>
             {this.state.data[this.state.current]
               ? this.state.data[this.state.current].name
               : "ngu"}
-          </p> */}
-          <div className="questionsVCNV col-11">
-            <div>
-              <p className="questionVCNV quessVCNV">
-                {this.state.question ? this.state.question.ques : ""}{" "}
-              </p>
-            </div>
-            {/* <div className="score col-4">{this.state.score}</div> */}
+          </p> 
+          */}
+          <div className="aroundTT">
+            <img src={Ques1} className="QuesImgTT Ques1"></img>
+          </div>
+          <div className="aroundTT">
+            <img src={Ques2} className="QuesImgTT Ques2"></img>
+          </div>
+          <div className="aroundTT">
+            <img src={Ques31} className="QuesImgTT Ques3"></img>
+          </div>
+          <div className="aroundTT">
+            <img src={Ques4} className="QuesImgTT Ques4"></img>
           </div>
 
-          <div id="progressBar">
-            <div className="bar"></div>
+          <div className="questionsTT col-11">
+            <p className="questionTT quessTT">
+              {this.state.question ? this.state.question.ques : ""}{" "}
+            </p>
           </div>
 
-          <ul className="ShowAns">
+          <div id="progressBar" className="ContentTTprogress">
+            <div className="bar barTTprogress"></div>
+          </div>
+
+          <ul className="ShowAnsTT">
             <img src={Show} className="backgroundVCNV"></img>
             {this.state.ListShowContentVCNV.map((user, id) => {
               return (
-                <li className="Ans" className={"diff" + id} key={id}>
-                  <span className="nameVCNV" className={"e" + id + "1"}>
+                <li className="Ans" className={"diffTT" + id} key={id}>
+                  <span className="nameVCNV" className={"eTT" + id + "1"}>
                     {user.name}
                   </span>
                   <br />
-                  <span className="ansVCNV " className={"e" + id + "2"}>
-                    HELLO EM YEU
+                  <span className="ansVCNV " className={"eTT" + id + "2"}>
                     {user.answer}
+                  </span>
+                  <span className="ansVCNV " className={"eTT" + id + "3"}>
+                    {user.time}
                   </span>
                 </li>
               );
@@ -225,13 +204,14 @@ class ContentVCNV extends Component {
   }
 }
 
-export default ContentVCNV;
+export default ContentTT;
 function progress(timeleft, timetotal, $element) {
   var progressBarWidth = (timeleft * $element.width()) / timetotal;
   $element
     .find("div")
     .animate({ width: progressBarWidth }, 500)
     .html(Math.floor(timeleft / 60) + ":" + (timeleft % 60));
+
   if (timeleft > 0) {
     setTimeout(function () {
       progress(timeleft - 1, timetotal, $element);

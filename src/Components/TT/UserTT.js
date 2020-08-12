@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import logo from "../../logo.svg";
 import io from "socket.io-client";
 import "../../App.css";
-import "./VCNV.css";
+import "./TT.css";
 import port from "../../port.json";
 import $ from "jquery";
 const socket = io.connect(port.port); //change when change wifi
-let check = true;
-let check1 = 0;
-class UserVCNV extends Component {
+let check = true,
+  check1 = 0,
+  myVar,
+  time = 0,
+  thisdd;
+class UserTT extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,9 +23,12 @@ class UserVCNV extends Component {
       currentQues: 0,
       currentUser: 0,
       answerVCNV: "",
+      time: 0,
     };
   }
   componentDidMount() {
+    stopTimer();
+    thisdd = this;
     if (localStorage.DisListVCNV) {
       for (let i = 0; i < localStorage.DisListVCNV.length; i++)
         if (localStorage.tooken == localStorage.DisListVCNV[i]) {
@@ -48,6 +54,12 @@ class UserVCNV extends Component {
       localStorage.setItem("submitVCNV", 1);
     });
 
+    socket.on("Add score TT", (crr) => {
+      if (crr != []) {
+        this.setState({ data: crr.data });
+        console.log(crr.data);
+      }
+    });
     // socket.on("add point ok", (data) => {
     //   this.setState({
     //     score: data.point,
@@ -57,6 +69,7 @@ class UserVCNV extends Component {
     // });
 
     socket.on("choose ques", (ques) => {
+      restartTimer();
       this.setState({
         question: ques.ques,
       });
@@ -66,7 +79,8 @@ class UserVCNV extends Component {
         if (check) {
           $("#progressBar").css("background-color", "#cfd6d9");
           $(".bar").css("background-color", "#428bca");
-          progress(15, 15, $("#progressBar"));
+          progress(30, 30, $("#progressBar"));
+          startTimer();
           check = false;
         }
       }, 5000);
@@ -98,19 +112,19 @@ class UserVCNV extends Component {
       }
     });
   }
-  AddScore = (name, scoreAdd, id) => {
-    let data = this.state.data;
-    if (data[id]) {
-      data[id].score += scoreAdd;
-      console.log(data);
-      this.setState({ data: data });
-      socket.emit("Add score", {
-        name: name,
-        score: data[id].score,
-        data: data,
-      });
-    }
-  };
+  // AddScore = (name, scoreAdd, id) => {
+  //   let data = this.state.data;
+  //   if (data[id]) {
+  //     data[id].score += scoreAdd;
+  //     console.log(data);
+  //     this.setState({ data: data });
+  //     socket.emit("Add score TT", {
+  //       name: name,
+  //       score: data[id].score,
+  //       data: data,
+  //     });
+  //   }
+  // };
 
   //===========================================================
   onAnswerVCNV = (e) => {
@@ -126,78 +140,33 @@ class UserVCNV extends Component {
       socket.emit("on send answer", {
         id: localStorage.tooken ? localStorage.tooken : 0,
         answer: answerVCNV,
+        time: this.state.time,
       });
       localStorage.setItem("submitVCNV", 0);
     } else {
       alert("BẠN CHỈ CÓ THỂ GỬI 1 LẦN");
     }
   };
-  onVCNV = () => {
-    let name = this.state.data[localStorage.tooken]
-        ? this.state.data[localStorage.tooken].name
-        : "admin",
-      id = localStorage.tooken ? localStorage.tooken : 0;
-    //this.AddScore(name, 50, id);
-    socket.emit("on VCNV", {
-      name: name,
-      id: id,
-    });
-  };
+
   render() {
     //$(".names").removeClass("CrName");
     // $(".names").eq(this.state.current).addClass("CrName");
     return (
       <div className="App">
         <div className="App-header">
-          <ul className="circle">
-            <div className="around">
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-            </div>
-
-            <div className="around">
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-            </div>
-            <div className="around">
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-            </div>
-            <div className="around">
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-            </div>
-          </ul>
-
-          {/* <table id="NameList">
-            <tr>
-              {this.state.data.map((user, id) => {
-                if (id != 0)
+          <table id="NameList">
+            <tbody>
+              <tr>
+                {this.state.data.map((user, id) => {
                   return (
                     <td className="names" key={id}>
                       {user.name} ({user.score})
                     </td>
                   );
-              })}
-            </tr>
-          </table> */}
-          {/* <p>
-            {this.state.data[this.state.current]
-              ? this.state.data[this.state.current].name
-              : "ngu"}
-          </p> */}
+                })}
+              </tr>
+            </tbody>
+          </table>
           <div className="questionsVCNV col-11">
             <div>
               <p className="questionVCNV quessVCNV">
@@ -228,20 +197,13 @@ class UserVCNV extends Component {
               >
                 GỬI CÂU TRẢ LỜI
               </button>
-              <button
-                type="button"
-                name=""
-                id=""
-                class="btn btn-danger btn-lg btn-block BestAnswer"
-                onClick={this.onVCNV}
-              >
-                TRẢ LỜI CHƯỚNG NGẠI VẬT
-              </button>
+
               <div id="showAnswerVCNV">
                 CÂU TRẢ LỜI ĐÃ GỬI : {this.state.answerVCNV.toUpperCase()}
               </div>
             </div>
           </div>
+          <p>{this.state.time}</p>
 
           <div id="progressBar">
             <div className="bar"></div>
@@ -252,14 +214,32 @@ class UserVCNV extends Component {
   }
 }
 
-export default UserVCNV;
+export default UserTT;
 
+function stopTimer() {
+  clearInterval(myVar);
+}
+function startTimer() {
+  myVar = setInterval(myTimer, 10);
+}
+function myTimer() {
+  console.log("qweg");
+  time = time + 0.01;
+  time = Math.round((time + 0.00001) * 100) / 100;
+  var d = new Date();
+  if (thisdd) thisdd.setState({ time: time });
+}
+function restartTimer() {
+  time = 0;
+}
 function progress(timeleft, timetotal, $element) {
   var progressBarWidth = (timeleft * $element.width()) / timetotal;
+  // startTimer();
   $element
     .find("div")
     .animate({ width: progressBarWidth }, 500)
     .html(Math.floor(timeleft / 60) + ":" + (timeleft % 60));
+
   if (timeleft > 0) {
     setTimeout(function () {
       progress(timeleft - 1, timetotal, $element);
@@ -267,6 +247,7 @@ function progress(timeleft, timetotal, $element) {
       //$(".bar").css("background-color", "red");
     }, 1000);
   } else {
+    stopTimer();
     $("#progressBar").css("background-color", "red");
     $(".bar").css("background-color", "red");
     $(".answerVCNV").hide();

@@ -4,11 +4,21 @@ import "./App.css";
 import port from "./port.json";
 import Signin from "./Components/Signin";
 import Signup from "./Components/Signup";
+//============================================
 import Admin from "./Components/Admin";
 import Content from "./Components/Content";
+//=================================================
+import AdminVD from "./Components/VD/AdminVD";
+import ContentVD from "./Components/VD/ContentVD";
+import UserVD from "./Components/VD/UserVD";
+//========================================================
 import AdminVCNV from "./Components/VCNV/AdminVCNV";
 import ContentVCNV from "./Components/VCNV/ContentVCNV";
 import UserVCNV from "./Components/VCNV/UserVCNV";
+//=========================================================
+import AdminTT from "./Components/TT/AdminTT";
+import ContentTT from "./Components/TT/ContentTT";
+import UserTT from "./Components/TT/UserTT";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { json } from "body-parser";
 const socket = io.connect(port.port); //change when change wifi
@@ -19,9 +29,10 @@ class App extends Component {
       gmail: "",
       password: "",
       data: [],
-      questions: [],
       current: 0,
+      questions: [],
       questionsVCNV: [],
+      questionsTT: [],
     };
   }
 
@@ -41,6 +52,7 @@ class App extends Component {
       this.setState({
         questions: data[0],
         questionsVCNV: data[1],
+        questionsTT: data[2],
       });
     });
     //=============GetQuestion=======================================================================================
@@ -113,6 +125,36 @@ class App extends Component {
               ></Content>
             )}
           />
+          {/**========================================================================== */}
+          <Route
+            path="/AdminVD"
+            component={() => (
+              <AdminVD
+                data={this.state.data}
+                questions={this.state.questions}
+                current={this.state.current}
+              ></AdminVD>
+            )}
+          />
+          <Route
+            path="/ContentVD"
+            component={() => (
+              <ContentVD
+                data={this.state.data}
+                current={this.state.current}
+              ></ContentVD>
+            )}
+          />
+          <Route
+            path="/UserVD"
+            component={() => (
+              <UserVD
+                data={this.state.data}
+                current={this.state.current}
+              ></UserVD>
+            )}
+          />
+          {/**========================================================================== */}
           <Route
             path="/AdminVCNV"
             component={() => (
@@ -141,6 +183,36 @@ class App extends Component {
                 current={this.state.current}
                 questions={this.state.questionsVCNV}
               ></UserVCNV>
+            )}
+          />
+          <Route
+            path="/UserTT"
+            component={() => (
+              <UserTT
+                data={this.state.data}
+                current={this.state.current}
+                questions={this.state.questionsTT}
+              ></UserTT>
+            )}
+          />
+          <Route
+            path="/ContentTT"
+            component={() => (
+              <ContentTT
+                data={this.state.data}
+                current={this.state.current}
+                questions={this.state.questionsTT}
+              ></ContentTT>
+            )}
+          />
+          <Route
+            path="/AdminTT"
+            component={() => (
+              <AdminTT
+                data={this.state.data}
+                current={this.state.current}
+                questions={this.state.questionsTT}
+              ></AdminTT>
             )}
           />
         </BrowserRouter>

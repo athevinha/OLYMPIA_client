@@ -36,7 +36,7 @@ class AdminVCNV extends Component {
       let { ListShowContentVCNV } = this.state;
       console.log(ListShowContentVCNV.length);
       if (ListShowContentVCNV.length == 0) {
-        for (let i = 1; i < this.state.data.length; i++) {
+        for (let i = 0; i < this.state.data.length; i++) {
           ListShowContentVCNV.push({
             name: this.state.data[i].name,
             answer: "",
@@ -63,7 +63,7 @@ class AdminVCNV extends Component {
               ListShowContentVCNV[i].answer = UserAns.answer;
             }
           }
-          console.log(ListShowContentVCNV);
+
           this.AddScore(name, 10, UserAns.id);
           //====
           this.setState({
@@ -139,7 +139,7 @@ class AdminVCNV extends Component {
     } //==============================================================================================================
     else if (e.keyCode == "113") {
       this.ChooseQuesVCNV(2);
-    } //==============================================================================================================
+    } //Trả lời chướng ngại vật ==============================================================================================================
     else if (e.keyCode == "114") {
       // right arrow
       this.ChooseQuesVCNV(3);
@@ -151,6 +151,10 @@ class AdminVCNV extends Component {
     } else if (e.keyCode == "116") {
       // right arrow
       this.ChooseQuesVCNV(5);
+      //this.setState({ problem: 10 });
+    } else if (e.keyCode == "117") {
+      // right arrow
+      this.ChooseQuesVCNV(6);
       //this.setState({ problem: 10 });
     } else if (e.keyCode == "46") {
       // delete to show list

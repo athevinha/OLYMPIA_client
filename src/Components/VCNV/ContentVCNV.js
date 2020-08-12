@@ -52,6 +52,7 @@ class ContentVCNV extends Component {
     });
 
     socket.on("show list VCNV", (show) => {
+      console.log("Show");
       if (this.state.toogle == 0) {
         $(".ShowAns").show(1000);
         this.setState({ toogle: 1 });
@@ -130,28 +131,38 @@ class ContentVCNV extends Component {
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
             </div>
             <div className="around">
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
             </div>
-            <div className="around">
+            <div className="around smallVCNV">
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
             </div>
 
             <div className="around">
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
             </div>
@@ -174,12 +185,11 @@ class ContentVCNV extends Component {
             <tbody>
               <tr>
                 {this.state.data.map((user, id) => {
-                  if (id != 0)
-                    return (
-                      <td className="names" key={id}>
-                        {user.name} ({user.score})
-                      </td>
-                    );
+                  return (
+                    <td className="names" key={id}>
+                      {user.name} ({user.score})
+                    </td>
+                  );
                 })}
               </tr>
             </tbody>
@@ -212,7 +222,6 @@ class ContentVCNV extends Component {
                   </span>
                   <br />
                   <span className="ansVCNV " className={"e" + id + "2"}>
-                    HELLO EM YEU
                     {user.answer}
                   </span>
                 </li>

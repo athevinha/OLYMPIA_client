@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import logo from "../logo.svg";
+import logo from "../../logo.svg";
 import io from "socket.io-client";
-import "../App.css";
+import "../../App.css";
 import $ from "jquery";
-import port from "../port.json";
+import port from "../../port.json";
+import "./VD.css";
 const socket = io.connect(port.port); //change when change wifi
-class Admin extends Component {
+class AdminVD extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,9 +25,9 @@ class Admin extends Component {
       data: this.props.data,
       currentUser: this.props.current[0] ? this.props.current[0].current : 0,
     });
-    // socket.on("choose ques", (ques) => {
-    //   console.log(ques);
-    // });
+    socket.on("on send VD", (ques) => {
+      if (ques) console.log(this.state.data[ques.id]);
+    });
   }
   checkKey = (e) => {
     e.preventDefault();
@@ -45,37 +46,6 @@ class Admin extends Component {
       this.setState({ currentQues: currentQues });
       $(document).scrollTop($(document).scrollTop() + 50);
       socket.emit("choose ques", this.state.questions[currentQues].ques);
-    } //==============================================================================================================
-    else if (e.keyCode == "13") {
-      let a = this.state.data[this.state.currentUser].score;
-      a += 10;
-      let userss = this.state.data;
-      userss[this.state.currentUser].score = a;
-      this.setState({ data: userss });
-      socket.emit("add point", {
-        name: this.state.data[this.state.currentUser].name,
-        point: this.state.data[this.state.currentUser].score,
-        stt: this.state.currentUser,
-        users: this.state.data,
-      });
-      //console.log(this.state.data[this.state.currentUser].score);
-      // left arrow
-      //alert("left");
-    } //==============================================================================================================
-    else if (e.keyCode == "49") {
-      this.nextUser(0);
-      // right arrow
-      //alert("right");
-    } //==============================================================================================================
-    else if (e.keyCode == "50") {
-      // right arrow
-      //alert("right");
-      this.nextUser(1);
-    } //==============================================================================================================
-    else if (e.keyCode == "51") {
-      // right arrow
-      //alert("right");
-      this.nextUser(2);
     } //==============================================================================================================
     else if (e.keyCode == "52") {
       // right arrow
@@ -104,6 +74,10 @@ class Admin extends Component {
     // arrow up/down button should select next/previous list element
     this.checkKey(e);
   };
+  OnChooseUser = (e) => {
+    e.preventDefault();
+    console.log(e.id);
+  };
   render() {
     //console.log(this.state.currentQues);
     // if (document.getElementsByClassName("ques")[this.state.currentQues]) {
@@ -115,25 +89,37 @@ class Admin extends Component {
     $(".ques").eq(this.state.currentQues).addClass("active");
 
     return (
-      <div className="App">
-        <form className="App-header" onSubmit={this.onSubmit}>
+      <div className="App row">
+        <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p></p>
-          <input onKeyDown={this.handleKeyDown} />
+          <table id="NameList">
+            <tbody>
+              <tr>
+                {this.state.data.map((user, id) => {
+                  return (
+                    <td className="names" key={id} onClick={this.OnChooseUser}>
+                      {user.name} ({user.score})
+                    </td>
+                  );
+                })}
+              </tr>
+            </tbody>
+          </table>
 
-          <div>
-            {this.state.questions.map((ques, id) => {
-              return (
-                <p key={id} className="ques active">
-                  {ques.ques}
-                </p>
-              );
-            })}
+          <div className="questions col-11">
+            <div>
+              <p className="question quess">{this.state.question} </p>
+            </div>
+            <div className="score col-4">{this.state.score}</div>
           </div>
-        </form>
+
+          <div id="progressBar">
+            <div className="bar"></div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-export default Admin;
+export default AdminVD;
