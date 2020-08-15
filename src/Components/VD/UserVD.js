@@ -3,7 +3,7 @@ import logo from "../../logo.svg";
 import io from "socket.io-client";
 import "../../App.css";
 import port from "../../port.json";
-import $ from "jquery";
+import $, { data } from "jquery";
 import "./VD.css";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
@@ -23,6 +23,19 @@ class UserVD extends Component {
     };
   }
   componentDidMount() {
+    socket.on("choose ques", (ques) => {
+      console.log(ques);
+      this.setState({
+        question: ques,
+      });
+    });
+    socket.on("time VD", (time) => {
+      console.log(time);
+      $("#progressBar").css("background-color", "#cfd6d9");
+      $(".bar").css("background-color", "#428bca");
+      progress(time, time, $("#progressBar"));
+    });
+
     this.setState({
       questions: this.props.questions,
       data: this.props.data,
@@ -49,22 +62,6 @@ class UserVD extends Component {
     //   });
     //   if (data.data != null) this.setState({ data: data.data });
     // });
-
-    socket.on("choose ques", (ques) => {
-      this.setState({
-        question: ques.ques,
-      });
-      $(".answerVCNV").show(200);
-      $(".submitVCNV").show(200);
-      setTimeout(function () {
-        if (check) {
-          $("#progressBar").css("background-color", "#cfd6d9");
-          $(".bar").css("background-color", "#428bca");
-          progress(15, 15, $("#progressBar"));
-          check = false;
-        }
-      }, 5000);
-    });
   }
   AddScore = (name, scoreAdd, id) => {
     let data = this.state.data;
@@ -82,20 +79,12 @@ class UserVD extends Component {
 
   //===========================================================
   onSubmitAnswerVD = () => {
-    if (localStorage.submitVCNV == 1) {
-      let { answerVCNV } = this.state;
-      answerVCNV = answerVCNV.toUpperCase();
-      this.setState({
-        answerVCNV: answerVCNV,
-      });
-      socket.emit("on send VD", {
-        id: localStorage.tooken ? localStorage.tooken : 0,
-      });
-
-      localStorage.setItem("submitVCNV", 0);
-    } else {
-      alert("BẠN CHỈ CÓ THỂ GỬI 1 LẦN");
-    }
+    let id = localStorage.tooken ? localStorage.tooken : 0;
+    let name = this.state.data[id] ? this.state.data[id].name : "NO NAME";
+    socket.emit("on send VD", {
+      id: id,
+      name: name,
+    });
   };
 
   render() {
@@ -113,16 +102,6 @@ class UserVD extends Component {
           <p className="disableVCNV">{this.state.notifition}</p>
           <div className="col-11">
             <div class="form-group">
-              <input
-                type="text"
-                class="form-control answerVCNV"
-                name="answerVCNV"
-                id=""
-                aria-describedby="helpId"
-                placeholder="Your Answer..."
-                value={this.state.answerVCNV}
-                onChange={this.onAnswerVCNV}
-              />
               <button
                 type="button"
                 name=""
@@ -155,18 +134,15 @@ function progress(timeleft, timetotal, $element) {
   $element
     .find("div")
     .animate({ width: progressBarWidth }, 500)
-    .html(Math.floor(timeleft / 60) + ":" + (timeleft % 60));
+    .html(timeleft % 60);
   if (timeleft > 0) {
     setTimeout(function () {
       progress(timeleft - 1, timetotal, $element);
-
       //$(".bar").css("background-color", "red");
     }, 1000);
   } else {
     $("#progressBar").css("background-color", "red");
     $(".bar").css("background-color", "red");
-    $(".answerVCNV").hide();
-    $(".submitVCNV").hide();
     check = true;
   }
 }

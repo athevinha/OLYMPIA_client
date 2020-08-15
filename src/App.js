@@ -33,6 +33,7 @@ class App extends Component {
       questions: [],
       questionsVCNV: [],
       questionsTT: [],
+      questionsVD: [],
     };
   }
 
@@ -53,6 +54,7 @@ class App extends Component {
         questions: data[0],
         questionsVCNV: data[1],
         questionsTT: data[2],
+        questionsVD: data[3],
       });
     });
     //=============GetQuestion=======================================================================================
@@ -131,7 +133,7 @@ class App extends Component {
             component={() => (
               <AdminVD
                 data={this.state.data}
-                questions={this.state.questions}
+                questions={this.state.questionsVD}
                 current={this.state.current}
               ></AdminVD>
             )}
