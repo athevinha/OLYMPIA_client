@@ -124,6 +124,7 @@ class AdminVD extends Component {
     $(".bar").css("background-color", "#428bca");
 
     progress(5, 5, $("#progressBar"));
+    socket.emit("time VD", 5);
   }
 
   ChooseStar() {

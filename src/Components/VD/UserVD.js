@@ -28,12 +28,16 @@ class UserVD extends Component {
       this.setState({
         question: ques,
       });
+      check = true;
     });
     socket.on("time VD", (time) => {
-      console.log(time);
-      $("#progressBar").css("background-color", "#cfd6d9");
-      $(".bar").css("background-color", "#428bca");
-      progress(time, time, $("#progressBar"));
+      if (check == true) {
+        console.log(time);
+        $("#progressBar").css("background-color", "#cfd6d9");
+        $(".bar").css("background-color", "#428bca");
+        progress(time, time, $("#progressBar"));
+        check = false;
+      }
     });
 
     this.setState({

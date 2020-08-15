@@ -51,14 +51,18 @@ class ContentVD extends Component {
       }
     });
     socket.on("close choose quesVD", (crr) => {
-      if (crr) console.log(crr);
+      $(".ChoosePointVD").hide(1000);
     });
     socket.on("next pp vd", (crr) => {
-      if (crr) console.log(crr);
+      if (crr) {
+        $(".TickVD").html("");
+        $(".names").removeClass("activeNameVD");
+        $(".names").eq(crr).addClass("activeNameVD");
+      }
     });
-    socket.on("next pp vd", (crr) => {
-      if (crr) console.log(crr);
-    });
+    // socket.on("next pp vd", (crr) => {
+    //   if (crr) console.log(crr);
+    // });
 
     socket.on("Add score", (crr) => {
       if (crr != []) {
@@ -70,13 +74,18 @@ class ContentVD extends Component {
       this.setState({
         question: ques,
       });
+      check = true;
     });
     socket.on("time VD", (time) => {
-      console.log(time);
-      $("#progressBar").css("background-color", "#cfd6d9");
-      $(".bar").css("background-color", "#428bca");
-      progress(time, time, $("#progressBar"));
+      if (check == true) {
+        console.log(time);
+        $("#progressBar").css("background-color", "#cfd6d9");
+        $(".bar").css("background-color", "#428bca");
+        progress(time, time, $("#progressBar"));
+        check = false;
+      }
     });
+
     socket.on("add point ok", (data) => {
       this.setState({
         score: data.point,
