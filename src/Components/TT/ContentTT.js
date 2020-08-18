@@ -32,6 +32,7 @@ class ContentTT extends Component {
       data: [],
       questions: [],
       question: "",
+      Ending: [],
       currentQues: 0,
       currentUser: 0,
       ListShowContentVCNV: [],
@@ -50,6 +51,8 @@ class ContentTT extends Component {
   componentDidMount() {
     $(".ShowAnsTT").hide();
     $(".QuesImgTT").hide();
+    $(".TongKetBar").hide();
+
     this.setState({
       data: this.props.data,
       questions: this.props.questions,
@@ -119,6 +122,25 @@ class ContentTT extends Component {
       $(".names").addClass("label danger");
       alert(data ? data.name : "ngu");
     });
+    socket.on("TongKetDiem", (data) => {
+      if (data) {
+        $(".TongKetBar").show(500);
+
+        this.setState({ Ending: data });
+        setTimeout(function () {
+          $(".EndingUser").eq(0).addClass("AnimationEndingUser");
+        }, 1000);
+        setTimeout(function () {
+          $(".EndingUser").eq(1).addClass("AnimationEndingUser");
+        }, 3500);
+        setTimeout(function () {
+          $(".EndingUser").eq(2).addClass("AnimationEndingUser");
+        }, 6000);
+        setTimeout(function () {
+          $(".EndingUser").eq(3).addClass("AnimationEndingUser");
+        }, 8500);
+      }
+    });
     socket.on("Open Picture", (data) => {
       //this.soundPlay(RowShow);
       if (data) {
@@ -178,7 +200,19 @@ class ContentTT extends Component {
           <div id="progressBar" className="ContentTTprogress">
             <div className="bar barTTprogress"></div>
           </div>
-
+          <div className="TongKetBar">
+            <div className="BlackTongKetBar">
+              <ul>
+                {this.state.Ending.map((user, id) => {
+                  return (
+                    <li className="EndingUser" key={id}>
+                      {user.name} : {user.score}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
           <ul className="ShowAnsTT">
             <img src={Show} className="backgroundVCNV"></img>
             {this.state.ListShowContentVCNV.map((user, id) => {

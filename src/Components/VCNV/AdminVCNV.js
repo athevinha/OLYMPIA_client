@@ -206,6 +206,11 @@ class AdminVCNV extends Component {
       id: stt,
     });
   };
+  TongKet = (e) => {
+    e.preventDefault();
+    console.log(this.state.data);
+    socket.emit("TongKetDiem", this.state.data);
+  };
   //==================================================================================================================
   handleKeyDown = (e) => {
     // arrow up/down button should select next/previous list element
@@ -312,6 +317,12 @@ class AdminVCNV extends Component {
                 );
             })}
           </div>
+          <button
+            onClick={this.TongKet}
+            className="btn btn-danger TongKetButton"
+          >
+            ENDING ROUND
+          </button>
         </form>
       </div>
     );

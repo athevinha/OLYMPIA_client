@@ -97,7 +97,11 @@ class AdminTT extends Component {
       //===========================================
     });
   }
-
+  TongKet = (e) => {
+    e.preventDefault();
+    console.log(this.state.data);
+    socket.emit("TongKetDiem", this.state.data);
+  };
   // AddScore = (name, scoreAdd, id) => {
   //   let data = this.state.data;
   //   if (data[id]) {
@@ -183,7 +187,7 @@ class AdminTT extends Component {
             }
           }
         }
-
+        console.log("rasdgsdgasdgasdgasdgadga");
         this.setState({
           ListShowContentVCNV: ListShowContentVCNV,
           data: data,
@@ -319,6 +323,12 @@ class AdminTT extends Component {
               onClick={this.ShowList}
             >
               OPEN CIRCLE
+            </button>
+            <button
+              onClick={this.TongKet}
+              className="btn btn-danger TongKetButton"
+            >
+              ENDING ROUND
             </button>
           </div>
           <div>

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import logo from "../logo.svg";
+import logo from "../../logo.svg";
 import io from "socket.io-client";
-import "../App.css";
+import "../../App.css";
 import $ from "jquery";
-import port from "../port.json";
+import port from "../../port.json";
 const socket = io.connect(port.port); //change when change wifi
 class Admin extends Component {
   constructor(props) {
@@ -104,6 +104,12 @@ class Admin extends Component {
     // arrow up/down button should select next/previous list element
     this.checkKey(e);
   };
+
+  TongKet = (e) => {
+    e.preventDefault();
+    console.log(this.state.data);
+    socket.emit("TongKetDiem", this.state.data);
+  };
   render() {
     //console.log(this.state.currentQues);
     // if (document.getElementsByClassName("ques")[this.state.currentQues]) {
@@ -120,7 +126,6 @@ class Admin extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <p></p>
           <input onKeyDown={this.handleKeyDown} />
-
           <div>
             {this.state.questions.map((ques, id) => {
               return (
@@ -130,6 +135,12 @@ class Admin extends Component {
               );
             })}
           </div>
+          <button
+            onClick={this.TongKet}
+            className="btn btn-danger TongKetButton"
+          >
+            ENDING ROUND
+          </button>
         </form>
       </div>
     );

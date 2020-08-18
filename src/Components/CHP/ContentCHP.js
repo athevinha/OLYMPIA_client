@@ -8,8 +8,10 @@ import "./VD.css";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
+let time1, time2;
+let stop = false;
 let oneTime = 0;
-class ContentVD extends Component {
+class ContentCHP extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,13 +19,13 @@ class ContentVD extends Component {
       password: "",
       data: [],
       question: "",
-      Ending: [],
       score: 0,
       current: 0,
+      winnerName: "",
     };
   }
   componentDidMount() {
-    $(".TongKetBar").hide();
+    $(".WinnerCHP").hide();
     $(".ChoosePointVD").hide();
     this.setState({
       data: this.props.data,
@@ -31,9 +33,11 @@ class ContentVD extends Component {
     });
     socket.on("send VD", (ques) => {
       if (ques) {
+        stops();
         console.log(ques.id);
         $(".names").removeClass("onAlertVD");
         $(".names").eq(ques.id).addClass("onAlertVD");
+        oneTime = 0;
       }
     });
     // this.setState({
@@ -65,29 +69,27 @@ class ContentVD extends Component {
     // socket.on("next pp vd", (crr) => {
     //   if (crr) console.log(crr);
     // });
-
+    socket.on("start time", (crr) => {
+      if (crr && oneTime == 0) {
+        $(".names").removeClass("onAlertVD");
+        oneTime = 1;
+        start();
+        console.log(crr);
+        progress(crr, 15, $("#progressBar"));
+      }
+    });
+    socket.on("true chp", (crr) => {
+      if (crr) {
+        $(".WinnerCHP").show(1000);
+        console.log(crr);
+        this.setState({
+          winnerName: crr,
+        });
+      }
+    });
     socket.on("Add score", (crr) => {
       if (crr != []) {
         this.setState({ data: crr.data });
-      }
-    });
-    socket.on("TongKetDiem", (data) => {
-      if (data) {
-        $(".TongKetBar").show(500);
-
-        this.setState({ Ending: data });
-        setTimeout(function () {
-          $(".EndingUser").eq(0).addClass("AnimationEndingUser");
-        }, 1000);
-        setTimeout(function () {
-          $(".EndingUser").eq(1).addClass("AnimationEndingUser");
-        }, 3500);
-        setTimeout(function () {
-          $(".EndingUser").eq(2).addClass("AnimationEndingUser");
-        }, 6000);
-        setTimeout(function () {
-          $(".EndingUser").eq(3).addClass("AnimationEndingUser");
-        }, 8500);
       }
     });
     socket.on("choose ques", (ques) => {
@@ -125,16 +127,13 @@ class ContentVD extends Component {
             <tbody>
               <tr>
                 {this.state.data.map((user, id) => {
-                  return (
-                    <td
-                      className={
-                        id == 0 ? "names activeNameVD pointer" : "names pointer"
-                      }
-                      key={id}
-                    >
-                      {user.name} ({user.score})
-                    </td>
-                  );
+                  if (id == 1 || id == 2) {
+                    return (
+                      <td className="names pointer" key={id}>
+                        {user.name} ({user.score})
+                      </td>
+                    );
+                  }
                 })}
               </tr>
             </tbody>
@@ -142,12 +141,9 @@ class ContentVD extends Component {
 
           <div className="questions col-11">
             <div>
-              <p className="question quess">{this.state.question}</p>
-            </div>
-            <div className="score col-4">
-              {this.state.data[this.state.examUser]
-                ? this.state.data[this.state.examUser].score
-                : 0}
+              <p className="question quess questionCHP">
+                {this.state.question}
+              </p>
             </div>
           </div>
 
@@ -157,43 +153,15 @@ class ContentVD extends Component {
                 (this.state.question ? " " + this.state.question.point : "")
               : ""}
           </p>
-          <div className="ChoosePointVD">
-            <div className="BlackBackground">
-              <div className="Ten">
-                <p className="TenText">10</p>
-                <div className="TickVD" id="Tick1"></div>
-                <div className="TickVD" id="Tick2"></div>
-                <div className="TickVD" id="Tick3"></div>
-              </div>
-              <div className="TwoTen">
-                <p className="TwoText">20</p>
-                <div className="TickVD" id="Tick4"></div>
-                <div className="TickVD" id="Tick5"></div>
-                <div className="TickVD" id="Tick6"></div>
-              </div>
-              <div className="ThreeTen">
-                <p className="ThreeText">30</p>
-                <div className="TickVD" id="Tick7"></div>
-                <div className="TickVD" id="Tick8"></div>
-                <div className="TickVD" id="Tick9"></div>
-              </div>
-            </div>
-          </div>
+
           {/* <img src={PointQues}></img> */}
           <div id="progressBar" className="progressBarVD ">
             <div className="bar barVD"></div>
           </div>
-          <div className="TongKetBar">
-            <div className="BlackTongKetBar">
-              <ul>
-                {this.state.Ending.map((user, id) => {
-                  return (
-                    <li className="EndingUser" key={id}>
-                      {user.name} : {user.score}
-                    </li>
-                  );
-                })}
-              </ul>
+
+          <div className="WinnerCHP">
+            <div className="BlackCHP">
+              <p className="WinnerName">WINNER:{this.state.winnerName}</p>
             </div>
           </div>
         </div>
@@ -202,21 +170,31 @@ class ContentVD extends Component {
   }
 }
 
-export default ContentVD;
+export default ContentCHP;
 function progress(timeleft, timetotal, $element) {
-  var progressBarWidth = (timeleft * $element.width()) / timetotal;
-  $element
-    .find("div")
-    .animate({ width: progressBarWidth }, 500)
-    .html(timeleft % 60);
-  if (timeleft > 0) {
-    setTimeout(function () {
-      progress(timeleft - 1, timetotal, $element);
-      //$(".bar").css("background-color", "red");
-    }, 1000);
-  } else {
-    $("#progressBar").css("background-color", "red");
-    $(".bar").css("background-color", "red");
-    check = true;
+  if (stop == false) {
+    time1 = timeleft;
+    time2 = timetotal;
+    var progressBarWidth = (timeleft * $element.width()) / timetotal;
+    $element
+      .find("div")
+      .animate({ width: progressBarWidth }, 500)
+      .html(timeleft % 60);
+    if (timeleft > 0) {
+      setTimeout(function () {
+        progress(timeleft - 1, timetotal, $element);
+        //$(".bar").css("background-color", "red");
+      }, 1000);
+    } else {
+      $("#progressBar").css("background-color", "red");
+      $(".bar").css("background-color", "red");
+      check = true;
+    }
   }
+}
+function stops() {
+  stop = true;
+}
+function start() {
+  stop = false;
 }

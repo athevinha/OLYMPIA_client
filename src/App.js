@@ -5,12 +5,16 @@ import port from "./port.json";
 import Signin from "./Components/Signin";
 import Signup from "./Components/Signup";
 //============================================
-import Admin from "./Components/Admin";
-import Content from "./Components/Content";
+import Admin from "./Components/KD/Admin";
+import Content from "./Components/KD/Content";
 //=================================================
 import AdminVD from "./Components/VD/AdminVD";
 import ContentVD from "./Components/VD/ContentVD";
 import UserVD from "./Components/VD/UserVD";
+//======================================================
+import AdminCHP from "./Components/CHP/AdminCHP";
+import ContentCHP from "./Components/CHP/ContentCHP";
+import UserCHP from "./Components/CHP/UserCHP";
 //========================================================
 import AdminVCNV from "./Components/VCNV/AdminVCNV";
 import ContentVCNV from "./Components/VCNV/ContentVCNV";
@@ -34,6 +38,7 @@ class App extends Component {
       questionsVCNV: [],
       questionsTT: [],
       questionsVD: [],
+      questionsCHP: [],
     };
   }
 
@@ -55,6 +60,7 @@ class App extends Component {
         questionsVCNV: data[1],
         questionsTT: data[2],
         questionsVD: data[3],
+        questionsCHP: data[4],
       });
     });
     //=============GetQuestion=======================================================================================
@@ -154,6 +160,36 @@ class App extends Component {
                 data={this.state.data}
                 current={this.state.current}
               ></UserVD>
+            )}
+          />
+          {/**========================================================================== */}
+          {/**========================================================================== */}
+          <Route
+            path="/AdminCHP"
+            component={() => (
+              <AdminCHP
+                data={this.state.data}
+                questions={this.state.questionsCHP}
+                current={this.state.current}
+              ></AdminCHP>
+            )}
+          />
+          <Route
+            path="/ContentCHP"
+            component={() => (
+              <ContentCHP
+                data={this.state.data}
+                current={this.state.current}
+              ></ContentCHP>
+            )}
+          />
+          <Route
+            path="/UserCHP"
+            component={() => (
+              <UserCHP
+                data={this.state.data}
+                current={this.state.current}
+              ></UserCHP>
             )}
           />
           {/**========================================================================== */}

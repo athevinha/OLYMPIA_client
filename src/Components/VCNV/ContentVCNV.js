@@ -30,6 +30,7 @@ class ContentVCNV extends Component {
       data: [],
       questions: [],
       question: "",
+      Ending: [],
       currentQues: 0,
       currentUser: 0,
       ListShowContentVCNV: [],
@@ -45,6 +46,7 @@ class ContentVCNV extends Component {
     sound.stop();
   };
   componentDidMount() {
+    $(".TongKetBar").hide();
     $(".ShowAns").hide();
     this.setState({
       data: this.props.data,
@@ -118,6 +120,25 @@ class ContentVCNV extends Component {
         $(data).hide(1000);
       }
     });
+    socket.on("TongKetDiem", (data) => {
+      if (data) {
+        $(".TongKetBar").show(500);
+
+        this.setState({ Ending: data });
+        setTimeout(function () {
+          $(".EndingUser").eq(0).addClass("AnimationEndingUser");
+        }, 1000);
+        setTimeout(function () {
+          $(".EndingUser").eq(1).addClass("AnimationEndingUser");
+        }, 3500);
+        setTimeout(function () {
+          $(".EndingUser").eq(2).addClass("AnimationEndingUser");
+        }, 6000);
+        setTimeout(function () {
+          $(".EndingUser").eq(3).addClass("AnimationEndingUser");
+        }, 8500);
+      }
+    });
   }
 
   render() {
@@ -163,6 +184,11 @@ class ContentVCNV extends Component {
             </div>
 
             <div className="around">
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
             </div>
@@ -211,7 +237,19 @@ class ContentVCNV extends Component {
           <div id="progressBar">
             <div className="bar"></div>
           </div>
-
+          <div className="TongKetBar">
+            <div className="BlackTongKetBar">
+              <ul>
+                {this.state.Ending.map((user, id) => {
+                  return (
+                    <li className="EndingUser" key={id}>
+                      {user.name} : {user.score}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
           <ul className="ShowAns">
             <img src={Show} className="backgroundVCNV"></img>
             {this.state.ListShowContentVCNV.map((user, id) => {

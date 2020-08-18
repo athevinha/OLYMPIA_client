@@ -147,6 +147,11 @@ class AdminVD extends Component {
     isStar = false;
     socket.emit("next pp vd", examUser);
   }
+  TongKet = (e) => {
+    e.preventDefault();
+    console.log(this.state.data);
+    socket.emit("TongKetDiem", this.state.data);
+  };
   OnChoosePoint(e, test) {
     choosePointQues++;
     if (choosePointQues >= 4) {
@@ -330,6 +335,12 @@ class AdminVD extends Component {
           <div id="progressBar" className="progressBarVD ">
             <div className="bar barVD"></div>
           </div>
+          <button
+            onClick={this.TongKet}
+            className="btn btn-danger TongKetButton TongKetButtonVD"
+          >
+            ENDING ROUND
+          </button>
         </div>
       </div>
     );

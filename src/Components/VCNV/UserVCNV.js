@@ -150,38 +150,6 @@ class UserVCNV extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <ul className="circle">
-            <div className="around">
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-            </div>
-
-            <div className="around">
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-            </div>
-            <div className="around">
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-            </div>
-            <div className="around">
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-              <li className="black-circle UserCircle"> &#9679;</li>
-            </div>
-          </ul>
-
           {/* <table id="NameList">
             <tr>
               {this.state.data.map((user, id) => {

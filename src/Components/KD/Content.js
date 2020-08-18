@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import logo from "../logo.svg";
+import logo from "../../logo.svg";
 import io from "socket.io-client";
-import "../App.css";
+import "../../App.css";
 import $ from "jquery";
 import "./css/Content.css";
-import port from "../port.json";
+import port from "../../port.json";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
@@ -16,11 +16,13 @@ class Content extends Component {
       password: "",
       data: [],
       question: "",
+      Ending: [],
       score: 0,
       current: 0,
     };
   }
   componentDidMount() {
+    $(".TongKetBar").hide();
     this.setState({
       data: this.props.data,
       current: this.props.current[0] ? this.props.current[0].current : 0,
@@ -36,7 +38,25 @@ class Content extends Component {
         question: ques,
       });
     });
+    socket.on("TongKetDiem", (data) => {
+      if (data) {
+        $(".TongKetBar").show(500);
 
+        this.setState({ Ending: data });
+        setTimeout(function () {
+          $(".EndingUser").eq(0).addClass("AnimationEndingUser");
+        }, 1000);
+        setTimeout(function () {
+          $(".EndingUser").eq(1).addClass("AnimationEndingUser");
+        }, 3500);
+        setTimeout(function () {
+          $(".EndingUser").eq(2).addClass("AnimationEndingUser");
+        }, 6000);
+        setTimeout(function () {
+          $(".EndingUser").eq(3).addClass("AnimationEndingUser");
+        }, 8500);
+      }
+    });
     socket.on("add point ok", (data) => {
       this.setState({
         score: data.point,
@@ -89,6 +109,19 @@ class Content extends Component {
 
           <div id="progressBar">
             <div className="bar"></div>
+          </div>
+          <div className="TongKetBar">
+            <div className="BlackTongKetBar">
+              <ul>
+                {this.state.Ending.map((user, id) => {
+                  return (
+                    <li className="EndingUser" key={id}>
+                      {user.name} : {user.score}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
