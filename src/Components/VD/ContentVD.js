@@ -2,9 +2,14 @@ import React, { Component } from "react";
 import logo from "../../logo.svg";
 import io from "socket.io-client";
 import "../../App.css";
+import { Howl, Howler } from "howler";
 import $ from "jquery";
 import port from "../../port.json";
 import "./VD.css";
+import s10 from "./Music/10s.mp3";
+import s15 from "./Music/15s.mp3";
+import s20 from "./Music/20s.mp3";
+import s5 from "./Music/Finish5Seconds.mp3";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
@@ -22,6 +27,15 @@ class ContentVD extends Component {
       current: 0,
     };
   }
+  soundPlay = (src) => {
+    const sound = new Howl({ src });
+    sound.volume(0.2);
+    sound.play();
+  };
+  soundStop = (src) => {
+    const sound = new Howl({ src });
+    sound.stop();
+  };
   componentDidMount() {
     $(".AnimationStart").hide();
     $(".TongKetBar").hide();
