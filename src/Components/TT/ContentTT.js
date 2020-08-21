@@ -5,7 +5,8 @@ import io from "socket.io-client";
 import "../../App.css";
 import "./TT.css";
 import port from "../../port.json";
-import OnVCNV from "./Music/ObstacleRowRightAnswer.mp3";
+import AccelerationRightAnswer from "./Music/AccelerationRightAnswer.mp3";
+// import OnVCNV from "./Music/ObstacleRowRightAnswer.mp3";
 import second from "./Music/30sAdven.mp3";
 import ObsGranted from "./Music/ObsGranted.wav";
 import RowShow from "./Music/OpenRow.mp3";
@@ -41,7 +42,7 @@ class ContentTT extends Component {
   }
   soundPlay = (src) => {
     const sound = new Howl({ src });
-    sound.volume = 0.1;
+    sound.volume(0.2);
     sound.play();
   };
   soundStop = (src) => {
@@ -57,7 +58,12 @@ class ContentTT extends Component {
       data: this.props.data,
       questions: this.props.questions,
     });
-
+    socket.on("Add score TT", (crr) => {
+      if (crr != []) {
+        this.setState({ data: crr.data });
+        console.log(crr.data);
+      }
+    });
     socket.on("show list TT", (show) => {
       if (this.state.toogle == 0) {
         $(".ShowAnsTT").show(1000);
@@ -123,6 +129,7 @@ class ContentTT extends Component {
       alert(data ? data.name : "ngu");
     });
     socket.on("TongKetDiem", (data) => {
+      this.soundPlay(AccelerationRightAnswer);
       if (data) {
         $(".TongKetBar").show(500);
 
@@ -178,6 +185,19 @@ class ContentTT extends Component {
               : "ngu"}
           </p> 
           */}
+          <table id="NameList" className="NameListTT">
+            <tbody>
+              <tr>
+                {this.state.data.map((user, id) => {
+                  return (
+                    <td className="names" key={id}>
+                      {user.name} ({user.score})
+                    </td>
+                  );
+                })}
+              </tr>
+            </tbody>
+          </table>
           <div className="aroundTT">
             <img src={Ques1} className="QuesImgTT Ques1"></img>
           </div>

@@ -154,19 +154,6 @@ class UserTT extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <table id="NameList">
-            <tbody>
-              <tr>
-                {this.state.data.map((user, id) => {
-                  return (
-                    <td className="names" key={id}>
-                      {user.name} ({user.score})
-                    </td>
-                  );
-                })}
-              </tr>
-            </tbody>
-          </table>
           <div className="questionsVCNV col-11">
             <div>
               <p className="questionVCNV quessVCNV">

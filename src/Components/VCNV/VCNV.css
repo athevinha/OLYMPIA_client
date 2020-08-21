@@ -7,6 +7,10 @@
 .smallVCNV {
   font-size: 80%;
 }
+.ActiveName {
+  background-color: orangered;
+  color: black;
+}
 .nothing {
   display: block;
 }

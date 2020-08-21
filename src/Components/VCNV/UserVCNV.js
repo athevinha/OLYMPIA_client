@@ -3,7 +3,6 @@ import logo from "../../logo.svg";
 import io from "socket.io-client";
 import "../../App.css";
 import "./VCNV.css";
-
 import port from "../../port.json";
 import $ from "jquery";
 const socket = io.connect(port.port); //change when change wifi
@@ -72,6 +71,7 @@ class UserVCNV extends Component {
         }
       }, 5000);
       $(".around").removeClass("CircleActive");
+      //====
       $(".around")
         .eq(ques.id - 1)
         .addClass("CircleActive");

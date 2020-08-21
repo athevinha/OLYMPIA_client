@@ -8,7 +8,6 @@ import "./VCNV.css";
 const socket = io.connect(port.port); //change when change wifi
 let checks = 0,
   check1 = 0;
-
 class AdminVCNV extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +19,7 @@ class AdminVCNV extends Component {
       currentQues: 0,
       currentUser: 0,
       ListShowContentVCNV: [],
+      ArrPointer: [],
       problem: 100,
     };
   }
@@ -27,6 +27,7 @@ class AdminVCNV extends Component {
   componentWillUnmount() {}
   //==================================================================================================================
   componentDidMount() {
+    localStorage.setItem("Faster", false);
     this.setState({
       questions: this.props.questions,
       data: this.props.data,
@@ -64,7 +65,15 @@ class AdminVCNV extends Component {
             }
           }
 
-          this.AddScore(name, 10, UserAns.id);
+          //this.AddScore(name, 10, UserAns.id);
+          let { ArrPointer } = this.state;
+          ArrPointer.push({
+            name: name,
+            id: UserAns.id,
+          });
+          this.setState({
+            ArrPointer: ArrPointer,
+          });
           //====
           this.setState({
             ListShowContentVCNV: ListShowContentVCNV,
@@ -94,7 +103,9 @@ class AdminVCNV extends Component {
       //===========================================
     });
     socket.on("on VCNV", (data) => {
-      if (check1 == 0) {
+      if (check1 == 0 && localStorage.Faster == "false") {
+        localStorage.setItem("Faster", true);
+        console.log(localStorage.Faster);
         // if (localStorage.DisListVCNV) {
         //   localStorage.setItem("DisListVCNV", []);
         // }
@@ -169,7 +180,11 @@ class AdminVCNV extends Component {
             });
         }
       }
-
+      let { ArrPointer } = this.state;
+      for (let i = 0; i < ArrPointer.length; i++) {
+        if (ArrPointer[i])
+          this.AddScore(ArrPointer[i].name, 10, ArrPointer[i].id);
+      }
       socket.emit("show list VCNV", {
         list: this.state.ListShowContentVCNV
           ? this.state.ListShowContentVCNV
@@ -179,6 +194,7 @@ class AdminVCNV extends Component {
           : "",
         stt: this.state.currentQues,
       });
+      this.setState({ ArrPointer: [] });
     }
   };
   //==================================================================================================================
@@ -200,6 +216,7 @@ class AdminVCNV extends Component {
     this.setState({
       currentQues: stt,
       ListShowContentVCNV: [],
+      ArrPointer: [],
     });
     socket.emit("choose ques", {
       ques: this.state.questions[stt],
@@ -233,7 +250,7 @@ class AdminVCNV extends Component {
   //True answer VCNV
   DisableUser = (e) => {
     e.preventDefault();
-
+    localStorage.setItem("Faster", false);
     let obj = {
       name: localStorage.name,
       id: localStorage.id,

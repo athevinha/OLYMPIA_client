@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import "../../App.css";
 import $ from "jquery";
 import port from "../../port.json";
+
 const socket = io.connect(port.port); //change when change wifi
 class Admin extends Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class Admin extends Component {
       currentQues++;
       this.setState({ currentQues: currentQues });
       $(document).scrollTop($(document).scrollTop() + 50);
+
       socket.emit("choose ques", this.state.questions[currentQues].ques);
     } //==============================================================================================================
     else if (e.keyCode == "13") {

@@ -6,6 +6,11 @@
   background-color: #cfd6d9;
   color: black;
 }
+.videoWarmup {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
 #NameList {
   background-color: black;
   opacity: 0.9;

@@ -21,6 +21,7 @@ import Pie4 from "./Img/Pie4.png";
 import PieCen from "./Img/PieCen.png";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
+
 class ContentVCNV extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +40,13 @@ class ContentVCNV extends Component {
   }
   soundPlay = (src) => {
     const sound = new Howl({ src });
+    if (src == RowShow) {
+      sound.volume(0.2);
+    } else if (src == ObsGranted) {
+      sound.volume(0.2);
+    } else {
+      sound.volume(0.4);
+    }
     sound.play();
   };
   soundStop = (src) => {
@@ -63,9 +71,11 @@ class ContentVCNV extends Component {
         this.setState({ toogle: 0 });
       }
       this.soundPlay(RowShow);
+
       this.setState({ ListShowContentVCNV: show.list });
     });
     socket.on("show answervcnv", (show) => {
+      //====
       console.log(
         this.state.questions[this.state.currentQues]
           ? this.state.questions[this.state.currentQues].answer
@@ -83,7 +93,7 @@ class ContentVCNV extends Component {
     });
 
     socket.on("choose ques", (ques) => {
-      this.soundPlay(ImgShow);
+      $(".names").removeClass("ActiveName");
       let thisd = this;
       this.setState({
         question: ques.ques,
@@ -110,12 +120,16 @@ class ContentVCNV extends Component {
       }
     });
     socket.on("on VCNV", (data) => {
-      this.soundPlay(ObsGranted);
-      $(".names").addClass("label danger");
-      alert(data ? data.name : "ngu");
+      if (data && localStorage.Faster == "false") {
+        this.soundPlay(ObsGranted);
+        $(".names").removeClass("ActiveName");
+        $(".names").eq(data.id).addClass("ActiveName");
+        $(".names").addClass("label danger");
+        //alert(data ? data.name : "ngu");
+      }
     });
     socket.on("Open Picture", (data) => {
-      //this.soundPlay(RowShow);
+      this.soundPlay(ImgShow);
       if (data) {
         $(data).hide(1000);
       }

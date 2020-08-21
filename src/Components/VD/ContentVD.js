@@ -23,6 +23,7 @@ class ContentVD extends Component {
     };
   }
   componentDidMount() {
+    $(".AnimationStart").hide();
     $(".TongKetBar").hide();
     $(".ChoosePointVD").hide();
     this.setState({
@@ -42,10 +43,13 @@ class ContentVD extends Component {
     //     : "gasg",
     // });
     socket.on("choose Star", (crr) => {
-      if (crr) console.log(crr);
+      $(".AnimationStart").show();
+      $(".AnimationStart").css("top", "60%");
+      $(".AnimationStart").css("transform", "90deg");
     });
     socket.on("open choose quesVD", (crr) => {
       if (crr) {
+        $(".names").removeClass("onAlertVD");
         let nameId = "#" + crr;
         $(".ChoosePointVD").show(1000);
         console.log(nameId);
@@ -91,6 +95,7 @@ class ContentVD extends Component {
       }
     });
     socket.on("choose ques", (ques) => {
+      $(".names").removeClass("onAlertVD");
       console.log(ques);
       this.setState({
         question: ques,
@@ -183,6 +188,12 @@ class ContentVD extends Component {
           <div id="progressBar" className="progressBarVD ">
             <div className="bar barVD"></div>
           </div>
+          <button
+            className="btn btn-warning StarVD AnimationStart abso"
+            onClick={this.ChooseStar}
+          >
+            ⭐
+          </button>
           <div className="TongKetBar">
             <div className="BlackTongKetBar">
               <ul>

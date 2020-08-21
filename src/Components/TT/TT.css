@@ -11,6 +11,12 @@
   left: -35%;
   height: 60px !important;
 }
+.NameListTT {
+  z-index: 100;
+  position: absolute;
+  top: 110%;
+  left: 15%;
+}
 .barTTprogress {
   height: 60px !important;
 }

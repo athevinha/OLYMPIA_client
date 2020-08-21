@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import logo from "../../logo.svg";
+import { Howl, Howler } from "howler";
 import io from "socket.io-client";
 import "../../App.css";
 import $ from "jquery";
 import "./css/Content.css";
+import second from "./Music/60s.mp3";
+import Warmup from "./Video/WarmupVideo.mp4";
+
+import StartRight from "./Music/StartRight.wav";
+import StartWrong from "./Music/StartWrong.wav";
 import port from "../../port.json";
-import { BrowserRouter, Route, Link } from "react-router-dom";
 const socket = io.connect(port.port); //change when change wifi
-let check = true;
+let check = true,
+  SoundTime = true;
+
 class Content extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +28,18 @@ class Content extends Component {
       current: 0,
     };
   }
+  soundPlay = (src) => {
+    const sound = new Howl({ src });
+    if (src == StartRight) {
+      sound.volume(0.1);
+    }
+    sound.play();
+  };
+  soundStop = (src) => {
+    const sound = new Howl({ src });
+    sound.volume(0.5);
+    sound.stop();
+  };
   componentDidMount() {
     $(".TongKetBar").hide();
     this.setState({
@@ -58,6 +77,7 @@ class Content extends Component {
       }
     });
     socket.on("add point ok", (data) => {
+      this.soundPlay(StartRight);
       this.setState({
         score: data.point,
         current: data.stt,
@@ -67,6 +87,10 @@ class Content extends Component {
 
     socket.on("change pp", (qwef) => {
       if (check == true) {
+        this.soundPlay(second);
+        if (SoundTime == false) {
+          this.soundStop(second);
+        }
         $("#progressBar").css("background-color", "#cfd6d9");
         $(".bar").css("background-color", "#428bca");
         progress(60, 60, $("#progressBar"));
@@ -145,6 +169,7 @@ function progress(timeleft, timetotal, $element) {
   } else {
     $("#progressBar").css("background-color", "red");
     $(".bar").css("background-color", "red");
+    SoundTime = false;
     check = true;
   }
 }
