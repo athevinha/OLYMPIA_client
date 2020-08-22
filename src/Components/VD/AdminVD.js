@@ -79,6 +79,7 @@ class AdminVD extends Component {
       : "";
     let PointAdd = thisd.state.question ? thisd.state.question.point : 0;
     if (TrueOrFalse == true) {
+      socket.emit("check ans vd", true);
       if (this.state.currentUser != this.state.examUser) {
         thisd.AddScore(nameLess, -PointAdd, this.state.examUser);
         thisd.AddScore(name, PointAdd, this.state.currentUser);
@@ -99,6 +100,7 @@ class AdminVD extends Component {
     }
     //==========================================================================
     else if (TrueOrFalse == false) {
+      socket.emit("check ans vd", false);
       if (isStar == true) {
         thisd.AddScore(name, -PointAdd, this.state.examUser);
       } else {

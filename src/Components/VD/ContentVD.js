@@ -10,6 +10,10 @@ import s10 from "./Music/10s.mp3";
 import s15 from "./Music/15s.mp3";
 import s20 from "./Music/20s.mp3";
 import s5 from "./Music/Finish5Seconds.mp3";
+import star from "./Music/FinishStarChose.mp3";
+import FinishWrongAnswer from "./Music/FinishWrongAnswer.mp3";
+import FinishRightAnswer from "./Music/FinishRightAnswer.mp3";
+import Granted from "./Music/ObsGranted.wav";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
@@ -24,6 +28,7 @@ class ContentVD extends Component {
       question: "",
       Ending: [],
       score: 0,
+      examUser: 0,
       current: 0,
     };
   }
@@ -49,6 +54,14 @@ class ContentVD extends Component {
         console.log(ques.id);
         $(".names").removeClass("onAlertVD");
         $(".names").eq(ques.id).addClass("onAlertVD");
+        this.soundPlay(Granted);
+      }
+    });
+    socket.on("check ans vd", (ques) => {
+      if (ques == true) {
+        this.soundPlay(FinishRightAnswer);
+      } else if (ques == false) {
+        this.soundPlay(FinishWrongAnswer);
       }
     });
     // this.setState({
@@ -59,7 +72,7 @@ class ContentVD extends Component {
     socket.on("choose Star", (crr) => {
       $(".AnimationStart").show();
       $(".AnimationStart").css("top", "60%");
-      $(".AnimationStart").css("transform", "90deg");
+      this.soundPlay(star);
     });
     socket.on("open choose quesVD", (crr) => {
       if (crr) {
@@ -77,7 +90,9 @@ class ContentVD extends Component {
       if (crr) {
         $(".TickVD").html("");
         $(".names").removeClass("activeNameVD");
+        this.setState({ examUser: crr });
         $(".names").eq(crr).addClass("activeNameVD");
+        this.soundPlay(Granted);
       }
     });
     // socket.on("next pp vd", (crr) => {
@@ -109,6 +124,8 @@ class ContentVD extends Component {
       }
     });
     socket.on("choose ques", (ques) => {
+      $(".AnimationStart").hide(500);
+      $(".AnimationStart").css("top", "80%");
       $(".names").removeClass("onAlertVD");
       console.log(ques);
       this.setState({
@@ -122,6 +139,15 @@ class ContentVD extends Component {
         $("#progressBar").css("background-color", "#cfd6d9");
         $(".bar").css("background-color", "#428bca");
         progress(time, time, $("#progressBar"));
+        if (time == 10) {
+          this.soundPlay(s10);
+        } else if (time == 15) {
+          this.soundPlay(s15);
+        } else if (time == 20) {
+          this.soundPlay(s20);
+        } else if (time == 5) {
+          this.soundPlay(s5);
+        }
         check = false;
       }
     });
