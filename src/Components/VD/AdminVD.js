@@ -13,6 +13,16 @@ let check = true;
 let dispute = false,
   isStar = false,
   choosePointQues = 0;
+let SttQuesUser = 0;
+let ques10 = [],
+  ques20 = [],
+  ques30 = [];
+let Stt10 = 0;
+let Stt20 = 0;
+let Stt30 = 0;
+//==need to reset====''
+let QuesUserChoose = [];
+
 class AdminVD extends Component {
   constructor(props) {
     super(props);
@@ -65,9 +75,39 @@ class AdminVD extends Component {
     currentQues++;
     thisd.setState({
       currentQues: currentQues,
-      question: thisd.state.questions[currentQues],
+      //  question: thisd.state.questions[currentQues],
     });
-    socket.emit("choose ques", thisd.state.questions[currentQues].ques);
+    let { questions } = thisd.state;
+    for (let i = 0; i < questions.length; i++) {
+      if (questions[i].point == 10) {
+        ques10.push(questions[i]);
+      } else if (questions[i].point == 20) {
+        ques20.push(questions[i]);
+      } else if (questions[i].point == 30) {
+        ques30.push(questions[i]);
+      }
+    }
+
+    if (QuesUserChoose[SttQuesUser]) {
+      if (QuesUserChoose[SttQuesUser] == 10) {
+        console.log(ques10[Stt10]);
+        socket.emit("choose ques", ques10[Stt10].ques);
+        thisd.setState({ question: ques10[Stt10] });
+        Stt10++;
+      } else if (QuesUserChoose[SttQuesUser] == 20) {
+        console.log(ques20[Stt20]);
+        socket.emit("choose ques", ques20[Stt20].ques);
+        thisd.setState({ question: ques20[Stt20] });
+        Stt20++;
+      } else if (QuesUserChoose[SttQuesUser] == 30) {
+        console.log(ques30[Stt30]);
+        socket.emit("choose ques", ques30[Stt30].ques);
+        thisd.setState({ question: ques30[Stt30] });
+        Stt30++;
+      }
+    }
+    SttQuesUser++;
+    // socket.emit("choose ques", thisd.state.questions[currentQues].ques);
   }
 
   CheckAnsVD(TrueOrFalse) {
@@ -136,6 +176,8 @@ class AdminVD extends Component {
   }
 
   FinishVD() {
+    QuesUserChoose = [];
+    SttQuesUser = 0;
     let { examUser } = thisd.state;
     examUser++;
     $(".names").removeClass("activeNameVD");
@@ -156,10 +198,13 @@ class AdminVD extends Component {
   };
   OnChoosePoint(e, test) {
     choosePointQues++;
+
     if (choosePointQues >= 4) {
       $(".ChoosePointVD").hide(1000);
       socket.emit("close choose quesVD", "qeg");
     } else {
+      QuesUserChoose.push(test);
+      console.log(QuesUserChoose);
       socket.emit("open choose quesVD", e.target.id);
       e.target.innerHTML = "✔";
     }
