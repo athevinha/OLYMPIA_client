@@ -127,12 +127,14 @@ class ContentCHP extends Component {
             <tbody>
               <tr>
                 {this.state.data.map((user, id) => {
-                  if (id == 1 || id == 2) {
+                  if (id == 0 || id == 2 || id == 3) {
                     return (
                       <td className="names pointer" key={id}>
                         {user.name} ({user.score})
                       </td>
                     );
+                  } else {
+                    return <td className="names pointer" key={id}></td>;
                   }
                 })}
               </tr>

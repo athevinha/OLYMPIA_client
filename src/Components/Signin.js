@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import logo from "../logo.svg";
-import io from "socket.io-client";
 import "../App.css";
-import Signup from "./Signup";
-import port from "../port.json";
-import { BrowserRouter, Route, Link } from "react-router-dom";
-const socket = io.connect(port.port); //change when change wifi
 class Signin extends Component {
   constructor(props) {
     super(props);

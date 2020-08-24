@@ -102,13 +102,6 @@ class AdminCHP extends Component {
 
   //✔
   render() {
-    //console.log(this.state.currentQues);
-    // if (document.getElementsByClassName("ques")[this.state.currentQues]) {
-    //   document.getElementsByClassName("ques")[
-    //     this.state.currentQues
-    //   ].innerHTML = "current";
-    //}
-    //  console.log(this.state.data[0] ? this.state.data[0].score : "????????");
     $(".ques").removeClass("active");
     $(".ques").eq(this.state.currentQues).addClass("active");
 
@@ -120,11 +113,15 @@ class AdminCHP extends Component {
             <tbody>
               <tr>
                 {this.state.data.map((user, id) => {
-                  return (
-                    <td className="names pointer" key={id}>
-                      {user.name} ({user.score})
-                    </td>
-                  );
+                  if (id == 0 || id == 2 || id == 3) {
+                    return (
+                      <td className="names pointer" key={id}>
+                        {user.name} ({user.score})
+                      </td>
+                    );
+                  } else {
+                    return <td className="names pointer" key={id}></td>;
+                  }
                 })}
               </tr>
             </tbody>

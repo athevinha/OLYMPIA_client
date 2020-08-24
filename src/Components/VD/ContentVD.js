@@ -11,6 +11,7 @@ import s15 from "./Music/15s.mp3";
 import s20 from "./Music/20s.mp3";
 import s5 from "./Music/Finish5Seconds.mp3";
 import star from "./Music/FinishStarChose.mp3";
+import Finish from "./Music/FinishFinish.mp3";
 import FinishWrongAnswer from "./Music/FinishWrongAnswer.mp3";
 import FinishRightAnswer from "./Music/FinishRightAnswer.mp3";
 import Granted from "./Music/ObsGranted.wav";
@@ -109,6 +110,7 @@ class ContentVD extends Component {
         $(".TongKetBar").show(500);
 
         this.setState({ Ending: data });
+        this.soundPlay(Finish);
         setTimeout(function () {
           $(".EndingUser").eq(0).addClass("AnimationEndingUser");
         }, 1000);

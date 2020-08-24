@@ -5,7 +5,7 @@ import "../../App.css";
 import "./TT.css";
 import port from "../../port.json";
 import $ from "jquery";
-const socket = io.connect(port.port); //change when change wifi
+const socket = io.connect(port.port);
 let check = true,
   check1 = 0,
   myVar,
@@ -26,6 +26,7 @@ class UserTT extends Component {
       time: 0,
     };
   }
+
   componentDidMount() {
     stopTimer();
     thisdd = this;
@@ -33,8 +34,10 @@ class UserTT extends Component {
       for (let i = 0; i < localStorage.DisListVCNV.length; i++)
         if (localStorage.tooken == localStorage.DisListVCNV[i]) {
           $(".col-11").hide();
+          console.log("qweg");
         }
     }
+
     this.setState({
       questions: this.props.questions,
       data: this.props.data,
@@ -57,7 +60,6 @@ class UserTT extends Component {
     socket.on("Add score TT", (crr) => {
       if (crr != []) {
         this.setState({ data: crr.data });
-        console.log(crr.data);
       }
     });
     // socket.on("add point ok", (data) => {

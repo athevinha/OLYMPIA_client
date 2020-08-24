@@ -24,7 +24,6 @@ import AdminTT from "./Components/TT/AdminTT";
 import ContentTT from "./Components/TT/ContentTT";
 import UserTT from "./Components/TT/UserTT";
 import { BrowserRouter, Route, Link } from "react-router-dom";
-import { json } from "body-parser";
 const socket = io.connect(port.port); //change when change wifi
 class App extends Component {
   constructor(props) {
@@ -260,4 +259,3 @@ class App extends Component {
 }
 
 export default App;
-// TODO https://docs.google.com/document/d/1vRjpY5VFDOIFP0eH_t1xzh3-SDc6UW-8F-geAUPPgug/edit //////////////////////ONLY ME  ///////
