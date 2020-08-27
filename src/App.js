@@ -63,8 +63,6 @@ class App extends Component {
       });
     });
     //=============GetQuestion=======================================================================================
-    // socket.emit("get ques vcnv", "hellu");
-    // socket.on("get ques vcnv", (data) => {
     //   this.setState({ questions: data });
     // });
     //=============GetQuestionVCNV===========================================================================

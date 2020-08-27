@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "../../logo.svg";
 import io from "socket.io-client";
 import "../../App.css";
 import "./TT.css";
@@ -192,7 +191,7 @@ class UserTT extends Component {
               </div>
             </div>
           </div>
-          <p>{this.state.time}</p>
+          {/* <p>{this.state.time}</p> */}
 
           <div id="progressBar">
             <div className="bar"></div>

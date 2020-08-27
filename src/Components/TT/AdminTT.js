@@ -6,8 +6,6 @@ import $, { data } from "jquery";
 import port from "../../port.json";
 import "./TT.css";
 const socket = io.connect(port.port); //change when change wifi
-let checks = 0,
-  check1 = 0;
 
 class AdminTT extends Component {
   constructor(props) {
@@ -23,7 +21,6 @@ class AdminTT extends Component {
       problem: 40,
     };
   }
-  //==================================================================================================================
   componentWillUnmount() {}
   //==================================================================================================================
   componentDidMount() {
@@ -253,6 +250,7 @@ class AdminTT extends Component {
     for (let i = 0; i < this.state.ListShowContentVCNV.length; i++) {
       if (this.state.ListShowContentVCNV[i].answer == Ans) {
         this.AddScore(this.state.ListShowContentVCNV[i].name, problem, i);
+        socket.emit("play sound TT", "he he");
         console.log(
           "Đã Cộng " + this.state.ListShowContentVCNV[i].name + " " + problem
         );

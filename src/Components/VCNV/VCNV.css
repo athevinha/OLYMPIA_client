@@ -4,13 +4,16 @@
   list-style-type: none;
   display: inline;
 }
+body {
+  transition: 3s;
+}
 .smallVCNV {
   font-size: 80%;
 }
-.ActiveName {
+/* .ActiveName {
   background-color: orangered;
   color: black;
-}
+} */
 .nothing {
   display: block;
 }
@@ -157,6 +160,17 @@
   margin-bottom: 80%;
   font-size: 125%;
 }
+#NameList {
+  opacity: 1 !important;
+}
+.ListFasterVCNV {
+  opacity: 1 !important;
+}
+.FasterVCNV {
+  background-color: rgb(255, 72, 0);
+  color: black;
+  border: 5px solid black;
+}
 .sttVCNV {
   position: absolute;
   left: 0% !important;
@@ -167,10 +181,11 @@
 }
 .circle {
   position: relative;
-  left: -18%;
+  left: -22%;
   height: 50%;
-  width: 50% !important;
+  width: 54% !important;
   display: inline;
+  font-size: 115%;
   background-color: black;
   opacity: 0.9;
   border: 2px white solid;

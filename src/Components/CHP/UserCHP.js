@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import logo from "../../logo.svg";
 import io from "socket.io-client";
 import "../../App.css";
 import port from "../../port.json";
-import $, { data } from "jquery";
+import $ from "jquery";
 import "./VD.css";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
-let check1 = 0;
 class UserCHP extends Component {
   constructor(props) {
     super(props);

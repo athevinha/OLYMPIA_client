@@ -6,8 +6,7 @@ import $, { data } from "jquery";
 import port from "../../port.json";
 import "./VCNV.css";
 const socket = io.connect(port.port); //change when change wifi
-let checks = 0,
-  check1 = 0;
+let check1 = 0;
 class AdminVCNV extends Component {
   constructor(props) {
     super(props);
@@ -240,6 +239,7 @@ class AdminVCNV extends Component {
   //==================================================================================================================
   AddGrantedPoint = (e) => {
     e.preventDefault();
+    socket.emit("play sound VCNV", "hehe");
     this.AddScore(
       localStorage.name,
       parseInt(this.state.problem),
@@ -247,7 +247,6 @@ class AdminVCNV extends Component {
     );
   };
   //==================================================================================================================
-  //True answer VCNV
   DisableUser = (e) => {
     e.preventDefault();
     localStorage.setItem("Faster", false);

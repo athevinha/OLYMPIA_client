@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import logo from "../../logo.svg";
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
 import io from "socket.io-client";
 import "../../App.css";
 import "./VCNV.css";
@@ -12,7 +11,8 @@ import RowShow from "./Music/ObstacleRowShow.mp3";
 import ImgShow from "./Music/ObstacleShowImage.mp3";
 import Img from "./Img/VCNVIMG.png";
 import Show from "./Img/show.png";
-import $, { data } from "jquery";
+import WrongMusic from "./Music/ExitAdvenSec.mp3";
+import $ from "jquery";
 //==============import img============================
 import Pie1 from "./Img/Pie1.png";
 import Pie2 from "./Img/Pie2.png";
@@ -21,7 +21,9 @@ import Pie4 from "./Img/Pie4.png";
 import PieCen from "./Img/PieCen.png";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
-
+let oneMusic = 0,
+  OnlyOne = 0,
+  OnePush = 0;
 class ContentVCNV extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +38,7 @@ class ContentVCNV extends Component {
       currentUser: 0,
       ListShowContentVCNV: [],
       toogle: 0,
+      WhoIsFaster: [],
     };
   }
   soundPlay = (src) => {
@@ -53,6 +56,9 @@ class ContentVCNV extends Component {
     const sound = new Howl({ src });
     sound.stop();
   };
+  //==============================================
+  //==============================================
+
   componentDidMount() {
     $(".TongKetBar").hide();
     $(".ShowAns").hide();
@@ -74,14 +80,25 @@ class ContentVCNV extends Component {
 
       this.setState({ ListShowContentVCNV: show.list });
     });
+
+    socket.on("disable", (dis) => {
+      this.soundPlay(WrongMusic);
+      $(".names").eq(dis.id).css("background-color", "red");
+      $(".names").eq(dis.id).css("color", "black");
+    });
+    socket.on("play sound VCNV", (hello) => {
+      if (oneMusic == 0) {
+        this.soundPlay(OnVCNV);
+        oneMusic = 1;
+      }
+    });
     socket.on("show answervcnv", (show) => {
-      //====
       console.log(
         this.state.questions[this.state.currentQues]
           ? this.state.questions[this.state.currentQues].answer
           : ""
       );
-      if (this.state.currentQues != 0)
+      if (this.state.currentQues !== 0)
         $(".around")
           .eq(show.stt - 1 ? show.stt - 1 : 0)
           .html(
@@ -103,7 +120,6 @@ class ContentVCNV extends Component {
       $(".around")
         .eq(ques.id - 1)
         .addClass("CircleActive");
-      //console.log(ques.id);
       setTimeout(function () {
         if (check) {
           $("#progressBar").css("background-color", "#cfd6d9");
@@ -115,17 +131,25 @@ class ContentVCNV extends Component {
       }, 5000);
     });
     socket.on("Add score", (crr) => {
-      if (crr != []) {
+      if (crr !== []) {
         this.setState({ data: crr.data });
       }
     });
     socket.on("on VCNV", (data) => {
-      if (data && localStorage.Faster == "false") {
+      let WhoIsFasters = this.state.WhoIsFaster;
+      if (OnePush % 1 == 0) {
+        WhoIsFasters.push({ name: data.name });
+
+        this.setState({ WhoIsFaster: WhoIsFasters });
+        console.log(this.state.WhoIsFaster);
+      }
+
+      OnePush++;
+      if (data) {
         this.soundPlay(ObsGranted);
         $(".names").removeClass("ActiveName");
         $(".names").eq(data.id).addClass("ActiveName");
         $(".names").addClass("label danger");
-        //alert(data ? data.name : "ngu");
       }
     });
     socket.on("Open Picture", (data) => {
@@ -135,6 +159,11 @@ class ContentVCNV extends Component {
       }
     });
     socket.on("TongKetDiem", (data) => {
+      if (OnlyOne == 0) {
+        this.soundPlay(OnVCNV);
+
+        OnlyOne = 1;
+      }
       if (data) {
         $(".TongKetBar").show(500);
 
@@ -144,19 +173,18 @@ class ContentVCNV extends Component {
         }, 1000);
         setTimeout(function () {
           $(".EndingUser").eq(1).addClass("AnimationEndingUser");
-        }, 3500);
+        }, 2500);
         setTimeout(function () {
           $(".EndingUser").eq(2).addClass("AnimationEndingUser");
-        }, 6000);
+        }, 5000);
         setTimeout(function () {
           $(".EndingUser").eq(3).addClass("AnimationEndingUser");
-        }, 8500);
+        }, 7500);
       }
     });
   }
 
   render() {
-    // $(".names").removeClass("CrName");
     // $(".names").eq(this.state.current).addClass("CrName");
     return (
       <div className="App">
@@ -208,18 +236,12 @@ class ContentVCNV extends Component {
             </div>
           </ul>
           <div>
-            <img className="VCNVimgContent" src={Img}></img>
-            <img className="pie1 pie" src={Pie1}></img>
-            <img className="pie2 pie" src={Pie2}></img>
-            <img className="pie3 pie" src={Pie3}></img>
-            <img className="pie4 pie" src={Pie4}></img>
-            <img className="pieCen pie" src={PieCen}></img>
-          </div>
-          <div className="sttVCNV">
-            <button className="btn btn-success buttonVCNV">1</button>
-            <button className="btn btn-primary buttonVCNV">2</button>
-            <button className="btn btn-danger buttonVCNV">3</button>
-            <button className="btn btn-light buttonVCNV">4</button>
+            <img className="VCNVimgContent" src={Img} alt=""></img>
+            <img className="pie1 pie" src={Pie1} alt=""></img>
+            <img className="pie2 pie" src={Pie2} alt=""></img>
+            <img className="pie3 pie" src={Pie3} alt=""></img>
+            <img className="pie4 pie" src={Pie4} alt=""></img>
+            <img className="pieCen pie" src={PieCen} alt=""></img>
           </div>
           <table id="NameList">
             <tbody>
@@ -234,6 +256,20 @@ class ContentVCNV extends Component {
               </tr>
             </tbody>
           </table>
+          <table id="NameList" className="ListFasterVCNV">
+            <tbody>
+              <tr>
+                {this.state.WhoIsFaster.map((user, id) => {
+                  return (
+                    <td className="names FasterVCNV" key={id}>
+                      {user.name + "[" + id + "]"}
+                    </td>
+                  );
+                })}
+              </tr>
+            </tbody>
+          </table>
+
           {/* <p>
             {this.state.data[this.state.current]
               ? this.state.data[this.state.current].name
@@ -247,7 +283,6 @@ class ContentVCNV extends Component {
             </div>
             {/* <div className="score col-4">{this.state.score}</div> */}
           </div>
-
           <div id="progressBar">
             <div className="bar"></div>
           </div>
@@ -265,7 +300,7 @@ class ContentVCNV extends Component {
             </div>
           </div>
           <ul className="ShowAns">
-            <img src={Show} className="backgroundVCNV"></img>
+            <img src={Show} className="backgroundVCNV" alt=""></img>
             {this.state.ListShowContentVCNV.map((user, id) => {
               return (
                 <li className="Ans" className={"diff" + id} key={id}>

@@ -17,8 +17,8 @@ class Signin extends Component {
     if (data) {
       for (let i = 0; i < data.length; i++) {
         if (
-          this.state.gmail == data[i].gmail &&
-          this.state.password == data[i].pass
+          this.state.gmail === data[i].gmail &&
+          this.state.password === data[i].pass
         ) {
           localStorage.setItem("tooken", i);
         }
@@ -44,11 +44,6 @@ class Signin extends Component {
     this.setState({
       data: this.props.data,
     });
-    // socket.emit("recive data", "hellu");
-    // socket.on("recive data", (data) => {
-    //   if (data) this.setState({ data: data });
-    //   // console.log(data);
-    // });
   }
 
   render() {

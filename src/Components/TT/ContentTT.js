@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import logo from "../../logo.svg";
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
 import io from "socket.io-client";
 import "../../App.css";
 import "./TT.css";
 import port from "../../port.json";
 import AccelerationRightAnswer from "./Music/AccelerationRightAnswer.mp3";
-// import OnVCNV from "./Music/ObstacleRowRightAnswer.mp3";
+import OnVCNV from "./Music/ObstacleRowRightAnswer.mp3";
 import second from "./Music/30sAdven.mp3";
 import ObsGranted from "./Music/ObsGranted.wav";
 import RowShow from "./Music/OpenRow.mp3";
@@ -17,13 +16,15 @@ import $, { data } from "jquery";
 import Ques1 from "./Img/Ques1.PNG";
 import Ques2 from "./Img/Ques2.PNG";
 import Ques31 from "./Img/Ques31.PNG";
-import Ques32 from "./Img/Ques32.PNG";
-import Ques33 from "./Img/Ques33.PNG";
+// import Ques32 from "./Img/Ques32.PNG";
+// import Ques33 from "./Img/Ques33.PNG";
 import Ques4 from "./Img/Ques4.PNG";
 //==============import img============================
 
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
+let oneMusic = 0,
+  OnlyOne = 0;
 class ContentTT extends Component {
   constructor(props) {
     super(props);
@@ -58,9 +59,16 @@ class ContentTT extends Component {
       data: this.props.data,
       questions: this.props.questions,
     });
+    socket.on("play sound TT", (crr) => {
+      if (oneMusic == 0) {
+        this.soundPlay(OnVCNV);
+        oneMusic = 1;
+      }
+    });
     socket.on("Add score TT", (crr) => {
       if (crr != []) {
         this.setState({ data: crr.data });
+        oneMusic = 0;
         console.log(crr.data);
       }
     });
@@ -106,7 +114,6 @@ class ContentTT extends Component {
       $(".around")
         .eq(ques.id - 1)
         .addClass("CircleActive");
-      //console.log(ques.id);
       setTimeout(function () {
         if (check) {
           $("#progressBar").css("background-color", "#cfd6d9");
@@ -129,7 +136,11 @@ class ContentTT extends Component {
       alert(data ? data.name : "ngu");
     });
     socket.on("TongKetDiem", (data) => {
-      this.soundPlay(AccelerationRightAnswer);
+      if (OnlyOne == 0) {
+        this.soundPlay(AccelerationRightAnswer);
+
+        OnlyOne = 1;
+      }
       if (data) {
         $(".TongKetBar").show(500);
 
@@ -139,13 +150,14 @@ class ContentTT extends Component {
         }, 1000);
         setTimeout(function () {
           $(".EndingUser").eq(1).addClass("AnimationEndingUser");
-        }, 3500);
+        }, 2500);
         setTimeout(function () {
           $(".EndingUser").eq(2).addClass("AnimationEndingUser");
-        }, 6000);
+        }, 5000);
         setTimeout(function () {
           $(".EndingUser").eq(3).addClass("AnimationEndingUser");
-        }, 8500);
+        }, 7500);
+        OnlyOne = 1;
       }
     });
     socket.on("Open Picture", (data) => {
@@ -199,16 +211,16 @@ class ContentTT extends Component {
             </tbody>
           </table>
           <div className="aroundTT">
-            <img src={Ques1} className="QuesImgTT Ques1"></img>
+            <img src={Ques1} className="QuesImgTT Ques1" alt=""></img>
           </div>
           <div className="aroundTT">
-            <img src={Ques2} className="QuesImgTT Ques2"></img>
+            <img src={Ques2} className="QuesImgTT Ques2" alt=""></img>
           </div>
           <div className="aroundTT">
-            <img src={Ques31} className="QuesImgTT Ques3"></img>
+            <img src={Ques31} className="QuesImgTT Ques3" alt=""></img>
           </div>
           <div className="aroundTT">
-            <img src={Ques4} className="QuesImgTT Ques4"></img>
+            <img src={Ques4} className="QuesImgTT Ques4" alt=""></img>
           </div>
 
           <div className="questionsTT col-11">
@@ -234,7 +246,7 @@ class ContentTT extends Component {
             </div>
           </div>
           <ul className="ShowAnsTT">
-            <img src={Show} className="backgroundVCNV"></img>
+            <img src={Show} className="backgroundVCNV" alt=""></img>
             {this.state.ListShowContentVCNV.map((user, id) => {
               return (
                 <li className="Ans" className={"diffTT" + id} key={id}>

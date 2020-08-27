@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "../../logo.svg";
 import io from "socket.io-client";
 import "../../App.css";
 import "./VCNV.css";
@@ -23,18 +22,15 @@ class UserVCNV extends Component {
     };
   }
   componentDidMount() {
-    if (localStorage.DisListVCNV) {
-      for (let i = 0; i < localStorage.DisListVCNV.length; i++)
-        if (localStorage.tooken == localStorage.DisListVCNV[i]) {
-          $(".col-11").hide();
-        }
+    if (localStorage.getItem("Disable") == "true") {
+      $(".col-11").hide();
     }
+
     this.setState({
       questions: this.props.questions,
       data: this.props.data,
       current: this.props.current[0] ? this.props.current[0].current : 0,
     });
-    // this.setState({
     //   score: this.state.data[this.state.current]
     //     ? this.state.data[this.state.current].score
     //     : "gasg",
@@ -71,30 +67,16 @@ class UserVCNV extends Component {
         }
       }, 5000);
       $(".around").removeClass("CircleActive");
-      //====
       $(".around")
         .eq(ques.id - 1)
         .addClass("CircleActive");
     });
 
     socket.on("disable", (dis) => {
-      if (check1 == 0) {
-        let obj = {
-          name: localStorage.name,
-          id: localStorage.id,
-        };
-        socket.emit("disable", obj);
-        let empity = [];
-        if (localStorage.DisListVCNV == null)
-          localStorage.setItem("DisListVCNV", JSON.stringify(empity));
-        let dislist = JSON.parse(localStorage.DisListVCNV);
-        dislist.push(localStorage.tooken);
-        localStorage.setItem("DisListVCNV", JSON.stringify(dislist));
-        // if (this.state.problem)
-        //   this.AddScore(data.name, this.state.problem, data.id);
-        check1 = 1;
-        if (localStorage.tooken == (dis ? dis.id : 0)) {
+      if (check1 == 0 && dis) {
+        if (dis.id == localStorage.tooken) {
           $(".col-11").hide();
+          localStorage.setItem("Disable", true);
         }
       }
     });

@@ -3,8 +3,7 @@ import logo from "../logo.svg";
 import io from "socket.io-client";
 import port from "../port.json";
 import "../App.css";
-// import { BrowserRouter, Route, Link, NavLink } from "react-router-dom";
-const socket = io.connect(port.port); //change when change wifi
+const socket = io.connect(port.port);
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -35,16 +34,10 @@ class Signup extends Component {
   };
 
   componentDidMount() {
-    //this.props.data;
     this.setState({
       data: this.props.data,
     });
     console.log(this.props.data);
-    // socket.emit("recive data", "hellu");
-
-    // socket.on("recive data", (data) => {
-    //   if (data) this.setState({ data: data });
-    // });
 
     socket.on("add data ok ", (check) => {
       console.log(check);
