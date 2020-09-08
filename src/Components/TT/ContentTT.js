@@ -17,7 +17,6 @@ import Ques1 from "./Img/Ques1.PNG";
 import Ques2 from "./Img/Ques2.PNG";
 import Ques31 from "./Img/Ques31.PNG";
 // import Ques32 from "./Img/Ques32.PNG";
-// import Ques33 from "./Img/Ques33.PNG";
 import Ques4 from "./Img/Ques4.PNG";
 //==============import img============================
 window.onload = function () {
