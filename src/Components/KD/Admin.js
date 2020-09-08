@@ -18,28 +18,23 @@ class Admin extends Component {
       currentUser: 0,
     };
   }
-
   componentDidMount() {
     this.setState({
       questions: this.props.questions,
       data: this.props.data,
       currentUser: this.props.current[0] ? this.props.current[0].current : 0,
     });
-    // socket.on("choose ques", (ques) => {
-    //   console.log(ques);
-    // });
   }
   checkKey = (e) => {
     e.preventDefault();
     e = e || window.event;
     let { currentQues } = this.state;
     if (e.keyCode == "38") {
-      // up arrow
       currentQues--;
       this.setState({ currentQues: currentQues });
       socket.emit("choose ques", this.state.questions[currentQues].ques);
       $(document).scrollTop($(document).scrollTop() - 50);
-    } //==============================================================================================================
+    } //=============================================================================================================
     else if (e.keyCode == "40") {
       // down arrow
       currentQues++;
@@ -88,6 +83,7 @@ class Admin extends Component {
 
   //
   nextUser = (stt) => {
+    console.log(stt);
     this.setState({ currentUser: stt });
     console.log(this.state.data);
     let a = this.state.data[this.state.currentUser].score;

@@ -183,7 +183,7 @@ class UserTT extends Component {
                 class="btn btn-primary btn-lg btn-block submitVCNV"
                 onClick={this.onSubmitAnswerVCNV}
               >
-                GỬI CÂU TRẢ LỜI
+                GỬI CÂU TRẢ LỜI.
               </button>
 
               <div id="showAnswerVCNV">

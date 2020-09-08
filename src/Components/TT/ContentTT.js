@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Howl } from "howler";
+import { Howl, Howler } from "howler";
 import io from "socket.io-client";
 import "../../App.css";
 import "./TT.css";
@@ -20,7 +20,9 @@ import Ques31 from "./Img/Ques31.PNG";
 // import Ques33 from "./Img/Ques33.PNG";
 import Ques4 from "./Img/Ques4.PNG";
 //==============import img============================
-
+window.onload = function () {
+  // Setup all nodes
+};
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
 let oneMusic = 0,
@@ -43,7 +45,6 @@ class ContentTT extends Component {
   }
   soundPlay = (src) => {
     const sound = new Howl({ src });
-    sound.volume(0.2);
     sound.play();
   };
   soundStop = (src) => {
@@ -51,6 +52,8 @@ class ContentTT extends Component {
     sound.stop();
   };
   componentDidMount() {
+    Howler.ctx = new AudioContext();
+    Howler.ctx.resume();
     $(".ShowAnsTT").hide();
     $(".QuesImgTT").hide();
     $(".TongKetBar").hide();
@@ -76,8 +79,12 @@ class ContentTT extends Component {
       if (this.state.toogle == 0) {
         $(".ShowAnsTT").show(1000);
         this.setState({ toogle: 1 });
+        console.log("showw");
         this.soundPlay(RowShow);
       } else {
+        this.soundStop(RowShow);
+
+        console.log("hide");
         $(".ShowAnsTT").hide(1000);
         this.setState({ toogle: 0 });
       }
@@ -118,12 +125,12 @@ class ContentTT extends Component {
         if (check) {
           $("#progressBar").css("background-color", "#cfd6d9");
           $(".bar").css("background-color", "#428bca");
-
-          progress(30, 30, $("#progressBar"));
           thisd.soundPlay(second);
+          progress(30, 30, $("#progressBar"));
+          console.log("ok");
           check = false;
         }
-      }, 5000);
+      }, 2000);
     });
     socket.on("Add score", (crr) => {
       if (crr != []) {

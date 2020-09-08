@@ -192,8 +192,6 @@ class AdminTT extends Component {
         console.log(data);
         console.log(ListShowContentVCNV);
         //==========================================Add=====
-
-        //this.AddScore("admin", 0, 0);
       }
       // let arr = [];
       // for (let i = 0; i < ListShowContentVCNV.length; i++) {

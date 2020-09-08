@@ -113,7 +113,7 @@ class AdminCHP extends Component {
             <tbody>
               <tr>
                 {this.state.data.map((user, id) => {
-                  if (id == 0 || id == 2 || id == 3) {
+                  if (id == 1 || id == 2) {
                     return (
                       <td className="names pointer" key={id}>
                         {user.name} ({user.score})
