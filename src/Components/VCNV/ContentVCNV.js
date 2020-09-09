@@ -5,10 +5,13 @@ import "../../App.css";
 import "./VCNV.css";
 import port from "../../port.json";
 import OnVCNV from "./Music/ObstacleRowRightAnswer.mp3";
+import OnVCNV2 from "./Music/ObstacleRightAnswer2.mp3";
 import second from "./Music/15sAdven.wav";
 import ObsGranted from "./Music/ObsGranted.wav";
 import RowShow from "./Music/ObstacleRowShow.mp3";
+import OpenCircle from "./Music/OpenCircle.mp3";
 import ImgShow from "./Music/ObstacleShowImage.mp3";
+import QuesShow from "./Music/ObstacleShowQues.mp3";
 import Img from "./Img/VCNVIMG.png";
 import Show from "./Img/show.png";
 import WrongMusic from "./Music/ExitAdvenSec.mp3";
@@ -88,11 +91,12 @@ class ContentVCNV extends Component {
     });
     socket.on("play sound VCNV", (hello) => {
       if (oneMusic == 0) {
-        this.soundPlay(OnVCNV);
+        this.soundPlay(OnVCNV2);
         oneMusic = 1;
       }
     });
     socket.on("show answervcnv", (show) => {
+      this.soundPlay(OpenCircle);
       console.log(
         this.state.questions[this.state.currentQues]
           ? this.state.questions[this.state.currentQues].answer
@@ -116,6 +120,7 @@ class ContentVCNV extends Component {
         question: ques.ques,
         currentQues: ques.id,
       });
+      this.soundPlay(QuesShow);
       $(".around").removeClass("CircleActive");
       $(".around")
         .eq(ques.id - 1)
@@ -128,7 +133,7 @@ class ContentVCNV extends Component {
           progress(15, 15, $("#progressBar"));
           check = false;
         }
-      }, 5000);
+      }, 3000);
     });
     socket.on("Add score", (crr) => {
       if (crr !== []) {
@@ -161,13 +166,31 @@ class ContentVCNV extends Component {
     socket.on("TongKetDiem", (data) => {
       if (OnlyOne == 0) {
         this.soundPlay(OnVCNV);
-
+        setTimeout(() => {
+          this.soundPlay(OnVCNV);
+        }, 6100);
         OnlyOne = 1;
       }
       if (data) {
         $(".TongKetBar").show(500);
+        let { Ending } = this.state;
+        let sorts = [];
+        Ending = data;
+        for (let i = 0; i < Ending.length; i++) {
+          sorts.push(Ending[i].score);
+          sorts.sort();
+        }
+        for (let i = 0; i < Ending.length; i++) {
+          for (let k = 0; k < Ending.length; k++) {
+            if (Ending[k].score == sorts[i]) {
+              let fake = Ending[k];
+              Ending[k] = Ending[i];
+              Ending[i] = fake;
+            }
+          }
+        }
 
-        this.setState({ Ending: data });
+        this.setState({ Ending: Ending });
         setTimeout(function () {
           $(".EndingUser").eq(0).addClass("AnimationEndingUser");
         }, 1000);

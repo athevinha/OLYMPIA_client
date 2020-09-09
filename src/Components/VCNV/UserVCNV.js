@@ -4,7 +4,7 @@ import "../../App.css";
 import "./VCNV.css";
 import port from "../../port.json";
 import $ from "jquery";
-const socket = io.connect(port.port); //change when change wifi
+const socket = io.connect(port.port); //change when change wif
 let check = true;
 let check1 = 0;
 class UserVCNV extends Component {
@@ -33,8 +33,6 @@ class UserVCNV extends Component {
     });
     //   score: this.state.data[this.state.current]
     //     ? this.state.data[this.state.current].score
-    //     : "gasg",
-    // });
 
     socket.on("choose ques", (ques) => {
       localStorage.setItem("submitVCNV", 1);

@@ -1,20 +1,22 @@
 import React, { Component } from "react";
 import logo from "../../logo.svg";
 import { Howl, Howler } from "howler";
+import ReactHowler from "react-howler";
 import io from "socket.io-client";
 import "../../App.css";
 import $ from "jquery";
 import "./css/Content.css";
 import second from "./Music/60s.mp3";
+import StartFinish from "./Music/StartFinish.mp3";
+import StartFinish2 from "./Music/StartFinish2.mp3";
 import Warmup from "./Video/WarmupVideo.mp4";
-
 import StartRight from "./Music/StartRight.wav";
 import StartWrong from "./Music/StartWrong.wav";
 import port from "../../port.json";
 const socket = io.connect(port.port); //change when change wifi
 let check = true,
   SoundTime = true;
-
+let thisd;
 class Content extends Component {
   constructor(props) {
     super(props);
@@ -30,17 +32,16 @@ class Content extends Component {
   }
   soundPlay = (src) => {
     const sound = new Howl({ src });
-    if (src == StartRight) {
-      sound.volume(0.1);
-    }
+
+    console.log(sound);
     sound.play();
   };
   soundStop = (src) => {
     const sound = new Howl({ src });
-    sound.volume(0.5);
     sound.stop();
   };
   componentDidMount() {
+    thisd = this;
     $(".TongKetBar").hide();
     this.setState({
       data: this.props.data,
@@ -57,18 +58,24 @@ class Content extends Component {
         question: ques,
       });
     });
+    socket.on("Wrong Answer", (ques) => {
+      this.soundPlay(StartWrong);
+    });
     socket.on("TongKetDiem", (data) => {
       if (data) {
         $(".TongKetBar").show(500);
 
         this.setState({ Ending: data });
+
         setTimeout(function () {
           $(".EndingUser").eq(0).addClass("AnimationEndingUser");
+          thisd.soundPlay(StartFinish2);
         }, 1000);
         setTimeout(function () {
           $(".EndingUser").eq(1).addClass("AnimationEndingUser");
         }, 3500);
         setTimeout(function () {
+          thisd.soundPlay(StartFinish2);
           $(".EndingUser").eq(2).addClass("AnimationEndingUser");
         }, 6000);
         setTimeout(function () {
@@ -104,6 +111,7 @@ class Content extends Component {
     $(".names").eq(this.state.current).addClass("CrName");
     return (
       <div className="App row">
+        <ReactHowler src="./Music/60s.mp3" playing={true} />
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <table id="NameList">
@@ -171,5 +179,6 @@ function progress(timeleft, timetotal, $element) {
     $(".bar").css("background-color", "red");
     SoundTime = false;
     check = true;
+    thisd.soundPlay(StartFinish);
   }
 }

@@ -4,7 +4,6 @@ import io from "socket.io-client";
 import "../../App.css";
 import $ from "jquery";
 import port from "../../port.json";
-
 const socket = io.connect(port.port); //change when change wifi
 class Admin extends Component {
   constructor(props) {
@@ -78,6 +77,9 @@ class Admin extends Component {
       // right arrow
       //alert("right");
       this.nextUser(3);
+    } else if (e.keyCode == "8") {
+      // right arrow
+      socket.emit("Wrong Answer", "false");
     }
   };
 
