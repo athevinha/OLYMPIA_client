@@ -22,7 +22,7 @@
 }
 .questionsTT {
   position: absolute;
-  top: 22%;
+  top: 27%;
   left: 10%;
 }
 .aroundTT {
@@ -32,10 +32,44 @@
   top: 31%;
   left: -5%;
 }
+.Ques1,
+.Ques3 {
+  padding: 0 !important;
+  left: 50%;
+  top: 8%;
+}
+.Ques4 {
+}
+.alert {
+  padding: 20px;
+  background-color: green;
+  color: white;
+  position: fixed;
+  top: 15%;
+  right: -60%;
+  opacity: 0.8;
+  transition: 1s;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
 .QuesImgTT {
-  position: absolute;
-  width: 100% !important;
-  height: 100% !important;
+  position: absolute !important;
+  width: 100%;
+  top: 7%;
+  height: 97% !important;
 }
 .ShowAnsTT {
   position: absolute;

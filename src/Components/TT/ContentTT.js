@@ -3,6 +3,7 @@ import { Howl, Howler } from "howler";
 import io from "socket.io-client";
 import "../../App.css";
 import "./TT.css";
+import { Player } from "video-react";
 import port from "../../port.json";
 import AccelerationRightAnswer from "./Music/AccelerationRightAnswer.mp3";
 import OnVCNV from "./Music/ObstacleRowRightAnswer.mp3";
@@ -13,9 +14,9 @@ import ImgShow from "./Music/ObstacleShowImage.mp3";
 import FormQues from "./Img/FormQuestion.png";
 import Show from "./Img/ShowPoint.png";
 import $, { data } from "jquery";
-import Ques1 from "./Img/Ques1.PNG";
+import Ques1 from "./Video/Ques1.mp4";
 import Ques2 from "./Img/Ques2.PNG";
-import Ques31 from "./Img/Ques31.PNG";
+import Ques3 from "./Video/Ques3.mp4";
 // import Ques32 from "./Img/Ques32.PNG";
 import Ques4 from "./Img/Ques4.PNG";
 //==============import img============================
@@ -25,7 +26,9 @@ window.onload = function () {
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
 let oneMusic = 0,
-  OnlyOne = 0;
+  OnlyOne = 0,
+  players,
+  players3;
 class ContentTT extends Component {
   constructor(props) {
     super(props);
@@ -44,6 +47,7 @@ class ContentTT extends Component {
   }
   soundPlay = (src) => {
     const sound = new Howl({ src });
+    sound.volume(0.2);
     sound.play();
   };
   soundStop = (src) => {
@@ -109,7 +113,13 @@ class ContentTT extends Component {
 
     socket.on("choose ques", (ques) => {
       $(".QuesImgTT").hide();
+      //===========================HIDE BUTTON==============
+      $(".video-react-control-bar").hide();
+      $(".video-react-control-text").hide();
+      $(".video-react-big-play-button").hide();
+      //========================================
       $(ques.src).show(500);
+      console.log(ques.src);
       this.soundPlay(ImgShow);
       let thisd = this;
       this.setState({
@@ -122,6 +132,9 @@ class ContentTT extends Component {
         .addClass("CircleActive");
       setTimeout(function () {
         if (check) {
+          players.play();
+          players3.play();
+          //============================================
           $("#progressBar").css("background-color", "#cfd6d9");
           $(".bar").css("background-color", "#428bca");
           thisd.soundPlay(second);
@@ -181,29 +194,7 @@ class ContentTT extends Component {
       <div className="App">
         <div className="App-header">
           <img src={FormQues} className="backgroundTT"></img>
-          {/* <ul className="circle"></ul>
-
-          <table id="NameList">
-            <tbody>
-              <tr>
-                {this.state.data.map((user, id) => {
-                  if (id != 0)
-                    return (
-                      <td className="names" key={id}>
-                        {user.name} ({user.score})
-                      </td>
-                    );
-                })}
-              </tr>
-            </tbody>
-          </table>
-           <p>
-            {this.state.data[this.state.current]
-              ? this.state.data[this.state.current].name
-              : "ngu"}
-          </p> 
-          */}
-          <table id="NameList" className="NameListTT">
+          {/* <table id="NameList" className="NameListTT">
             <tbody>
               <tr>
                 {this.state.data.map((user, id) => {
@@ -215,15 +206,32 @@ class ContentTT extends Component {
                 })}
               </tr>
             </tbody>
-          </table>
+          </table> */}
           <div className="aroundTT">
-            <img src={Ques1} className="QuesImgTT Ques1" alt=""></img>
+            {/* <img src={Ques1} className="QuesImgTT Ques1" alt=""></img> */}
+            <Player
+              ref={(player) => {
+                players = player;
+                console.log(players);
+              }}
+              src={Ques1}
+              className="QuesImgTT Ques1"
+              muted
+            />
           </div>
           <div className="aroundTT">
             <img src={Ques2} className="QuesImgTT Ques2" alt=""></img>
           </div>
           <div className="aroundTT">
-            <img src={Ques31} className="QuesImgTT Ques3" alt=""></img>
+            {/* <img src={Ques3} className="QuesImgTT Ques3" alt=""></img> */}
+            <Player
+              ref={(player) => {
+                players3 = player;
+              }}
+              src={Ques3}
+              className="QuesImgTT Ques3"
+              muted
+            />
           </div>
           <div className="aroundTT">
             <img src={Ques4} className="QuesImgTT Ques4" alt=""></img>

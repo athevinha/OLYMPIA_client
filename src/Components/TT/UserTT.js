@@ -42,7 +42,6 @@ class UserTT extends Component {
       data: this.props.data,
       current: this.props.current[0] ? this.props.current[0].current : 0,
     });
-    // this.setState({
     //   score: this.state.data[this.state.current]
     //     ? this.state.data[this.state.current].score
     //     : "gasg",
@@ -84,7 +83,7 @@ class UserTT extends Component {
           startTimer();
           check = false;
         }
-      }, 5000);
+      }, 2000);
       $(".around").removeClass("CircleActive");
       $(".around")
         .eq(ques.id - 1)
@@ -127,12 +126,17 @@ class UserTT extends Component {
   //   }
   // };
 
-  //===========================================================
+  //==========================================================
   onAnswerVCNV = (e) => {
     this.setState({ answerVCNV: e.target.value });
   };
-  onSubmitAnswerVCNV = () => {
-    if (localStorage.submitVCNV == 1) {
+  onSubmitAnswerVCNV = (e) => {
+    e.preventDefault();
+    $(".alert").css("right", "0");
+    setTimeout(() => {
+      $(".alert").css("right", "-60%");
+    }, 3000);
+    if (localStorage.submitVCNV) {
       let { answerVCNV } = this.state;
       answerVCNV = answerVCNV.toUpperCase();
       this.setState({
@@ -166,28 +170,30 @@ class UserTT extends Component {
           <p className="disableVCNV">{this.state.notifition}</p>
           <div className="col-11">
             <div class="form-group">
-              <input
-                type="text"
-                class="form-control answerVCNV"
-                name="answerVCNV"
-                id=""
-                aria-describedby="helpId"
-                placeholder="Your Answer..."
-                value={this.state.answerVCNV}
-                onChange={this.onAnswerVCNV}
-              />
-              <button
-                type="button"
-                name=""
-                id=""
-                class="btn btn-primary btn-lg btn-block submitVCNV"
-                onClick={this.onSubmitAnswerVCNV}
-              >
-                GỬI CÂU TRẢ LỜI.
-              </button>
-
+              <form onSubmit={this.onSubmitAnswerVCNV}>
+                <input
+                  type="text"
+                  class="form-control answerVCNV"
+                  name="answerVCNV"
+                  id=""
+                  aria-describedby="helpId"
+                  placeholder="Your Answer..."
+                  value={this.state.answerVCNV}
+                  onChange={this.onAnswerVCNV}
+                />
+                <button
+                  type="submit"
+                  name=""
+                  id=""
+                  class="btn btn-primary btn-lg btn-block submitVCNV"
+                  // onClick={this.onSubmitAnswerVCNV}
+                >
+                  GỬI CÂU TRẢ LỜI.
+                </button>
+              </form>
               <div id="showAnswerVCNV">
-                CÂU TRẢ LỜI ĐÃ GỬI : {this.state.answerVCNV.toUpperCase()}
+                CÂU TRẢ LỜI SẼ GỬI : {this.state.answerVCNV.toUpperCase()} --{" "}
+                {this.state.time}
               </div>
             </div>
           </div>
@@ -195,6 +201,19 @@ class UserTT extends Component {
 
           <div id="progressBar">
             <div className="bar"></div>
+          </div>
+
+          <div className="alert">
+            {/* <span
+              className="closebtn"
+              // onClick={() => {
+              //   $(".alert").hide(500);
+              // }}
+            >
+              &times;
+            </span> */}
+            <strong>Success !</strong> Câu Trả Lời Đã gửi :{" "}
+            {this.state.answerVCNV.toUpperCase()}
           </div>
         </div>
       </div>
