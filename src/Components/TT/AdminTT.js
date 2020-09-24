@@ -235,7 +235,7 @@ class AdminTT extends Component {
   };
   //==================================================================================================================
   handleKeyDown = (e) => {
-    // arrow up/down button should select next/previous list element
+    // arrow up/down buton should select next/previous list element
     this.checkKey(e);
   };
   //==================================================================================================================
@@ -256,8 +256,9 @@ class AdminTT extends Component {
         this.setState({ problem: problem });
       }
     }
+    console.log(this.state.data);
   };
-  //==================================================================================================================
+  //=================================================================================================================
 
   //==================================================================================================================
   //True answer VCNV
@@ -309,17 +310,17 @@ class AdminTT extends Component {
             <input onKeyDown={this.handleKeyDown} />
 
             <button
-              className="btn btn-danger btn-block  nothing"
+              className="btn btn-danger btn-block nothing"
               onClick={this.OnAddPoint}
             >
               Add Point
             </button>
-            <button
+            {/* <button
               className="btn btn-success btn-block  nothing"
               onClick={this.ShowList}
             >
               OPEN CIRCLE
-            </button>
+            </button> */}
             <button
               onClick={this.TongKet}
               className="btn btn-danger TongKetButton"

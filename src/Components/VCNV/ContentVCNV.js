@@ -50,6 +50,8 @@ class ContentVCNV extends Component {
       sound.volume(0.2);
     } else if (src == ObsGranted) {
       sound.volume(0.2);
+    } else if (src == OnVCNV) {
+      sound.volume(1);
     } else {
       sound.volume(0.4);
     }
@@ -71,15 +73,14 @@ class ContentVCNV extends Component {
     });
 
     socket.on("show list VCNV", (show) => {
-      console.log("Show");
       if (this.state.toogle == 0) {
         $(".ShowAns").show(1000);
+        this.soundPlay(RowShow);
         this.setState({ toogle: 1 });
       } else {
         $(".ShowAns").hide(1000);
         this.setState({ toogle: 0 });
       }
-      this.soundPlay(RowShow);
 
       this.setState({ ListShowContentVCNV: show.list });
     });
@@ -93,6 +94,7 @@ class ContentVCNV extends Component {
       if (oneMusic == 0) {
         this.soundPlay(OnVCNV2);
         oneMusic = 1;
+        console.log("hello");
       }
     });
     socket.on("show answervcnv", (show) => {
@@ -166,9 +168,7 @@ class ContentVCNV extends Component {
     socket.on("TongKetDiem", (data) => {
       if (OnlyOne == 0) {
         this.soundPlay(OnVCNV);
-        setTimeout(() => {
-          this.soundPlay(OnVCNV);
-        }, 6100);
+
         OnlyOne = 1;
       }
       if (data) {
@@ -228,30 +228,12 @@ class ContentVCNV extends Component {
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
-
               <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
             </div>
 
             <div className="around">
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
-              <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
@@ -323,17 +305,13 @@ class ContentVCNV extends Component {
             </div>
           </div>
           <ul className="ShowAns">
-            <img src={Show} className="backgroundVCNV" alt=""></img>
+            {/* <img src={Show} className="backgroundVCNV" alt=""></img> */}
             {this.state.ListShowContentVCNV.map((user, id) => {
               return (
-                <li className="Ans" className={"diff" + id} key={id}>
-                  <span className="nameVCNV" className={"e" + id + "1"}>
-                    {user.name}
-                  </span>
+                <li className={"ShowVCNV diffTT" + id} key={id}>
+                  <span className={"nameTT eTT" + id + "1"}>{user.name}</span>
                   <br />
-                  <span className="ansVCNV " className={"e" + id + "2"}>
-                    {user.answer}
-                  </span>
+                  <span className={"AnsTT eTT" + id + "2"}>{user.answer}</span>
                 </li>
               );
             })}

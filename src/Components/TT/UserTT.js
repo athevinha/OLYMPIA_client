@@ -4,6 +4,7 @@ import "../../App.css";
 import "./TT.css";
 import port from "../../port.json";
 import $ from "jquery";
+
 const socket = io.connect(port.port);
 let check = true,
   check1 = 0,
@@ -52,6 +53,7 @@ class UserTT extends Component {
       this.setState({
         question: ques.ques,
       });
+      this.setState({ answerVCNV: "" });
       localStorage.setItem("submitVCNV", 1);
     });
 
@@ -73,6 +75,9 @@ class UserTT extends Component {
       this.setState({
         question: ques.ques,
       });
+      $(".video-react-control-bar").hide();
+      $(".video-react-control-text").hide();
+      $(".video-react-big-play-button").hide();
       $(".answerVCNV").show(200);
       $(".submitVCNV").show(200);
       setTimeout(function () {
@@ -162,7 +167,7 @@ class UserTT extends Component {
           <div className="questionsVCNV col-11">
             <div>
               <p className="questionVCNV quessVCNV">
-                {this.state.question.ques}{" "}
+                {this.state.question ? this.state.question.ques : ""}{" "}
               </p>
             </div>
             {/* <div className="score col-4">{this.state.score}</div> */}
@@ -193,7 +198,6 @@ class UserTT extends Component {
               </form>
               <div id="showAnswerVCNV">
                 CÂU TRẢ LỜI SẼ GỬI : {this.state.answerVCNV.toUpperCase()} --{" "}
-                {this.state.time}
               </div>
             </div>
           </div>
@@ -262,3 +266,4 @@ function progress(timeleft, timetotal, $element) {
     check = true;
   }
 }
+

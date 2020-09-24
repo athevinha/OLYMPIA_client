@@ -39,6 +39,7 @@ class UserVCNV extends Component {
       this.setState({
         question: ques.ques,
       });
+      this.setState({ answerVCNV: "" });
       localStorage.setItem("submitVCNV", 1);
     });
 
@@ -63,7 +64,7 @@ class UserVCNV extends Component {
           progress(15, 15, $("#progressBar"));
           check = false;
         }
-      }, 5000);
+      }, 3000);
       $(".around").removeClass("CircleActive");
       $(".around")
         .eq(ques.id - 1)
@@ -97,8 +98,13 @@ class UserVCNV extends Component {
   onAnswerVCNV = (e) => {
     this.setState({ answerVCNV: e.target.value });
   };
-  onSubmitAnswerVCNV = () => {
-    if (localStorage.submitVCNV == 1) {
+  onSubmitAnswerVCNV = (e) => {
+    e.preventDefault();
+    $(".alert").css("right", "0");
+    setTimeout(() => {
+      $(".alert").css("right", "-60%");
+    }, 2000);
+    if (localStorage.submitVCNV) {
       let { answerVCNV } = this.state;
       answerVCNV = answerVCNV.toUpperCase();
       this.setState({
@@ -158,25 +164,27 @@ class UserVCNV extends Component {
           <p className="disableVCNV">{this.state.notifition}</p>
           <div className="col-11">
             <div class="form-group">
-              <input
-                type="text"
-                class="form-control answerVCNV"
-                name="answerVCNV"
-                id=""
-                aria-describedby="helpId"
-                placeholder="Your Answer..."
-                value={this.state.answerVCNV}
-                onChange={this.onAnswerVCNV}
-              />
-              <button
-                type="button"
-                name=""
-                id=""
-                class="btn btn-primary btn-lg btn-block submitVCNV"
-                onClick={this.onSubmitAnswerVCNV}
-              >
-                GỬI CÂU TRẢ LỜI
-              </button>
+              <form onSubmit={this.onSubmitAnswerVCNV}>
+                <input
+                  type="text"
+                  class="form-control answerVCNV"
+                  name="answerVCNV"
+                  id=""
+                  aria-describedby="helpId"
+                  placeholder="Your Answer..."
+                  value={this.state.answerVCNV}
+                  onChange={this.onAnswerVCNV}
+                />
+                <button
+                  type="submit"
+                  name=""
+                  id=""
+                  class="btn btn-primary btn-lg btn-block submitVCNV"
+                  // onClick={this.onSubmitAnswerVCNV}
+                >
+                  GỬI CÂU TRẢ LỜI.
+                </button>
+              </form>
               <button
                 type="button"
                 name=""
@@ -194,6 +202,18 @@ class UserVCNV extends Component {
 
           <div id="progressBar">
             <div className="bar"></div>
+          </div>
+          <div className="alert">
+            {/* <span
+              className="closebtn"
+              // onClick={() => {
+              //   $(".alert").hide(500);
+              // }}
+            >
+              &times;
+            </span> */}
+            <strong>Success !</strong> Câu Trả Lời Đã gửi :{" "}
+            {this.state.answerVCNV.toUpperCase()}
           </div>
         </div>
       </div>

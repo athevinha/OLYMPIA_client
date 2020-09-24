@@ -14,7 +14,7 @@ body {
   background-color: orangered;
   color: black;
 } */
-.nothing {
+.nothingVCNV {
   display: block;
 }
 .SubmitAdminVCNV {
@@ -118,6 +118,8 @@ body {
 }
 .BestAnswer {
   font-size: 40px;
+  position: relative;
+  top: 30px;
 }
 .VCNVimgContent {
   position: absolute;

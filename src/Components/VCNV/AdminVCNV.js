@@ -6,7 +6,9 @@ import $, { data } from "jquery";
 import port from "../../port.json";
 import "./VCNV.css";
 const socket = io.connect(port.port); //change when change wifi
-let check1 = 0;
+let check1 = 0,
+  Anss = "",
+  tog = 0;
 class AdminVCNV extends Component {
   constructor(props) {
     super(props);
@@ -49,8 +51,10 @@ class AdminVCNV extends Component {
       let Ans = this.state.questions[this.state.currentQues]
         ? this.state.questions[this.state.currentQues].answer
         : "";
+
       //==========================================
       if (Ans != "") {
+        Anss = Ans;
         if (UserAns.answer == Ans) {
           //alert(UserAns.answer);
           let name = this.state.data[UserAns.id]
@@ -66,10 +70,13 @@ class AdminVCNV extends Component {
 
           //this.AddScore(name, 10, UserAns.id);
           let { ArrPointer } = this.state;
-          ArrPointer.push({
-            name: name,
-            id: UserAns.id,
-          });
+
+          console.log(ListShowContentVCNV);
+          ArrPointer = ListShowContentVCNV;
+          // ArrPointer.push({
+          //   name: name,
+          //   id: UserAns.id,
+          // });
           this.setState({
             ArrPointer: ArrPointer,
           });
@@ -168,7 +175,6 @@ class AdminVCNV extends Component {
       //this.setState({ problem: 10 });
     } else if (e.keyCode == "46") {
       // delete to show list
-      // right arrow
       let { ListShowContentVCNV } = this.state;
       if (ListShowContentVCNV[0]) {
         if (data[0]) {
@@ -180,10 +186,15 @@ class AdminVCNV extends Component {
         }
       }
       let { ArrPointer } = this.state;
-      for (let i = 0; i < ArrPointer.length; i++) {
-        if (ArrPointer[i])
-          this.AddScore(ArrPointer[i].name, 10, ArrPointer[i].id);
+      if (tog == 0) {
+        for (let i = 0; i < ListShowContentVCNV.length; i++) {
+          if (ListShowContentVCNV[i].answer == Anss)
+            this.AddScore(ListShowContentVCNV[i].name, 10, i);
+        }
+        tog = 1;
       }
+
+      console.log(ArrPointer);
       socket.emit("show list VCNV", {
         list: this.state.ListShowContentVCNV
           ? this.state.ListShowContentVCNV
@@ -212,6 +223,7 @@ class AdminVCNV extends Component {
 
   //==================================================================================================================
   ChooseQuesVCNV = (stt) => {
+    tog = 0;
     this.setState({
       currentQues: stt,
       ListShowContentVCNV: [],
@@ -299,19 +311,19 @@ class AdminVCNV extends Component {
               placeholder="Add Point"
             />
             <button
-              className="btn btn-primary btn-block nothing"
+              className="btn btn-primary btn-block nothingVCNV"
               onClick={this.AddGrantedPoint}
             >
               ADD POINT
             </button>
             <button
-              className="btn btn-danger btn-block  nothing"
+              className="btn btn-danger btn-block  nothingVCNV"
               onClick={this.DisableUser}
             >
               BLOCK USER
             </button>
             <button
-              className="btn btn-success btn-block  nothing"
+              className="btn btn-success btn-block  nothingVCNV"
               onClick={this.ShowList}
             >
               OPEN CIRCLE

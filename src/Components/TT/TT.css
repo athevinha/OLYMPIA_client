@@ -1,6 +1,10 @@
 .backgroundTT {
   position: absolute;
-  z-index: 0;
+  background-color: black;
+  left: 20%;
+  width: 78%;
+  height: 90%;
+  opacity: 0.8;
 }
 
 .ContentTTprogress {
@@ -22,8 +26,10 @@
 }
 .questionsTT {
   position: absolute;
+  border-bottom: 2px white solid;
   top: 27%;
-  left: 10%;
+  left: 21%;
+  width: 75%;
 }
 .aroundTT {
   position: absolute;
@@ -61,27 +67,23 @@
   cursor: pointer;
   transition: 0.3s;
 }
-
+.nothing {
+  font-size: 150%;
+  position: relative;
+  margin-top: 10%;
+}
 .closebtn:hover {
   color: black;
 }
 .QuesImgTT {
+  border: 2px white solid;
   position: absolute !important;
   width: 100%;
   top: 7%;
   height: 97% !important;
 }
-.ShowAnsTT {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  z-index: 1;
-  list-style-type: none;
-  font-size: 80% !important;
-}
 
-.eTT23,
+/* .eTT23,
 .eTT33,
 .eTT13,
 .eTT03 {
@@ -134,4 +136,73 @@
   right: 35%;
   width: 25% !important;
   height: 25% !important;
+}
+.ShowAnsTT {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  text-align: center;
+  z-index: 1;
+  list-style-type: none;
+  font-size: 80% !important;
+}
+
+*/
+
+.ShowTT,
+.ShowVCNV {
+  width: 100%;
+  border-bottom: 2px white solid;
+  font-size: 235%;
+}
+.ShowVCNV {
+  font-size: 250%;
+}
+.ShowAnsTT,
+.ShowAns {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-image: url("./Img/Back.jpg");
+  position: fixed;
+  top: 0;
+  text-align: center;
+  width: 100%;
+  background-color: black;
+  height: 100%;
+  z-index: 100;
+}
+.BackBlack {
+  position: fixed;
+  width: 100%;
+  background-color: black;
+  opacity: 0.8;
+  height: 100%;
+  z-index: 1000;
+}
+.nameTT {
+  color: orange;
+  border: 2px white solid;
+  border-radius: 50px;
+  background-color: rgb(24, 24, 24);
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.AnsTimeTT {
+  position: relative;
+  left: 5%;
+  border: 2px white solid;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: center;
+  border-radius: 50px;
+}
+.AnsTT {
+  border: 2px white solid;
+  padding-left: 5%;
+  padding-right: 5%;
+  text-align: center;
+  border-radius: 50px;
+  background-color: rgb(0, 29, 37);
 }

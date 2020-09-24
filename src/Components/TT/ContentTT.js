@@ -21,7 +21,7 @@ import Ques3 from "./Video/Ques3.mp4";
 import Ques4 from "./Img/Ques4.PNG";
 //==============import img============================
 window.onload = function () {
-  // Setup all nodes
+  // Setup all node
 };
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
@@ -134,7 +134,7 @@ class ContentTT extends Component {
         if (check) {
           players.play();
           players3.play();
-          //============================================
+          //===========================================
           $("#progressBar").css("background-color", "#cfd6d9");
           $(".bar").css("background-color", "#428bca");
           thisd.soundPlay(second);
@@ -180,7 +180,6 @@ class ContentTT extends Component {
       }
     });
     socket.on("Open Picture", (data) => {
-      //this.soundPlay(RowShow);
       if (data) {
         $(data).hide(1000);
       }
@@ -188,13 +187,12 @@ class ContentTT extends Component {
   }
 
   render() {
-    // $(".names").removeClass("CrName");
-    // $(".names").eq(this.state.current).addClass("CrName");
+    // $".names").removeClass("CrName");
+    // $(".names").eq(this.state.crrent).addClass("CrName");
     return (
       <div className="App">
         <div className="App-header">
-          <img src={FormQues} className="backgroundTT"></img>
-          {/* <table id="NameList" className="NameListTT">
+          {/* <table id="NameList">
             <tbody>
               <tr>
                 {this.state.data.map((user, id) => {
@@ -207,6 +205,10 @@ class ContentTT extends Component {
               </tr>
             </tbody>
           </table> */}
+          {/* <img src={FormQues} className="backgroundTT"></img> */}
+
+          <div className="backgroundTT"></div>
+
           <div className="aroundTT">
             {/* <img src={Ques1} className="QuesImgTT Ques1" alt=""></img> */}
             <Player
@@ -260,18 +262,18 @@ class ContentTT extends Component {
             </div>
           </div>
           <ul className="ShowAnsTT">
-            <img src={Show} className="backgroundVCNV" alt=""></img>
+            {/* <img src={Show} className="backgroundVCNV" alt=""></img> */}
             {this.state.ListShowContentVCNV.map((user, id) => {
               return (
-                <li className="Ans" className={"diffTT" + id} key={id}>
-                  <span className="nameVCNV" className={"eTT" + id + "1"}>
-                    {user.name}
-                  </span>
+                <li
+                  className="Ans ShowTT"
+                  className={"ShowTT diffTT" + id}
+                  key={id}
+                >
+                  <span className={"nameTT eTT" + id + "1"}>{user.name}</span>
                   <br />
-                  <span className="ansVCNV " className={"eTT" + id + "2"}>
-                    {user.answer}
-                  </span>
-                  <span className="ansVCNV " className={"eTT" + id + "3"}>
+                  <span className={"AnsTT eTT" + id + "2"}>{user.answer}</span>
+                  <span className={"AnsTimeTT eTT" + id + "3"}>
                     {user.time}
                   </span>
                 </li>

@@ -69,13 +69,12 @@ class Content extends Component {
 
         setTimeout(function () {
           $(".EndingUser").eq(0).addClass("AnimationEndingUser");
-          thisd.soundPlay(StartFinish2);
+          thisd.soundPlay(StartFinish);
         }, 1000);
         setTimeout(function () {
           $(".EndingUser").eq(1).addClass("AnimationEndingUser");
         }, 3500);
         setTimeout(function () {
-          thisd.soundPlay(StartFinish2);
           $(".EndingUser").eq(2).addClass("AnimationEndingUser");
         }, 6000);
         setTimeout(function () {
