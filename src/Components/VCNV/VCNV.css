@@ -111,7 +111,7 @@ body {
   transition: 1s;
 }
 .CircleActive {
-  background-color: aqua;
+  background-color: rgb(11, 84, 112);
 }
 .answerVCNV {
   font-size: 25px;
@@ -189,9 +189,9 @@ body {
   display: inline;
   font-size: 115%;
   background-color: black;
-  opacity: 0.9;
   border: 2px white solid;
   text-align: center;
+  margin-bottom: 3%;
 }
 .questionsVCNV {
   height: 100px !important;

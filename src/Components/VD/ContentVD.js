@@ -12,6 +12,7 @@ import s20 from "./Music/20s.mp3";
 import s5 from "./Music/Finish5Seconds.mp3";
 import star from "./Music/FinishStarChose.mp3";
 import Finish from "./Music/FinishFinish.mp3";
+import Tick from "./Music/Tick.mp3";
 import FinishWrongAnswer from "./Music/FinishWrongAnswer.mp3";
 import FinishRightAnswer from "./Music/FinishRightAnswer.mp3";
 import Granted from "./Music/ObsGranted.wav";
@@ -35,7 +36,14 @@ class ContentVD extends Component {
   }
   soundPlay = (src) => {
     const sound = new Howl({ src });
-    sound.volume(0.2);
+    if (
+      src == Tick ||
+      src == FinishWrongAnswer ||
+      src == FinishRightAnswer ||
+      src == star
+    ) {
+      sound.volume(0.3);
+    }
     sound.play();
   };
   soundStop = (src) => {
@@ -82,6 +90,7 @@ class ContentVD extends Component {
         $(".ChoosePointVD").show(1000);
         console.log(nameId);
         $(nameId).html("✔");
+        this.soundPlay(Tick);
       }
     });
     socket.on("close choose quesVD", (crr) => {
@@ -93,7 +102,6 @@ class ContentVD extends Component {
         $(".names").removeClass("activeNameVD");
         this.setState({ examUser: crr });
         $(".names").eq(crr).addClass("activeNameVD");
-        this.soundPlay(Granted);
       }
     });
     // socket.on("next pp vd", (crr) => {

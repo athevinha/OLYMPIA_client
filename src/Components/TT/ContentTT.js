@@ -5,7 +5,7 @@ import "../../App.css";
 import "./TT.css";
 import { Player } from "video-react";
 import port from "../../port.json";
-import AccelerationRightAnswer from "./Music/AccelerationRightAnswer.mp3";
+import AccelerationRightAnswer from "./Music/StartFinish.mp3";
 import OnVCNV from "./Music/ObstacleRowRightAnswer.mp3";
 import second from "./Music/30sAdven.mp3";
 import ObsGranted from "./Music/ObsGranted.wav";
@@ -47,7 +47,6 @@ class ContentTT extends Component {
   }
   soundPlay = (src) => {
     const sound = new Howl({ src });
-    sound.volume(0.2);
     sound.play();
   };
   soundStop = (src) => {
@@ -142,7 +141,7 @@ class ContentTT extends Component {
           console.log("ok");
           check = false;
         }
-      }, 2000);
+      }, 5000);
     });
     socket.on("Add score", (crr) => {
       if (crr != []) {
@@ -203,7 +202,7 @@ class ContentTT extends Component {
                   );
                 })}
               </tr>
-            </tbody>
+            </tbod>
           </table> */}
           {/* <img src={FormQues} className="backgroundTT"></img> */}
 

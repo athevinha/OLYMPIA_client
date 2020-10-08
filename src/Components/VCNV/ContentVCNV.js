@@ -46,15 +46,7 @@ class ContentVCNV extends Component {
   }
   soundPlay = (src) => {
     const sound = new Howl({ src });
-    if (src == RowShow) {
-      sound.volume(0.2);
-    } else if (src == ObsGranted) {
-      sound.volume(0.2);
-    } else if (src == OnVCNV) {
-      sound.volume(1);
-    } else {
-      sound.volume(0.4);
-    }
+    sound.volume(0.4);
     sound.play();
   };
   soundStop = (src) => {
@@ -112,12 +104,15 @@ class ContentVCNV extends Component {
               ? this.state.questions[this.state.currentQues].answer
               : ""
           )
-          .css({ "font-size": "50px" });
+          .css({ "font-size": "55px" })
+          .css({ color: "white" })
+          .css({ "font-style": "bold" });
     });
-
+    console.log("");
     socket.on("choose ques", (ques) => {
       $(".names").removeClass("ActiveName");
       let thisd = this;
+
       this.setState({
         question: ques.ques,
         currentQues: ques.id,
@@ -135,7 +130,7 @@ class ContentVCNV extends Component {
           progress(15, 15, $("#progressBar"));
           check = false;
         }
-      }, 3000);
+      }, 7000);
     });
     socket.on("Add score", (crr) => {
       if (crr !== []) {
@@ -217,13 +212,28 @@ class ContentVCNV extends Component {
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
             </div>
             <div className="around">
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
             </div>
-            <div className="around smallVCNV">
+            <div className="around ">
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
+              <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
@@ -234,7 +244,6 @@ class ContentVCNV extends Component {
             </div>
 
             <div className="around">
-              <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
@@ -305,7 +314,7 @@ class ContentVCNV extends Component {
             </div>
           </div>
           <ul className="ShowAns">
-            {/* <img src={Show} className="backgroundVCNV" alt=""></img> */}
+            {/* <img src={Show} className"backgroundVCNV" alt=""></img */}
             {this.state.ListShowContentVCNV.map((user, id) => {
               return (
                 <li className={"ShowVCNV diffTT" + id} key={id}>

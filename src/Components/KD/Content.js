@@ -178,6 +178,6 @@ function progress(timeleft, timetotal, $element) {
     $(".bar").css("background-color", "red");
     SoundTime = false;
     check = true;
-    thisd.soundPlay(StartFinish);
+    thisd.soundPlay(StartFinish2);
   }
 }

@@ -88,7 +88,7 @@ class UserTT extends Component {
           startTimer();
           check = false;
         }
-      }, 2000);
+      }, 5000);
       $(".around").removeClass("CircleActive");
       $(".around")
         .eq(ques.id - 1)
@@ -266,4 +266,3 @@ function progress(timeleft, timetotal, $element) {
     check = true;
   }
 }
-

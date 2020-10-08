@@ -8,7 +8,8 @@ import "./VCNV.css";
 const socket = io.connect(port.port); //change when change wifi
 let check1 = 0,
   Anss = "",
-  tog = 0;
+  tog = 0,
+  Current = 0;
 class AdminVCNV extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +23,7 @@ class AdminVCNV extends Component {
       ListShowContentVCNV: [],
       ArrPointer: [],
       problem: 100,
+      Faster: [],
     };
   }
   //==================================================================================================================
@@ -109,7 +111,7 @@ class AdminVCNV extends Component {
       //===========================================
     });
     socket.on("on VCNV", (data) => {
-      if (check1 == 0 && localStorage.Faster == "false") {
+      if (check1 == 0) {
         localStorage.setItem("Faster", true);
         console.log(localStorage.Faster);
         // if (localStorage.DisListVCNV) {
@@ -117,6 +119,13 @@ class AdminVCNV extends Component {
         // }
         localStorage.setItem("name", data.name);
         localStorage.setItem("id", data.id);
+        let { Faster } = this.state;
+        Faster.push({
+          name: localStorage.name,
+          id: localStorage.id,
+        });
+        this.setState({ Faster });
+        console.log(Faster);
       }
     });
   }
@@ -239,9 +248,9 @@ class AdminVCNV extends Component {
     console.log(this.state.data);
     socket.emit("TongKetDiem", this.state.data);
   };
-  //==================================================================================================================
+  //=================================================================================================================
   handleKeyDown = (e) => {
-    // arrow up/down button should select next/previous list element
+    // arrow up/down button should select next/previouslielement
     this.checkKey(e);
   };
   //==================================================================================================================
@@ -252,22 +261,29 @@ class AdminVCNV extends Component {
   AddGrantedPoint = (e) => {
     e.preventDefault();
     socket.emit("play sound VCNV", "hehe");
-    this.AddScore(
-      localStorage.name,
-      parseInt(this.state.problem),
-      localStorage.id
-    );
+    let { Faster } = this.state;
+    let obj = {
+      name: Faster[Current]?.name,
+      id: Faster[Current]?.id,
+    };
+    this.AddScore(obj.name, parseInt(this.state.problem), obj.id);
   };
   //==================================================================================================================
   DisableUser = (e) => {
     e.preventDefault();
+
     localStorage.setItem("Faster", false);
+    let { Faster } = this.state;
     let obj = {
-      name: localStorage.name,
-      id: localStorage.id,
+      name: Faster[Current]?.name,
+      id: Faster[Current]?.id,
     };
+
     console.log(obj);
+
     socket.emit("disable", obj);
+
+    Current++;
   };
   ShowList = (e) => {
     e.preventDefault();

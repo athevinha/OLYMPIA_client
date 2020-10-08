@@ -7,6 +7,7 @@ import $ from "jquery";
 const socket = io.connect(port.port); //change when change wif
 let check = true;
 let check1 = 0;
+let onVCNV = false;
 class UserVCNV extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +65,7 @@ class UserVCNV extends Component {
           progress(15, 15, $("#progressBar"));
           check = false;
         }
-      }, 3000);
+      }, 7000);
       $(".around").removeClass("CircleActive");
       $(".around")
         .eq(ques.id - 1)
@@ -120,15 +121,18 @@ class UserVCNV extends Component {
     }
   };
   onVCNV = () => {
-    let name = this.state.data[localStorage.tooken]
-        ? this.state.data[localStorage.tooken].name
-        : "admin",
-      id = localStorage.tooken ? localStorage.tooken : 0;
-    //this.AddScore(name, 50, id);
-    socket.emit("on VCNV", {
-      name: name,
-      id: id,
-    });
+    if (onVCNV == false) {
+      let name = this.state.data[localStorage.tooken]
+          ? this.state.data[localStorage.tooken].name
+          : "admin",
+        id = localStorage.tooken ? localStorage.tooken : 0;
+      //this.AddScore(name, 50, id);
+      socket.emit("on VCNV", {
+        name: name,
+        id: id,
+      });
+      onVCNV = true;
+    }
   };
   render() {
     //$(".names").removeClass("CrName");
