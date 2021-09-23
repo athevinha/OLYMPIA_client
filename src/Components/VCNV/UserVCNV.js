@@ -74,7 +74,7 @@ class UserVCNV extends Component {
 
     socket.on("disable", (dis) => {
       if (check1 == 0 && dis) {
-        if (dis.id == localStorage.tooken) {
+        if (dis.id == localStorage.tooken_id) {
           $(".col-11").hide();
           localStorage.setItem("Disable", true);
         }
@@ -112,7 +112,7 @@ class UserVCNV extends Component {
         answerVCNV: answerVCNV,
       });
       socket.emit("on send answer", {
-        id: localStorage.tooken ? localStorage.tooken : 0,
+        id: localStorage.tooken_id ? localStorage.tooken_id : 0,
         answer: answerVCNV,
       });
       localStorage.setItem("submitVCNV", 0);
@@ -122,10 +122,10 @@ class UserVCNV extends Component {
   };
   onVCNV = () => {
     if (onVCNV == false) {
-      let name = this.state.data[localStorage.tooken]
-          ? this.state.data[localStorage.tooken].name
+      let name = this.state.data[localStorage.tooken_id]
+          ? this.state.data[localStorage.tooken_id].name
           : "admin",
-        id = localStorage.tooken ? localStorage.tooken : 0;
+        id = localStorage.tooken_id ? localStorage.tooken_id : 0;
       //this.AddScore(name, 50, id);
       socket.emit("on VCNV", {
         name: name,

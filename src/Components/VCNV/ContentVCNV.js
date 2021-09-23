@@ -16,7 +16,7 @@ import Img from "./Img/VCNVIMG.png";
 import Show from "./Img/show.png";
 import WrongMusic from "./Music/ExitAdvenSec.mp3";
 import $ from "jquery";
-//==============import img============================
+//==============import img==================
 import Pie1 from "./Img/Pie1.png";
 import Pie2 from "./Img/Pie2.png";
 import Pie3 from "./Img/Pie3.png";
@@ -73,10 +73,8 @@ class ContentVCNV extends Component {
         $(".ShowAns").hide(1000);
         this.setState({ toogle: 0 });
       }
-
       this.setState({ ListShowContentVCNV: show.list });
     });
-
     socket.on("disable", (dis) => {
       this.soundPlay(WrongMusic);
       $(".names").eq(dis.id).css("background-color", "red");
@@ -108,7 +106,6 @@ class ContentVCNV extends Component {
           .css({ color: "white" })
           .css({ "font-style": "bold" });
     });
-    console.log("");
     socket.on("choose ques", (ques) => {
       $(".names").removeClass("ActiveName");
       let thisd = this;
@@ -138,6 +135,7 @@ class ContentVCNV extends Component {
       }
     });
     socket.on("on VCNV", (data) => {
+      console.log(data)
       let WhoIsFasters = this.state.WhoIsFaster;
       if (OnePush % 1 == 0) {
         WhoIsFasters.push({ name: data.name });

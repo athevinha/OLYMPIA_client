@@ -72,7 +72,7 @@ class UserCHP extends Component {
 
   //===========================================================
   onSubmitAnswerVD = () => {
-    let id = localStorage.tooken ? localStorage.tooken : 0;
+    let id = localStorage.tooken_id ? localStorage.tooken_id : 0;
     let name = this.state.data[id] ? this.state.data[id].name : "NO NAME";
     socket.emit("on send VD", {
       id: id,

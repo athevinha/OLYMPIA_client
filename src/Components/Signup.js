@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logo from "../logo.svg";
 import io from "socket.io-client";
 import port from "../port.json";
+import usersService from "../service/users.service";
 import "../App.css";
 const socket = io.connect(port.port);
 class Signup extends Component {
@@ -14,17 +15,35 @@ class Signup extends Component {
       data: [],
     };
   }
+  GenerateTooken = () => {
+    let length = 40;
+    var randomChars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var result = "";
+    for (var i = 0; i < length; i++) {
+      result += randomChars.charAt(
+        Math.floor(Math.random() * randomChars.length)
+      );
+    }
+    return result;
+  };
   onSubmit = (e) => {
     e.preventDefault();
-    socket.emit("add data", {
+    let userN= {
       gmail: this.state.gmail,
       pass: this.state.password,
       name: this.state.name,
       avatar:
         "https://wsa.ca/wp-content/uploads/2018/10/facebook-profile-picture-unknown-facts-about-facebook-300x188.jpg",
-      vip: "0",
       score: 0,
-    });
+      tooken: this.GenerateTooken()
+    };
+    usersService.create(userN).then((req,res)=>{
+      alert(req);
+      window.location="/content"
+      localStorage.setItem("tooken", req.data.tooken )
+    })
+    // socket.emit("add data", );
   };
 
   onLogin = (e) => {

@@ -24,6 +24,7 @@ class AdminTT extends Component {
   componentWillUnmount() {}
   //==================================================================================================================
   componentDidMount() {
+    console.log(this.props.questions)
     this.setState({
       questions: this.props.questions,
       data: this.props.data,
@@ -147,7 +148,7 @@ class AdminTT extends Component {
       // right arrow
       this.ChooseQuesTT(5);
       //this.setState({ problem: 10 });
-    } else if (e.keyCode == "46") {
+    } else if (e.keyCode == "8") {
       // delete to show list
       let { ListShowContentVCNV } = this.state;
       if (ListShowContentVCNV.length != 0) {

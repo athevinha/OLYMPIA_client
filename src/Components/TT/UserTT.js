@@ -32,7 +32,7 @@ class UserTT extends Component {
     thisdd = this;
     if (localStorage.DisListVCNV) {
       for (let i = 0; i < localStorage.DisListVCNV.length; i++)
-        if (localStorage.tooken == localStorage.DisListVCNV[i]) {
+        if (localStorage.tooken_id == localStorage.DisListVCNV[i]) {
           $(".col-11").hide();
           console.log("qweg");
         }
@@ -106,12 +106,12 @@ class UserTT extends Component {
         if (localStorage.DisListVCNV == null)
           localStorage.setItem("DisListVCNV", JSON.stringify(empity));
         let dislist = JSON.parse(localStorage.DisListVCNV);
-        dislist.push(localStorage.tooken);
+        dislist.push(localStorage.tooken_id);
         localStorage.setItem("DisListVCNV", JSON.stringify(dislist));
         // if (this.state.problem)
         //   this.AddScore(data.name, this.state.problem, data.id);
         check1 = 1;
-        if (localStorage.tooken == (dis ? dis.id : 0)) {
+        if (localStorage.tooken_id == (dis ? dis.id : 0)) {
           $(".col-11").hide();
         }
       }
@@ -131,7 +131,7 @@ class UserTT extends Component {
   //   }
   // };
 
-  //==========================================================
+  //======================================================
   onAnswerVCNV = (e) => {
     this.setState({ answerVCNV: e.target.value });
   };
@@ -148,7 +148,7 @@ class UserTT extends Component {
         answerVCNV: answerVCNV,
       });
       socket.emit("on send answer", {
-        id: localStorage.tooken ? localStorage.tooken : 0,
+        id: localStorage.tooken_id ? localStorage.tooken_id : 0,
         answer: answerVCNV,
         time: this.state.time,
       });

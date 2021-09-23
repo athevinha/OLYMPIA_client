@@ -10,6 +10,7 @@ class Signin extends Component {
       data: [],
     };
   }
+ 
   onSubmit = (e) => {
     e.preventDefault();
     let { data } = this.state;
@@ -20,7 +21,10 @@ class Signin extends Component {
           this.state.gmail === data[i].gmail &&
           this.state.password === data[i].pass
         ) {
-          localStorage.setItem("tooken", i);
+          localStorage.setItem("tooken", data[i].tooken);
+          localStorage.setItem("tooken_id", i);
+          // alert("hi:"+ data[i].name);
+          window.location= "/content"
         }
       }
     }

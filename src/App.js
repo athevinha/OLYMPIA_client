@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
 import "./App.css";
+import usersService from "./service/users.service";
 import port from "./port.json";
 import Signin from "./Components/Signin";
 import Signup from "./Components/Signup";
@@ -24,7 +25,7 @@ import AdminTT from "./Components/TT/AdminTT";
 import ContentTT from "./Components/TT/ContentTT";
 import UserTT from "./Components/TT/UserTT";
 import { BrowserRouter, Route, Link } from "react-router-dom";
-const socket = io.connect(port.port); //change when change wifi
+const socket = io.connect('http://localhost:7878/'); //change when change wifi
 class App extends Component {
   constructor(props) {
     super(props);
@@ -45,7 +46,6 @@ class App extends Component {
     socket.emit("recive data", "hellu");
     socket.on("recive data", (data) => {
       if (data) this.setState({ data: data });
-
       localStorage.setItem("users", JSON.stringify(data));
     });
     //============GetUser========================================================================================
@@ -54,6 +54,8 @@ class App extends Component {
 
     socket.emit("get ques", "hellu");
     socket.on("get ques", (data) => {
+      console.log(data)
+      if(data)
       this.setState({
         questions: data[0],
         questionsVCNV: data[1],
@@ -62,24 +64,27 @@ class App extends Component {
         questionsCHP: data[4],
       });
     });
-    //=============GetQuestion=======================================================================================
-    //   this.setState({ questions: data });
+    
+    // socket.emit("recive current", "hellu");
+    // socket.on("recive current", (crr) => {
+    //   if (crr) this.setState({ current: crr });
     // });
-    //=============GetQuestionVCNV===========================================================================
-    //====================================================================================================
-    socket.emit("recive current", "hellu");
-    socket.on("recive current", (crr) => {
-      if (crr) this.setState({ current: crr });
-    });
+    usersService.getAll().then((res)=>{
+      let users = res.data
+      if (users) this.setState({ data: users });
+      localStorage.setItem("users", JSON.stringify(users));
+      users.map((user,id)=>{
+        if(localStorage.tooken === user.tooken){
+          this.setState({current:id})
+        }
+      })
+    })
   }
-  // componentWillUnmount(){
-
-  // }
   render() {
     return (
       <div>
         <BrowserRouter>
-          <div>
+          {/* <div>
             <ul>
               <li>
                 <Link to="/">Sign In</Link>
@@ -91,7 +96,7 @@ class App extends Component {
                 <Link to="/Content">Content</Link>
               </li>
             </ul>
-          </div>
+          </div> */}
           <Route
             exact
             path="/"

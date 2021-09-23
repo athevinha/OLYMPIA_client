@@ -46,12 +46,12 @@ class ContentTT extends Component {
     };
   }
   soundPlay = (src) => {
-    const sound = new Howl({ src });
-    sound.play();
+    // const sound = new Howl({ src });
+    // sound.play();
   };
   soundStop = (src) => {
-    const sound = new Howl({ src });
-    sound.stop();
+    // const sound = new Howl({ src });
+    // sound.stop();
   };
   componentDidMount() {
     Howler.ctx = new AudioContext();

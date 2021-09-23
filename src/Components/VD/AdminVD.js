@@ -43,6 +43,7 @@ class AdminVD extends Component {
   componentDidMount() {
     $(".ChoosePointVD").show();
     thisd = this;
+    console.log(this.props.questions)
     this.setState({
       questions: this.props.questions,
       data: this.props.data,

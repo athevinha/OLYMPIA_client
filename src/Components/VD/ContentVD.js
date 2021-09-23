@@ -195,11 +195,11 @@ class ContentVD extends Component {
             </tbody>
           </table>
 
-          <div className="questions col-11">
+          <div className="questions col">
             <div>
               <p className="question quess">{this.state.question}</p>
             </div>
-            <div className="score col-4">
+            <div className="score col-3">
               {this.state.data[this.state.examUser]
                 ? this.state.data[this.state.examUser].score
                 : 0}

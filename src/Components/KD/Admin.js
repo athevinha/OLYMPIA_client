@@ -4,6 +4,8 @@ import io from "socket.io-client";
 import "../../App.css";
 import $ from "jquery";
 import port from "../../port.json";
+import AdminService from "../../service/admin.service"
+import adminService from "../../service/admin.service";
 const socket = io.connect(port.port); //change when change wifi
 class Admin extends Component {
   constructor(props) {
@@ -21,7 +23,8 @@ class Admin extends Component {
     this.setState({
       questions: this.props.questions,
       data: this.props.data,
-      currentUser: this.props.current[0] ? this.props.current[0].current : 0,
+      currentUser: 0
+      // this.props.current[0] ? this.props.current[0].current : 0,
     });
   }
   checkKey = (e) => {
@@ -29,6 +32,7 @@ class Admin extends Component {
     e = e || window.event;
     let { currentQues } = this.state;
     if (e.keyCode == "38") {
+      console.log("gihihiuhui")
       currentQues--;
       this.setState({ currentQues: currentQues });
       socket.emit("choose ques", this.state.questions[currentQues].ques);
@@ -46,17 +50,15 @@ class Admin extends Component {
       let a = this.state.data[this.state.currentUser].score;
       a += 10;
       let userss = this.state.data;
+
       userss[this.state.currentUser].score = a;
       this.setState({ data: userss });
+      // console.log(this.state.data[this.state.currentUser].score)
       socket.emit("add point", {
         name: this.state.data[this.state.currentUser].name,
         point: this.state.data[this.state.currentUser].score,
         stt: this.state.currentUser,
-        users: this.state.data,
       });
-      //console.log(this.state.data[this.state.currentUser].score);
-      // left arrow
-      //alert("left");
     } //==============================================================================================================
     else if (e.keyCode == "49") {
       this.nextUser(0);
@@ -93,8 +95,8 @@ class Admin extends Component {
     userss[this.state.currentUser].score = a;
     this.setState({ data: userss });
     socket.emit("add point", {
-      name: this.state.data[this.state.currentUser].name,
-      point: this.state.data[this.state.currentUser].score,
+      name: this.state.data[stt].name,
+      point: this.state.data[stt].score,
       stt: stt,
     });
     socket.emit("change people");

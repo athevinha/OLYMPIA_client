@@ -19,7 +19,7 @@ class AdminVCNV extends Component {
       data: [],
       questions: [],
       currentQues: 0,
-      currentUser: 0,
+      // currentUser: 0,
       ListShowContentVCNV: [],
       ArrPointer: [],
       problem: 100,
@@ -34,9 +34,11 @@ class AdminVCNV extends Component {
     this.setState({
       questions: this.props.questions,
       data: this.props.data,
-      currentUser: this.props.current[0] ? this.props.current[0].current : 0,
+      // currentUser: this.props.current[0] ? this.props.current[0].current : 0,
     });
+    console.log(this.props.questions)
     socket.on("on send answer", (UserAns) => {
+      console.log(UserAns)
       let { ListShowContentVCNV } = this.state;
       console.log(ListShowContentVCNV.length);
       if (ListShowContentVCNV.length == 0) {
@@ -124,7 +126,7 @@ class AdminVCNV extends Component {
           name: localStorage.name,
           id: localStorage.id,
         });
-        this.setState({ Faster });
+        this.setState({ Faster:Faster });
         console.log(Faster);
       }
     });
@@ -148,7 +150,7 @@ class AdminVCNV extends Component {
     e.preventDefault();
     let { problem } = this.state;
     e = e || window.event;
-
+    console.log(e.keyCode)
     let { currentQues } = this.state;
     if (e.keyCode == "49") {
       socket.emit("Open Picture", ".pie1");
@@ -182,7 +184,7 @@ class AdminVCNV extends Component {
       // right arrow
       this.ChooseQuesVCNV(6);
       //this.setState({ problem: 10 });
-    } else if (e.keyCode == "46") {
+    } else if (e.keyCode == "8") {
       // delete to show list
       let { ListShowContentVCNV } = this.state;
       if (ListShowContentVCNV[0]) {
@@ -238,6 +240,7 @@ class AdminVCNV extends Component {
       ListShowContentVCNV: [],
       ArrPointer: [],
     });
+    console.log(this.state.questions[stt])
     socket.emit("choose ques", {
       ques: this.state.questions[stt],
       id: stt,

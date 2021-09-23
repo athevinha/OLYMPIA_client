@@ -4,7 +4,7 @@ import { Howl, Howler } from "howler";
 import ReactHowler from "react-howler";
 import io from "socket.io-client";
 import "../../App.css";
-import $ from "jquery";
+import $, { isNumeric } from "jquery";
 import "./css/Content.css";
 import second from "./Music/60s.mp3";
 import StartFinish from "./Music/StartFinish.mp3";
@@ -87,7 +87,15 @@ class Content extends Component {
       this.setState({
         score: data.point,
         current: data.stt,
+        data: this.state.data.map((user,id)=>{
+          console.log(data.stt)
+          if(id == data.stt) user.score = data.point
+          return user
+        })
       });
+      console.log(
+        data.point
+      )
       if (data.data != null) this.setState({ data: data.data });
     });
 
@@ -109,14 +117,14 @@ class Content extends Component {
     $(".names").removeClass("CrName");
     $(".names").eq(this.state.current).addClass("CrName");
     return (
-      <div className="App row">
+      <div className="App">
         <ReactHowler src="./Music/60s.mp3" playing={true} />
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <table id="NameList">
             <tbody>
               <tr>
                 {this.state.data.map((user, id) => {
+                  if(id<=3)
                   return (
                     <td className="names" key={id}>
                       {user.name} ({user.score})
@@ -126,11 +134,6 @@ class Content extends Component {
               </tr>
             </tbody>
           </table>
-          {/* <p>
-            {this.state.data[this.state.current]
-              ? this.state.data[this.state.current].name
-              : "ngu"}
-          </p> */}
           <div className="questions col-11">
             <div>
               <p className="question quess">{this.state.question} </p>
