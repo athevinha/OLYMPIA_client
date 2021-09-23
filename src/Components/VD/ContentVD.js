@@ -175,7 +175,7 @@ class ContentVD extends Component {
     return (
       <div className="App row">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <table id="NameList">
             <tbody>
               <tr>

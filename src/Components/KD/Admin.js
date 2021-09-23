@@ -125,7 +125,7 @@ class Admin extends Component {
     return (
       <div className="App">
         <form className="App-header" onSubmit={this.onSubmit}>
-          <img src={logo} className="App-logo" alt="logo" />
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <p></p>
           <input onKeyDown={this.handleKeyDown} />
           <div>

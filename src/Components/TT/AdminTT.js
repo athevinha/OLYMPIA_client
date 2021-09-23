@@ -295,7 +295,7 @@ class AdminTT extends Component {
     return (
       <div className="App">
         <form className="App-header" onSubmit={this.onSubmit}>
-          <img src={logo} className="App-logo" alt="logo" />
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <div>
             {this.state.ListShowContentVCNV
               ? this.state.ListShowContentVCNV.map((user, id) => {

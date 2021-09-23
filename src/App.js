@@ -25,7 +25,7 @@ import AdminTT from "./Components/TT/AdminTT";
 import ContentTT from "./Components/TT/ContentTT";
 import UserTT from "./Components/TT/UserTT";
 import { BrowserRouter, Route, Link } from "react-router-dom";
-const socket = io.connect('http://localhost:7878/'); //change when change wifi
+const socket = io.connect(port.port); //change when change wifi
 class App extends Component {
   constructor(props) {
     super(props);
@@ -84,19 +84,6 @@ class App extends Component {
     return (
       <div>
         <BrowserRouter>
-          {/* <div>
-            <ul>
-              <li>
-                <Link to="/">Sign In</Link>
-              </li>
-              <li>
-                <Link to="/Signup">SignUp</Link>
-              </li>
-              <li>
-                <Link to="/Content">Content</Link>
-              </li>
-            </ul>
-          </div> */}
           <Route
             exact
             path="/"

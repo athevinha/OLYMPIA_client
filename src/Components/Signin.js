@@ -54,7 +54,7 @@ class Signin extends Component {
     return (
       <div className="App">
         <form className="App-header" onSubmit={this.onSubmit}>
-          <img src={logo} className="App-logo" alt="logo" />
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <p>Make by Nguyen The Vinh</p>
           <div className="form-group">
             <input
