@@ -16,7 +16,6 @@
   opacity: 0.9;
 }
 .App {
-  background-image: url("../Background.jpg");
   background-repeat: no-repeat, repeat;
   background-color: #cccccc;
 }

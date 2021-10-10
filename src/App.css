@@ -1,11 +1,17 @@
 .App {
-  text-align: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white !important;
 }
+
 body,
 html {
   width: 100vw;
   height: 100vh;
-  padding-top:0 !important;
+  padding-top: 0 !important;
 }
 .App-logo {
   height: 40vmin;
@@ -16,13 +22,11 @@ html {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url("./Components/VD/Img/background2.jpg");
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover;
 }
 .BlackTongKetBar {
-  background-color: black;
   opacity: 0.8;
   position: absolute;
   width: 101%;
@@ -50,9 +54,6 @@ li {
 }
 
 .App-header {
-  background-image: url("./Components/Background.jpg");
-  background-repeat: repeat;
-  background-color: #cccccc;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
