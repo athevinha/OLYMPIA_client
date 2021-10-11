@@ -17,6 +17,16 @@ import Show from "./Img/show.png";
 import WrongMusic from "./Music/ExitAdvenSec.mp3";
 import $ from "jquery";
 //==============import img==================
+import {
+  Card,
+  Button,
+  ListGroup,
+  Table,
+  Container,
+  Row,
+  Col,
+  Spinner,
+} from "react-bootstrap";
 import Pie1 from "./Img/Pie1.png";
 import Pie2 from "./Img/Pie2.png";
 import Pie3 from "./Img/Pie3.png";
@@ -102,9 +112,8 @@ class ContentVCNV extends Component {
               ? this.state.questions[this.state.currentQues].answer
               : ""
           )
-          .css({ "font-size": "55px" })
-          .css({ color: "white" })
-          .css({ "font-style": "bold" });
+          .css({ "font-size": "30px" })
+          .css({ color: "black" });
     });
     socket.on("choose ques", (ques) => {
       $(".names").removeClass("ActiveName");
@@ -135,7 +144,7 @@ class ContentVCNV extends Component {
       }
     });
     socket.on("on VCNV", (data) => {
-      console.log(data)
+      console.log(data);
       let WhoIsFasters = this.state.WhoIsFaster;
       if (OnePush % 1 == 0) {
         WhoIsFasters.push({ name: data.name });
@@ -204,8 +213,7 @@ class ContentVCNV extends Component {
     // $(".names").eq(this.state.current).addClass("CrName");
     return (
       <div className="App">
-        <div className="App-header">
-          <ul className="circle">
+        {/* <ul className="circle">
             <div className="around">
               <li className="black-circle"> &#9679;</li>
               <li className="black-circle"> &#9679;</li>
@@ -281,19 +289,12 @@ class ContentVCNV extends Component {
               </tr>
             </tbody>
           </table>
-
-          {/* <p>
-            {this.state.data[this.state.current]
-              ? this.state.data[this.state.current].name
-              : "ngu"}
-          </p> */}
           <div className="questionsVCNV col-11">
             <div>
               <p className="questionVCNV quessVCNV">
                 {this.state.question ? this.state.question.ques : ""}{" "}
               </p>
             </div>
-            {/* <div className="score col-4">{this.state.score}</div> */}
           </div>
           <div id="progressBar">
             <div className="bar"></div>
@@ -312,7 +313,6 @@ class ContentVCNV extends Component {
             </div>
           </div>
           <ul className="ShowAns">
-            {/* <img src={Show} className"backgroundVCNV" alt=""></img */}
             {this.state.ListShowContentVCNV.map((user, id) => {
               return (
                 <li className={"ShowVCNV diffTT" + id} key={id}>
@@ -322,8 +322,161 @@ class ContentVCNV extends Component {
                 </li>
               );
             })}
+          </ul> */}
+        <Card
+          className="text-center"
+          style={{ width: "90%", borderRadius: "20px" }}
+        >
+          <ListGroup.Item>
+            <h5>Vòng Vượt Chướng Ngại Vật</h5>
+            Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
+            các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
+            được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
+            phần thi này dù còn thời gian.
+            <Table style={{ marginTop: "10px" }} striped bordered hover>
+              <tbody>
+                <tr>
+                  {this.state.data.map((user, id) => {
+                    if (id <= 3)
+                      return (
+                        <td key={id} className="names">
+                          {user.name} ({user.score})
+                        </td>
+                      );
+                  })}
+                </tr>
+              </tbody>
+            </Table>
+            Chướng ngoại vật gồm:{" "}
+            <b>
+              {this.state.questions[0]
+                ? this.state.questions[0].answer.length
+                : "..."}{" "}
+              ký tự{" "}
+            </b>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <Container>
+              <Row>
+                <Col xs={8}>
+                  {/* <ul className="circle">
+                    <div className="around">
+                      <li className="black-circle">◉</li>
+                      <li className="black-circle">◉</li>
+                      <li className="black-circle">◉</li>
+                    </div>
+                    <div className="around">
+                      <li className="black-circle">◉</li>
+                      <li className="black-circle">◉</li>
+                    </div>
+                    <div className="around ">
+                      <li className="black-circle">◉</li>
+                      <li className="black-circle">◉</li>
+                      <li className="black-circle">◉</li>
+                      <li className="black-circle">◉</li>
+                      <li className="black-circle">◉</li>
+                    </div>
+                    <div className="around">
+                      <li className="black-circle">◉</li>
+                      <li className="black-circle">◉</li>
+                      <li className="black-circle">◉</li>
+                    </div>
+                  </ul> */}
+                  <ul className="circle" style={{ marginTop: "5%" }}>
+                    {this.state.questions.map((ques, id) => {
+                      if (id !== 5 && id !== 0)
+                        return (
+                          <div className="around">
+                            {ques.answer.split("").map((string, ids) => {
+                              return <li className="black-circle">◉</li>;
+                            })}
+                          </div>
+                        );
+                    })}
+                  </ul>
+                </Col>
+                <Col xs={4} style={{ padding: 0 }}>
+                  <img className="VCNVimgContent" src={Img}></img>
+                  <p className="pie1 pie" src={Pie1} alt="">
+                    1
+                  </p>
+                  <p className="pie2 pie" src={Pie2} alt="">
+                    2
+                  </p>
+                  <p className="pie3 pie" src={Pie3} alt="">
+                    3
+                  </p>
+                  <p className="pie4 pie" src={Pie4} alt="">
+                    4
+                  </p>
+                  <p className="pieCen pie" src={PieCen} alt="">
+                    5
+                  </p>
+                </Col>
+              </Row>
+            </Container>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <Container>
+              <Row>
+                <Col xs={8}>
+                  <h3>
+                    {this.state.question ? this.state.question.ques : ""}{" "}
+                  </h3>
+                </Col>
+                <Col xs={4}>
+                  <table id="NameList" className="ListFasterVCNV">
+                    <tbody>
+                      <tr>
+                        {this.state.WhoIsFaster.map((user, id) => {
+                          return (
+                            <td className="names FasterVCNV" key={id}>
+                              <div>
+                                <span style={{position:"relative",top:"-5px"}}>{user.name + "[" + id + "]"}{" "}</span>
+                                <Spinner animation="grow" variant="danger" />
+                              </div>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    </tbody>
+                  </table>
+                </Col>
+              </Row>
+            </Container>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <div style={{ borderRadius: "50px" }} id="progressBar">
+              <div className="bar" style={{ borderRadius: "50px" }}></div>
+            </div>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
+            <Card.Link href="#">KC Olympia Square</Card.Link>
+          </ListGroup.Item>
+        </Card>
+        <div className="TongKetBar">
+          <ul>
+            {this.state.Ending.map((user, id) => {
+              return (
+                <li className="EndingUser" key={id}>
+                  {user.name} : {user.score}
+                </li>
+              );
+            })}
           </ul>
         </div>
+        <ul className="ShowAns">
+          {this.state.ListShowContentVCNV.map((user, id) => {
+            return (
+              <li className={"ShowVCNV diffTT" + id} key={id}>
+                <span className={"nameTT eTT" + id + "1"}>{user.name}</span>
+                <br />
+                <span className={"AnsTT eTT" + id + "2"}>{user.answer}</span>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
   }
@@ -339,11 +492,11 @@ function progress(timeleft, timetotal, $element) {
   if (timeleft > 0) {
     setTimeout(function () {
       progress(timeleft - 1, timetotal, $element);
-      //$(".bar").css("background-color", "red");
     }, 1000);
   } else {
     $("#progressBar").css("background-color", "red");
     $(".bar").css("background-color", "red");
+    $(".bar").html("");
     check = true;
   }
 }

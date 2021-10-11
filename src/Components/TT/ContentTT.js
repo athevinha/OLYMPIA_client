@@ -191,23 +191,7 @@ class ContentTT extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          {/* <table id="NameList">
-            <tbody>
-              <tr>
-                {this.state.data.map((user, id) => {
-                  return (
-                    <td className="names" key={id}>
-                      {user.name} ({user.score})
-                    </td>
-                  );
-                })}
-              </tr>
-            </tbod>
-          </table> */}
-          {/* <img src={FormQues} className="backgroundTT"></img> */}
-
           <div className="backgroundTT"></div>
-
           <div className="aroundTT">
             {/* <img src={Ques1} className="QuesImgTT Ques1" alt=""></img> */}
             <Player

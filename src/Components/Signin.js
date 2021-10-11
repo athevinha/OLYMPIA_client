@@ -90,7 +90,7 @@ class Signin extends Component {
                 className="form-control"
                 name="gmail"
                 value={this.state.gmail}
-                placeholder="Type Your Gmail..."
+                placeholder="Your Gmail..."
                 onChange={this.onLogin}
               />
               <input
@@ -98,7 +98,7 @@ class Signin extends Component {
                 className="form-control"
                 name="password"
                 value={this.state.password}
-                placeholder="Type Your Password..."
+                placeholder="Your Password..."
                 onChange={this.onLogin}
               />
               <input

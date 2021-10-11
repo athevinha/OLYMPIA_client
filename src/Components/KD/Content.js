@@ -11,6 +11,15 @@ import StartRight from "./Music/StartRight.wav";
 import StartWrong from "./Music/StartWrong.wav";
 import port from "../../port.json";
 import ReactAudioPlayer from "react-audio-player";
+import {
+  Card,
+  Button,
+  ListGroup,
+  Table,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 const socket = io.connect(port.port); //change when change wifi
 let check = true,
   SoundTime = true;
@@ -107,33 +116,18 @@ class Content extends Component {
     return (
       <div className="App">
         <div className="full-control">
-          <ReactAudioPlayer id="StartFinish" src={StartFinish}  />
-          <ReactAudioPlayer id="StartFinish2" src={StartFinish2} controls style={{display:"none"}} />
-          <ReactAudioPlayer id="StartWrong" src={StartWrong}  />
-          <ReactAudioPlayer id="StartRight" src={StartRight}  />
-          <ReactAudioPlayer id="second" src={second}  />
-          {/* <audio id="StartFinish">
-          <source src={StartFinish} class = "audio" type="audio/ogg" />
-          <source src={StartFinish} class = "audio" type="audio/mpeg" />
-        </audio>
-        <audio id="StartFinish2">
-          <source src={StartFinish2} class = "audio" type="audio/ogg" />
-          <source src={StartFinish2} class = "audio" type="audio/mpeg" />
-        </audio>
-        <audio id="StartRight">
-          <source src={StartRight} class = "audio" type="audio/ogg" />
-          <source src={StartRight} class = "audio" type="audio/mpeg" />
-        </audio>
-        <audio id="StartWrong">
-          <source src={StartWrong} class = "audio" type="audio/ogg" />
-          <source src={StartWrong} class = "audio" type="audio/mpeg" />
-        </audio>
-        <audio id="second">
-          <source src={second} class = "audio" type="audio/ogg" />
-          <source src={second} class = "audio" type="audio/mpeg" />
-        </audio> */}
+          <ReactAudioPlayer id="StartFinish" src={StartFinish} />
+          <ReactAudioPlayer
+            id="StartFinish2"
+            src={StartFinish2}
+            controls
+            style={{ display: "none" }}
+          />
+          <ReactAudioPlayer id="StartWrong" src={StartWrong} />
+          <ReactAudioPlayer id="StartRight" src={StartRight} />
+          <ReactAudioPlayer id="second" src={second} />
         </div>
-        <div className="App-header">
+        {/* <div className="App-header">
           <table id="NameList">
             <tbody>
               <tr>
@@ -171,6 +165,62 @@ class Content extends Component {
               </ul>
             </div>
           </div>
+        </div> */}
+        <Card className="text-center" style={{ width: "90%",borderRadius:"20px" }}>
+          <ListGroup.Item>
+            <h5>Vòng Khởi Động</h5>
+            Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
+            các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
+            được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
+            phần thi này dù còn thời gian.
+            <Table style={{ marginTop: "10px" }} striped bordered hover>
+              <tbody>
+                <tr>
+                  {this.state.data.map((user, id) => {
+                    if (id <= 3)
+                      return (
+                        <td key={id} className="names">
+                          {user.name} ({user.score})
+                        </td>
+                      );
+                  })}
+                </tr>
+              </tbody>
+            </Table>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <Container>
+              <Row>
+                <Col xs={10}>
+                  <h3>{this.state.question}</h3>
+                </Col>
+                <Col xs={2}>
+                  <h3>{this.state.score}</h3>
+                </Col>
+              </Row>
+            </Container>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <div style={{ borderRadius: "50px" }} id="progressBar">
+              <div className="bar" style={{ borderRadius: "50px" }}></div>
+            </div>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
+            <Card.Link href="#">KC Olympia Square</Card.Link>
+          </ListGroup.Item>
+        </Card>
+
+        <div className="TongKetBar">
+            <ul>
+              {this.state.Ending.map((user, id) => {
+                return (
+                  <li className="EndingUser" key={id}>
+                    {user.name} : {user.score}
+                  </li>
+                );
+              })}
+            </ul>
         </div>
       </div>
     );
@@ -195,6 +245,7 @@ function progress(timeleft, timetotal, $element) {
     $(".bar").css("background-color", "red");
     SoundTime = false;
     check = true;
+    $(".bar").html("");
     // thisd.soundPlay("StartFinish2");
     document.getElementById("StartFinish2").play();
   }

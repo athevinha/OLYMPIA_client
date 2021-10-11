@@ -11,10 +11,6 @@
   height: 100%;
   position: absolute;
 }
-#NameList {
-  background-color: black;
-  opacity: 0.9;
-}
 .App {
   background-repeat: no-repeat, repeat;
   background-color: #cccccc;

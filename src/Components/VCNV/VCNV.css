@@ -1,6 +1,6 @@
 .black-circle {
-  font-size: 40px;
-  color: white;
+  font-size: 30px;
+  color: black;
   list-style-type: none;
   display: inline;
 }
@@ -27,7 +27,6 @@ body {
 #showAnswerVCNV {
   display: block;
   width: 100%;
-  background-color: black;
   color: white;
   opacity: 0.9;
   text-align: center;
@@ -39,7 +38,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: white;
   z-index: 1;
   list-style-type: none;
   font-size: 95%;
@@ -103,15 +102,13 @@ body {
   left: 67%;
 }
 .around {
-  border-bottom: 1px white solid;
-  position: relative;
-  width: 100%;
-  left: -5%;
-  text-align: center;
-  transition: 1s;
+
 }
 .CircleActive {
-  background-color: rgb(11, 84, 112);
+  transition: 0.4s;
+  background-color: #428bca;
+  border-radius: 50px;
+  color: black;
 }
 .answerVCNV {
   font-size: 25px;
@@ -122,56 +119,58 @@ body {
   top: 30px;
 }
 .VCNVimgContent {
-  position: absolute;
-  width: 40%;
-  height: 46%;
-  top: 26%;
-  left: 55%;
+  position: relative;
+  height: 240px;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 .pie {
   position: absolute;
-  width: 20%;
-  height: 23%;
+  z-index: 50;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 50%;
+  background-color: gainsboro;
+  border:1px solid gray;
+  padding-top: 10%;
+  font-size:30px;
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .pie1 {
-  top: 25%;
-  right: 25%;
+  padding-right: 15%;
 }
 .pie2 {
-  top: 48%;
-  right: 25%;
-  height: 25%;
+   top:50%;
+   padding-right: 15%;
 }
 .pie3 {
-  height: 25%;
-  top: 48%;
-  right: 5%;
+  padding-left: 15%;
+  top: 50%;
+  left: 50%;
 }
 .pie4 {
-  top: 25%;
-  right: 5%;
+  padding-left: 15%;
+left: 50%;
 }
 .pieCen {
-  right: 14%;
-  height: 26%;
-  width: 22%;
-  top: 35%;
+  left: 25%;
+  top:25%;
 }
 .buttonVCNV {
   display: block;
   margin-bottom: 80%;
   font-size: 125%;
 }
-#NameList {
-  opacity: 1 !important;
-}
 .ListFasterVCNV {
   opacity: 1 !important;
 }
 .FasterVCNV {
-  background-color: rgb(255, 72, 0);
+  background-color: gainsboro;
   color: black;
-  border: 5px solid black;
+  border: 1px solid black;
+  font-size: 20px;
 }
 .sttVCNV {
   position: absolute;
@@ -183,15 +182,7 @@ body {
 }
 .circle {
   position: relative;
-  left: -22%;
-  height: 50%;
-  width: 54% !important;
-  display: inline;
-  font-size: 115%;
-  background-color: black;
-  border: 2px white solid;
-  text-align: center;
-  margin-bottom: 3%;
+ color: black;
 }
 .questionsVCNV {
   height: 100px !important;

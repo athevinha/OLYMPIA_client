@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import port from "../port.json";
 import usersService from "../service/users.service";
 import "../App.css";
+import { Card, Button, ListGroup } from "react-bootstrap";
 const socket = io.connect(port.port);
 class Signup extends Component {
   constructor(props) {
@@ -29,20 +30,20 @@ class Signup extends Component {
   };
   onSubmit = (e) => {
     e.preventDefault();
-    let userN= {
+    let userN = {
       gmail: this.state.gmail,
       pass: this.state.password,
       name: this.state.name,
       avatar:
         "https://wsa.ca/wp-content/uploads/2018/10/facebook-profile-picture-unknown-facts-about-facebook-300x188.jpg",
       score: 0,
-      tooken: this.GenerateTooken()
+      tooken: this.GenerateTooken(),
     };
-    usersService.create(userN).then((req,res)=>{
+    usersService.create(userN).then((req, res) => {
       alert(req);
-      window.location="/content"
-      localStorage.setItem("tooken", req.data.tooken )
-    })
+      window.location = "/content";
+      localStorage.setItem("tooken", req.data.tooken);
+    });
     // socket.emit("add data", );
   };
 
@@ -66,8 +67,7 @@ class Signup extends Component {
   render() {
     return (
       <div className="App">
-        <form className="App-header" onSubmit={this.onSubmit}>
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
+        {/* <form className="App-header" onSubmit={this.onSubmit}>
           <p>Make by Nguyen The Vinh</p>
           <div className="form-group">
             <input
@@ -96,7 +96,43 @@ class Signup extends Component {
             />
             <input className="btn btn-light" type="submit" value="Submit" />
           </div>
-        </form>
+        </form> */}
+        <Card className="text-center" style={{ width: "90%" }}>
+          <ListGroup.Item>Sign Up</ListGroup.Item>
+          <ListGroup.Item>
+            <form onSubmit={this.onSubmit}>
+              <input
+                type="email"
+                className="form-control"
+                name="gmail"
+                value={this.state.gmail}
+                placeholder="Your Gmail..."
+                onChange={this.onLogin}
+              />
+              <input
+                type="text"
+                className="form-control"
+                name="password"
+                value={this.state.password}
+                placeholder="Your Password..."
+                onChange={this.onLogin}
+              />
+              <input
+                type="text"
+                className="form-control"
+                name="name"
+                value={this.state.name}
+                placeholder="Your Name..."
+                onChange={this.onLogin}
+              />
+              <input className="btn btn-light" type="submit" value="Submit" />
+            </form>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
+            <Card.Link href="#">KC Olympia Square</Card.Link>
+          </ListGroup.Item>
+        </Card>
       </div>
     );
   }
