@@ -6,6 +6,15 @@ import $ from "jquery";
 import port from "../../port.json";
 import PointQues from "./Img/PointQues.PNG";
 import "./VD.css";
+import {
+  Card,
+  Button,
+  ListGroup,
+  Table,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 const socket = io.connect(port.port); //change when change wifi
 
 let thisd;
@@ -43,7 +52,7 @@ class AdminVD extends Component {
   componentDidMount() {
     $(".ChoosePointVD").show();
     thisd = this;
-    console.log(this.props.questions)
+    console.log(this.props.questions);
     this.setState({
       questions: this.props.questions,
       data: this.props.data,
@@ -226,7 +235,7 @@ class AdminVD extends Component {
       <div className="App row">
         <div className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <table id="NameList">
+          {/* <table id="NameList">
             <tbody>
               <tr>
                 {this.state.data.map((user, id) => {
@@ -259,7 +268,60 @@ class AdminVD extends Component {
                 ? this.state.data[this.state.examUser].score
                 : 0}
             </div>
-          </div>
+          </div> */}
+          <Card
+            className="text-center"
+            style={{ width: "90%", borderRadius: "20px" }}
+          >
+            <ListGroup.Item>
+              <h5>Vòng Khởi Động</h5>
+              Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
+              các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
+              được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
+              phần thi này dù còn thời gian.
+              <Table style={{ marginTop: "10px" }} striped bordered hover>
+                <tbody>
+                  <tr>
+                    {this.state.data.map((user, id) => {
+                      if (id <= 3)
+                        return (
+                          <td key={id} className="names namesVD"
+                          onClick={() =>
+                            this.OnChooseUser(user.name, id, user.score)
+                          }>
+                            {user.name} ({user.score})
+                          </td>
+                        );
+                    })}
+                  </tr>
+                </tbody>
+              </Table>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Container>
+                <Row>
+                  <Col xs={10}>
+                    <h3> {this.state.question ? this.state.question.ques : ""}{" "}</h3>
+                  </Col>
+                  <Col xs={2}>
+                    <h3> {this.state.data[this.state.examUser]
+                ? this.state.data[this.state.examUser].score
+                : 0}</h3>
+                  </Col>
+                </Row>
+              </Container>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <div style={{ borderRadius: "50px" }} id="progressBar">
+                <div className="bar" style={{ borderRadius: "50px" }}></div>
+              </div>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
+              <Card.Link href="#">KC Olympia Square</Card.Link>
+            </ListGroup.Item>
+          </Card>
+
           <button
             className="btn btn-info NextQuesVD timeVD abso"
             onClick={this.NextQuesVD}
@@ -267,13 +329,13 @@ class AdminVD extends Component {
             ▶▶
           </button>
           <button
-            className="btn btn-dark TrueAnsVD abso"
+            className="btn btn-primary TrueAnsVD abso"
             onClick={() => this.CheckAnsVD(true)}
           >
             ✅
           </button>
           <button
-            className="btn btn-dark FalseAnsVD  abso"
+            className="btn btn-primary FalseAnsVD  abso"
             onClick={() => this.CheckAnsVD(false)}
           >
             ❌
@@ -430,4 +492,3 @@ function progress(timeleft, timetotal, $element) {
 //The Anh :4203
 //Ngguyen Huu Truong :5226
 //Vinh : 4177
-//ducga321@

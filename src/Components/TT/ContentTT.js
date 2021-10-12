@@ -19,6 +19,15 @@ import Ques2 from "./Img/Ques2.PNG";
 import Ques3 from "./Video/Ques3.mp4";
 // import Ques32 from "./Img/Ques32.PNG";
 import Ques4 from "./Img/Ques4.PNG";
+import {
+  Card,
+  Button,
+  ListGroup,
+  Table,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 //==============import img============================
 window.onload = function () {
   // Setup all node
@@ -190,10 +199,10 @@ class ContentTT extends Component {
     // $(".names").eq(this.state.crrent).addClass("CrName");
     return (
       <div className="App">
-        <div className="App-header">
+        {/* <div className="App-header">
           <div className="backgroundTT"></div>
           <div className="aroundTT">
-            {/* <img src={Ques1} className="QuesImgTT Ques1" alt=""></img> */}
+            <img src={Ques1} className="QuesImgTT Ques1" alt=""></img>
             <Player
               ref={(player) => {
                 players = player;
@@ -208,7 +217,7 @@ class ContentTT extends Component {
             <img src={Ques2} className="QuesImgTT Ques2" alt=""></img>
           </div>
           <div className="aroundTT">
-            {/* <img src={Ques3} className="QuesImgTT Ques3" alt=""></img> */}
+            <img src={Ques3} className="QuesImgTT Ques3" alt=""></img>
             <Player
               ref={(player) => {
                 players3 = player;
@@ -245,7 +254,6 @@ class ContentTT extends Component {
             </div>
           </div>
           <ul className="ShowAnsTT">
-            {/* <img src={Show} className="backgroundVCNV" alt=""></img> */}
             {this.state.ListShowContentVCNV.map((user, id) => {
               return (
                 <li
@@ -263,12 +271,119 @@ class ContentTT extends Component {
               );
             })}
           </ul>
+        </div> */}
+        <Card
+          className="text-center"
+          style={{ width: "90%", borderRadius: "20px" }}
+        >
+          <ListGroup.Item>
+            <h5>Vòng tăng tốc</h5>
+            Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
+            các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
+            được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
+            phần thi này dù còn thời gian.
+            <Table style={{ marginTop: "10px" }} striped bordered hover>
+              <tbody>
+                <tr>
+                  {this.state.data.map((user, id) => {
+                    if (id <= 3)
+                      return (
+                        <td key={id} className="names">
+                          {user.name} ({user.score})
+                        </td>
+                      );
+                  })}
+                </tr>
+              </tbody>
+            </Table>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <Row>
+              <Col xs={7}>
+                <div className="aroundTT">
+                  <Player
+                    ref={(player) => {
+                      players = player;
+                    }}
+                    src={Ques1}
+                    className="QuesImgTT Ques1"
+                    muted
+                  />
+                </div>
+                <div className="aroundTT">
+                  <img src={Ques2} className="QuesImgTT Ques2" alt=""></img>
+                </div>
+                <div className="aroundTT">
+                  <Player
+                    ref={(player) => {
+                      players3 = player;
+                    }}
+                    src={Ques3}
+                    className="QuesImgTT Ques3"
+                    muted
+                  />
+                </div>
+                <div className="aroundTT">
+                  <img src={Ques4} className="QuesImgTT Ques4" alt=""></img>
+                </div>
+              </Col>
+              <Col xs={5} className="her_cen">
+                <div style={{width:"100%"}}>
+                  <div
+                    style={{ borderRadius: "50px", width: "100%" }}
+                    id="progressBar"
+                  >
+                    <div className="bar" style={{ borderRadius: "50px" }}></div>
+                  </div>
+                  <hr />
+                  <div className="questionTT">
+                    {this.state.question ? this.state.question.ques : ""}{" "}
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </ListGroup.Item>
+          {/* <ListGroup.Item>
+          </ListGroup.Item> */}
+          <ListGroup.Item>
+            <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
+            <Card.Link href="#">KC Olympia Square</Card.Link>
+            {/* <Card.Link href="#">Nguyen The Vinh</Card.Link> */}
+          </ListGroup.Item>
+        </Card>
+        <div className="TongKetBar">
+          <div className="BlackTongKetBar">
+            <ul>
+              {this.state.Ending.map((user, id) => {
+                return (
+                  <li className="EndingUser" key={id}>
+                    {user.name} : {user.score}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
+        <ul className="ShowAnsTT">
+          {this.state.ListShowContentVCNV.map((user, id) => {
+            return (
+              <li
+                className="Ans ShowTT"
+                className="ShowVCNV"
+                key={id}
+              >
+                <span className={"nameTT eTT" + id + "1"}>{user.name}</span>
+                <br />
+                <span className={"AnsTT eTT" + id + "2"}>{user.answer}</span>
+                <span className={"AnsTimeTT eTT" + id + "3"}>{user.time}</span>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
   }
 }
-
 export default ContentTT;
 function progress(timeleft, timetotal, $element) {
   var progressBarWidth = (timeleft * $element.width()) / timetotal;
@@ -285,6 +400,7 @@ function progress(timeleft, timetotal, $element) {
   } else {
     $("#progressBar").css("background-color", "red");
     $(".bar").css("background-color", "red");
+    $(".bar").html("");
     check = true;
   }
 }

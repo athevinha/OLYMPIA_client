@@ -5,15 +5,6 @@
   height: 90%;
   opacity: 0.8;
 }
-
-.ContentTTprogress {
-  z-index: 1 !important;
-  transform: rotate(-90deg);
-  width: 50% !important;
-  position: relative;
-  left: -35%;
-  height: 60px !important;
-}
 .NameListTT {
   z-index: 100;
   position: absolute;
@@ -31,11 +22,8 @@
   width: 75%;
 }
 .aroundTT {
-  position: absolute;
-  width: 64% !important;
-  height: 77% !important;
-  top: 31%;
-  left: -5%;
+  position: relative;
+
 }
 .Ques1,
 .Ques3,
@@ -78,80 +66,12 @@
   color: black;
 }
 .QuesImgTT {
-  border: 2px white solid;
-  position: absolute !important;
-  width: 100%;
-  top: 7%;
-  height: 97% !important;
+  width:100%;
+  border-radius: 50px;
 }
 .eTT{
 }
-/* .eTT23,
-.eTT33,
-.eTT13,
-.eTT03 {
-  position: relative;
-  top: -25px;
-  right: 75%;
-  font-size: 300%;
-}
-.eTT02,
-.eTT12,
-.eTT22,
-.eTT32 {
-  position: relative;
-  top: -10%;
-  left: 30%;
-}
-.eTT01,
-.eTT11,
-.eTT21,
-.eTT31 {
-  position: relative;
-  color: orange;
-  font-weight: bold;
-  left: 5%;
-}
-.diffTT0 {
-  position: absolute;
-  top: 10%;
-  right: 35%;
-  width: 25% !important;
-  height: 25% !important;
-}
-.diffTT1 {
-  position: absolute;
-  top: 31%;
-  right: 35%;
-  width: 25% !important;
-  height: 25% !important;
-}
-.diffTT2 {
-  position: absolute;
-  top: 50%;
-  right: 35%;
-  width: 25% !important;
-  height: 25% !important;
-}
-.diffTT3 {
-  position: absolute;
-  top: 72%;
-  right: 35%;
-  width: 25% !important;
-  height: 25% !important;
-}
-.ShowAnsTT {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  text-align: center;
-  z-index: 1;
-  list-style-type: none;
-  font-size: 80% !important;
-}
 
-*/
 
 .ShowTT,
 .ShowVCNV {
@@ -164,6 +84,7 @@
 }
 .ShowAnsTT,
 .ShowAns {
+  background-color: white;
   position: fixed;
   top: 0;
   text-align: center;
@@ -190,10 +111,10 @@
 }
 .AnsTimeTT {
   position: relative;
-  left: 5%;
-  border: 2px white solid;
-  padding-left: 10%;
-  padding-right: 10%;
+  left: 2%;
+  border: 2px black solid;
+  padding-left: 5%;
+  padding-right: 5%;
   text-align: center;
   border-radius: 50px;
 }
@@ -203,4 +124,15 @@
   padding-right: 5%;
   text-align: center;
   border-radius: 50px;
+}
+.questionTT{
+  font-size: 35px;
+  font-family: 'Times New Roman', Times, serif;
+  border: 1px solid black;
+  border-radius: 50px;
+} 
+.her_cen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

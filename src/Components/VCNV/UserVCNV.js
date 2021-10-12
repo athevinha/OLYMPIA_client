@@ -159,8 +159,8 @@ class UserVCNV extends Component {
           </p> */}
           <div className="questionsVCNV col-11">
             <div>
-              <p className="questionVCNV quessVCNV">
-                {this.state.question.ques}{" "}
+              <p className="quessVCNV">
+              {this.state.question.ques}
               </p>
             </div>
             {/* <div className="score col-4">{this.state.score}</div> */}

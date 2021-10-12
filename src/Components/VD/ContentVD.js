@@ -17,6 +17,15 @@ import FinishWrongAnswer from "./Music/FinishWrongAnswer.mp3";
 import FinishRightAnswer from "./Music/FinishRightAnswer.mp3";
 import Granted from "./Music/ObsGranted.wav";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import {
+  Card,
+  Button,
+  ListGroup,
+  Table,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
 let oneTime = 0;
@@ -175,7 +184,7 @@ class ContentVD extends Component {
     return (
       <div className="App row">
         <div className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
+          {/* 
           <table id="NameList">
             <tbody>
               <tr>
@@ -234,7 +243,6 @@ class ContentVD extends Component {
               </div>
             </div>
           </div>
-          {/* <img src={PointQues}></img> */}
           <div id="progressBar" className="progressBarVD ">
             <div className="bar barVD"></div>
           </div>
@@ -257,12 +265,101 @@ class ContentVD extends Component {
               </ul>
             </div>
           </div>
+        </div> */}
+          <Card
+            className="text-center"
+            style={{ width: "90%", borderRadius: "20px" }}
+          >
+            <ListGroup.Item>
+              <h5>Vòng Khởi Động</h5>
+              Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
+              các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
+              được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
+              phần thi này dù còn thời gian.
+              <Table style={{ marginTop: "10px" }} striped bordered hover>
+                <tbody>
+                  <tr>
+                    {this.state.data.map((user, id) => {
+                      if (id <= 3)
+                        return (
+                          <td key={id} className="names">
+                            {user.name} ({user.score})
+                          </td>
+                        );
+                    })}
+                  </tr>
+                </tbody>
+              </Table>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Container>
+                <Row>
+                  <Col xs={10}>
+                    <h3>{this.state.question}</h3>
+                  </Col>
+                  <Col xs={2}>
+                    <h3>{this.state.score}</h3>
+                  </Col>
+                </Row>
+              </Container>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <div style={{ borderRadius: "50px" }} id="progressBar">
+                <div className="bar" style={{ borderRadius: "50px" }}></div>
+              </div>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
+              <Card.Link href="#">KC Olympia Square</Card.Link>
+            </ListGroup.Item>
+          </Card>
+          <div className="ChoosePointVD">
+            <div className="BlackBackground">
+              <div className="Ten" >
+                <p className="TenText">10</p>
+                <div className="TickVD" id="Tick1"></div>
+                <div className="TickVD" id="Tick2"></div>
+                <div className="TickVD" id="Tick3"></div>
+              </div>
+              <div className="TwoTen TenTick" >
+                <p className="TwoText">20</p>
+                <div className="TickVD" id="Tick4"></div>
+                <div className="TickVD" id="Tick5"></div>
+                <div className="TickVD" id="Tick6"></div>
+              </div>
+              <div className="ThreeTen TenTick" >
+                <p className="ThreeText">30</p>
+                <div className="TickVD" id="Tick7"></div>
+                <div className="TickVD" id="Tick8"></div>
+                <div className="TickVD" id="Tick9"></div>
+              </div>
+            </div>
+          </div>
+          <button
+            className="btn btn-warning StarVD AnimationStart abso"
+            onClick={this.ChooseStar}
+          >
+            ⭐
+          </button>
+          <div className="TongKetBar">
+            <div className="BlackTongKetBar">
+              <ul>
+                {this.state.Ending.map((user, id) => {
+                  return (
+                    <li className="EndingUser" key={id}>
+                      {user.name} : {user.score}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
         </div>
+        
       </div>
     );
   }
 }
-
 export default ContentVD;
 function progress(timeleft, timetotal, $element) {
   var progressBarWidth = (timeleft * $element.width()) / timetotal;
@@ -273,7 +370,6 @@ function progress(timeleft, timetotal, $element) {
   if (timeleft > 0) {
     setTimeout(function () {
       progress(timeleft - 1, timetotal, $element);
-      //$(".bar").css("background-color", "red");
     }, 1000);
   } else {
     $("#progressBar").css("background-color", "red");

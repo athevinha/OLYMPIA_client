@@ -1,6 +1,9 @@
 .pointer {
   cursor: pointer;
 }
+h3{
+  font-family: 'Times New Roman', Times, serif;
+}
 .progressBarVD {
   height: 40px !important;
   font-size: 120% !important;
@@ -34,23 +37,29 @@
   top: 65%;
 }
 .activeNameVD {
-  background-color: aqua;
+  background-color: #428bca;
   color: black;
   opacity: 1 !important;
 }
 .VDText {
-  top: 40%;
-  left: 60%;
-  background-color: black;
-  font-size: 200%;
+  position: fixed;
+  border-radius: 50px;
+  border:1px solid black;
+  padding-left: 100px;
+  padding-right: 100px;
+  top: 80%;
+  left: 40%;
+  color: black;
+  font-size: 250%;
 }
 .FalseAnsVD {
   left: 91%;
   top: 65%;
 }
 .FinishVD {
-  top: 110%;
+  top: 5%;
   left: 85%;
+  font-size: 30px;
 }
 .Muois {
   top: 80%;
@@ -62,16 +71,17 @@
   top: 90%;
 }
 .timeVD {
-  font-size: 60%;
+  font-size: 15px;
   width: 5%;
   left: 95%;
 }
 .fiveVD {
-  top: 100%;
+  top: 95%;
 }
 .StarVD {
   left: 5%;
-  font-size: 150%;
+  top: 60%;
+  font-size: 200%;
 }
 .ChoosePointVD {
   background-position: center; /* Center the image */
@@ -82,63 +92,72 @@
   height: 101%;
 }
 .BlackBackground {
-  background-color: black;
-  opacity: 0.9;
+  background-color: white;
   width: 100%;
   height: 100%;
+}
+
+
+
+.TickVD {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  top: -150px;
+  left: -30%;
+  cursor: pointer;
+}
+.TenText {
+  position: relative;
+  top: 5%;
+  font-size: 100px;
+  color: black;
+}
+.TwoText {
+  position: relative;
+  top: 5%;
+  font-size: 100px;
+  color: black;
+}
+
+.ThreeText {
+  position: relative;
+  top: 5%;
+  font-size: 100px;
+  color: black;
 }
 .Ten {
   width: 200px;
   height: 200px;
   position: absolute;
-  border: 2px solid white;
+  border: 1px solid black;
   text-align: center;
   left: 85%;
   top: 5%;
 }
-.TenText {
-  position: relative;
-  top: 5%;
-  font-size: 450%;
-}
-/* Resize the background image to cover the entire container */
-/* Resize the background image to cover the entire container */
 .TwoTen {
   width: 200px;
   height: 200px;
   position: absolute;
-  border: 2px solid white;
+  border: 1px solid black;
   text-align: center;
   left: 85%;
   top: 35%;
 }
-.TwoText {
-  position: relative;
-  top: 5%;
-  font-size: 450%;
-}
-/* Resize the background image to cover the entire container */
+
 .ThreeTen {
   width: 200px;
   height: 200px;
   position: absolute;
-  border: 2px solid white;
+  border: 1px solid black;
   text-align: center;
   left: 85%;
   top: 65%;
 }
-.ThreeText {
-  position: relative;
-  top: 5%;
-  font-size: 450%;
-}
-/* Resize the background image to cover the entire container */
-.TickVD {
-  position: relative;
-  width: 50px;
-  height: 50px;
-  border: 1px solid white;
-  top: -95%;
-  left: -30%;
+.namesVD{
   cursor: pointer;
+}
+.namesVD:hover{
+  background-color: turquoise;
 }
