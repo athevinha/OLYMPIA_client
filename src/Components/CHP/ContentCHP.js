@@ -6,6 +6,15 @@ import $ from "jquery";
 import port from "../../port.json";
 import "./VD.css";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import {
+  Card,
+  Button,
+  ListGroup,
+  Table,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
 let time1, time2;
@@ -122,8 +131,7 @@ class ContentCHP extends Component {
     return (
       <div className="App row">
         <div className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <table id="NameList">
+          {/* <table id="NameList">
             <tbody>
               <tr>
                 {this.state.data.map((user, id) => {
@@ -156,7 +164,6 @@ class ContentCHP extends Component {
               : ""}
           </p>
 
-          {/* <img src={PointQues}></img> */}
           <div id="progressBar" className="progressBarVD ">
             <div className="bar barVD"></div>
           </div>
@@ -165,7 +172,60 @@ class ContentCHP extends Component {
             <div className="BlackCHP">
               <p className="WinnerName">WINNER:{this.state.winnerName}</p>
             </div>
-          </div>
+          </div> */}
+          <Card
+            className="text-center"
+            style={{ width: "90%", borderRadius: "20px" }}
+          >
+            <ListGroup.Item>
+              <h5>Câu hỏi phụ</h5>
+              Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
+              các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
+              được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
+              phần thi này dù còn thời gian.
+              <Table style={{ marginTop: "10px" }} striped bordered hover>
+                <tbody>
+                  <tr>
+                    {this.state.data.map((user, id) => {
+                      if (id == 1 || id == 2)
+                        return (
+                          <td key={id} className="names pointer">
+                            {user.name} ({user.score})
+                          </td>
+                        );
+                        else {
+                          return <td className="names pointer" key={id}></td>;
+                        }
+                    })}
+                     
+                  </tr>
+                </tbody>
+              </Table>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Container>
+                <Row>
+                  <Col xs={12}>
+                    <h3>{this.state.question}</h3>
+                  </Col>
+                </Row>
+              </Container>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <div style={{ borderRadius: "50px" }} id="progressBar">
+                <div className="bar" style={{ borderRadius: "50px" }}></div>
+              </div>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
+              <Card.Link href="#">KC Olympia Square</Card.Link>
+            </ListGroup.Item>
+          </Card>
+          <div className="WinnerCHP">
+            <div className="BlackCHP">
+              <p className="WinnerName">WINNER:{this.state.winnerName}</p>
+            </div>
+          </div> 
         </div>
       </div>
     );
