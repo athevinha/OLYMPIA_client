@@ -17,6 +17,7 @@ import $, { data } from "jquery";
 import Ques1 from "./Video/Ques1.mp4";
 import Ques2 from "./Img/Ques2.PNG";
 import Ques3 from "./Video/Ques3.mp4";
+import ReactAudioPlayer from "react-audio-player";
 // import Ques32 from "./Img/Ques32.PNG";
 import Ques4 from "./Img/Ques4.PNG";
 import {
@@ -75,7 +76,7 @@ class ContentTT extends Component {
     });
     socket.on("play sound TT", (crr) => {
       if (oneMusic == 0) {
-        this.soundPlay(OnVCNV);
+        document.getElementById('OnVCNV').play();
         oneMusic = 1;
       }
     });
@@ -91,7 +92,7 @@ class ContentTT extends Component {
         $(".ShowAnsTT").show(1000);
         this.setState({ toogle: 1 });
         console.log("showw");
-        this.soundPlay(RowShow);
+        document.getElementById("RowShow").play();
       } else {
         this.soundStop(RowShow);
 
@@ -128,7 +129,7 @@ class ContentTT extends Component {
       //========================================
       $(ques.src).show(500);
       console.log(ques.src);
-      this.soundPlay(ImgShow);
+      document.getElementById('ImgShow').play();
       let thisd = this;
       this.setState({
         question: ques.ques,
@@ -158,13 +159,13 @@ class ContentTT extends Component {
       }
     });
     socket.on("on VCNV", (data) => {
-      this.soundPlay(ObsGranted);
+      document.getElementById('ObsGranted').play();
       $(".names").addClass("label danger");
       alert(data ? data.name : "ngu");
     });
     socket.on("TongKetDiem", (data) => {
       if (OnlyOne == 0) {
-        this.soundPlay(AccelerationRightAnswer);
+        document.getElementById('AccelerationRightAnswer').play();
 
         OnlyOne = 1;
       }
@@ -193,12 +194,20 @@ class ContentTT extends Component {
       }
     });
   }
-
   render() {
     // $".names").removeClass("CrName");
     // $(".names").eq(this.state.crrent).addClass("CrName");
     return (
       <div className="App">
+                   <div className="full-control">
+          <ReactAudioPlayer id="AccelerationRightAnswer" src={AccelerationRightAnswer} />
+          <ReactAudioPlayer id="OnVCNV" src={OnVCNV} />
+          <ReactAudioPlayer id="second" src={second} />
+          <ReactAudioPlayer id="ObsGranted" src={ObsGranted} />
+          <ReactAudioPlayer id="RowShow" src={RowShow} />
+          <ReactAudioPlayer id="ImgShow" src={ImgShow} />
+       
+        </div>
         {/* <div className="App-header">
           <div className="backgroundTT"></div>
           <div className="aroundTT">
@@ -278,10 +287,10 @@ class ContentTT extends Component {
         >
           <ListGroup.Item>
             <h5>Vòng tăng tốc</h5>
-            Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
-            các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
-            được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
-            phần thi này dù còn thời gian.
+            Mỗi gói sẽ có 3 câu hỏi. Thí sinh kết hợp các câu hỏi 10, 20, 30
+            điểm tạo thành một gói câu hỏi. Vì thế tổng điểm của gói câu hỏi có
+            thể nằm trong khoảng từ 30 đến 90 điểm. Thời gian suy nghĩ và trả
+            lời của câu 10, 20 và 30 điểm lần lượt là 10, 15 và 20 giây.
             <Table style={{ marginTop: "10px" }} striped bordered hover>
               <tbody>
                 <tr>
@@ -328,7 +337,7 @@ class ContentTT extends Component {
                 </div>
               </Col>
               <Col xs={5} className="her_cen">
-                <div style={{width:"100%"}}>
+                <div style={{ width: "100%" }}>
                   <div
                     style={{ borderRadius: "50px", width: "100%" }}
                     id="progressBar"
@@ -367,11 +376,7 @@ class ContentTT extends Component {
         <ul className="ShowAnsTT">
           {this.state.ListShowContentVCNV.map((user, id) => {
             return (
-              <li
-                className="Ans ShowTT"
-                className="ShowVCNV"
-                key={id}
-              >
+              <li className="Ans ShowTT" className="ShowVCNV" key={id}>
                 <span className={"nameTT eTT" + id + "1"}>{user.name}</span>
                 <br />
                 <span className={"AnsTT eTT" + id + "2"}>{user.answer}</span>

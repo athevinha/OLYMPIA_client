@@ -15,6 +15,7 @@ import QuesShow from "./Music/ObstacleShowQues.mp3";
 import Img from "./Img/VCNVIMG.png";
 import Show from "./Img/show.png";
 import WrongMusic from "./Music/ExitAdvenSec.mp3";
+import ReactAudioPlayer from "react-audio-player";
 import $ from "jquery";
 //==============import img==================
 import {
@@ -77,7 +78,7 @@ class ContentVCNV extends Component {
     socket.on("show list VCNV", (show) => {
       if (this.state.toogle == 0) {
         $(".ShowAns").show(1000);
-        this.soundPlay(RowShow);
+        document.getElementById("RowShow").play();
         this.setState({ toogle: 1 });
       } else {
         $(".ShowAns").hide(1000);
@@ -86,19 +87,19 @@ class ContentVCNV extends Component {
       this.setState({ ListShowContentVCNV: show.list });
     });
     socket.on("disable", (dis) => {
-      this.soundPlay(WrongMusic);
+      document.getElementById("WrongMusic").play();
       $(".names").eq(dis.id).css("background-color", "red");
       $(".names").eq(dis.id).css("color", "black");
     });
     socket.on("play sound VCNV", (hello) => {
       if (oneMusic == 0) {
-        this.soundPlay(OnVCNV2);
+        document.getElementById("OnVCNV2").play();
         oneMusic = 1;
         console.log("hello");
       }
     });
     socket.on("show answervcnv", (show) => {
-      this.soundPlay(OpenCircle);
+      document.getElementById("OpenCircle").play();
       console.log(
         this.state.questions[this.state.currentQues]
           ? this.state.questions[this.state.currentQues].answer
@@ -123,7 +124,7 @@ class ContentVCNV extends Component {
         question: ques.ques,
         currentQues: ques.id,
       });
-      this.soundPlay(QuesShow);
+      document.getElementById("QuesShow").play();
       $(".around").removeClass("CircleActive");
       $(".around")
         .eq(ques.id - 1)
@@ -155,21 +156,21 @@ class ContentVCNV extends Component {
 
       OnePush++;
       if (data) {
-        this.soundPlay(ObsGranted);
+        document.getElementById("ObsGranted").play();
         $(".names").removeClass("ActiveName");
         $(".names").eq(data.id).addClass("ActiveName");
         $(".names").addClass("label danger");
       }
     });
     socket.on("Open Picture", (data) => {
-      this.soundPlay(ImgShow);
+      document.getElementById("ImgShow").play();
       if (data) {
         $(data).hide(1000);
       }
     });
     socket.on("TongKetDiem", (data) => {
       if (OnlyOne == 0) {
-        this.soundPlay(OnVCNV);
+        document.getElementById("OnVCNV").play();
 
         OnlyOne = 1;
       }
@@ -208,11 +209,22 @@ class ContentVCNV extends Component {
       }
     });
   }
-
+ 
   render() {
     // $(".names").eq(this.state.current).addClass("CrName");
     return (
       <div className="App">
+           <div className="full-control">
+          <ReactAudioPlayer id="OnVCNV" src={OnVCNV} />
+          <ReactAudioPlayer id="OnVCNV2" src={OnVCNV2} />
+          <ReactAudioPlayer id="second" src={second} />
+          <ReactAudioPlayer id="ObsGranted" src={ObsGranted} />
+          <ReactAudioPlayer id="RowShow" src={RowShow} />
+          <ReactAudioPlayer id="OpenCircle" src={OpenCircle} />
+          <ReactAudioPlayer id="ImgShow" src={ImgShow} />
+          <ReactAudioPlayer id="QuesShow" src={QuesShow} />
+          <ReactAudioPlayer id="WrongMusic" src={WrongMusic} />
+        </div>
         {/* <ul className="circle">
             <div className="around">
               <li className="black-circle"> &#9679;</li>
@@ -323,16 +335,18 @@ class ContentVCNV extends Component {
               );
             })}
           </ul> */}
+          
         <Card
           className="text-center"
           style={{ width: "90%", borderRadius: "20px" }}
         >
           <ListGroup.Item>
-            <h5>Vòng Vượt Chướng Ngại Vật</h5>
-            Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
-            các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
-            được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
-            phần thi này dù còn thời gian.
+            <h5>Vòng vượt chướng ngại vật</h5>
+            Có 4 từ hàng ngang – cũng chính là 4 gợi ý liên quan đến chướng ngại
+            vật mà các thí sinh phải đi tìm. Có 1 gợi ý thứ 5 – là 1 hình ảnh
+            liên quan đến chướng ngại vật hoặc chính là chướng ngại vật. Hình
+            ảnh được chia thành 5 ô đánh số thứ tự từ 1 đến 4 và một ô trung
+            tâm.
             <Table style={{ marginTop: "10px" }} striped bordered hover>
               <tbody>
                 <tr>
@@ -432,7 +446,11 @@ class ContentVCNV extends Component {
                           return (
                             <td className="names FasterVCNV" key={id}>
                               <div>
-                                <span style={{position:"relative",top:"-5px"}}>{user.name + "[" + id + "]"}{" "}</span>
+                                <span
+                                  style={{ position: "relative", top: "-5px" }}
+                                >
+                                  {user.name + "[" + id + "]"}{" "}
+                                </span>
                                 <Spinner animation="grow" variant="danger" />
                               </div>
                             </td>

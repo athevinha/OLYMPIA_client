@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import "../../App.css";
 import $ from "jquery";
 import port from "../../port.json";
-import "./VD.css";
+import "./CHP.css";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import {
   Card,

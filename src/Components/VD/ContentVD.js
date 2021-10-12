@@ -16,6 +16,7 @@ import Tick from "./Music/Tick.mp3";
 import FinishWrongAnswer from "./Music/FinishWrongAnswer.mp3";
 import FinishRightAnswer from "./Music/FinishRightAnswer.mp3";
 import Granted from "./Music/ObsGranted.wav";
+import ReactAudioPlayer from "react-audio-player";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import {
   Card,
@@ -72,14 +73,14 @@ class ContentVD extends Component {
         console.log(ques.id);
         $(".names").removeClass("onAlertVD");
         $(".names").eq(ques.id).addClass("onAlertVD");
-        this.soundPlay(Granted);
+        document.getElementById('Granted').play();
       }
     });
     socket.on("check ans vd", (ques) => {
       if (ques == true) {
-        this.soundPlay(FinishRightAnswer);
+        document.getElementById('FinishRightAnswer').play();
       } else if (ques == false) {
-        this.soundPlay(FinishWrongAnswer);
+        document.getElementById('FinishWrongAnswer').play();
       }
     });
     // this.setState({
@@ -90,7 +91,7 @@ class ContentVD extends Component {
     socket.on("choose Star", (crr) => {
       $(".AnimationStart").show();
       $(".AnimationStart").css("top", "60%");
-      this.soundPlay(star);
+      document.getElementById('star').play();
     });
     socket.on("open choose quesVD", (crr) => {
       if (crr) {
@@ -99,7 +100,7 @@ class ContentVD extends Component {
         $(".ChoosePointVD").show(1000);
         console.log(nameId);
         $(nameId).html("✔");
-        this.soundPlay(Tick);
+        document.getElementById('Tick').play();
       }
     });
     socket.on("close choose quesVD", (crr) => {
@@ -127,7 +128,7 @@ class ContentVD extends Component {
         $(".TongKetBar").show(500);
 
         this.setState({ Ending: data });
-        this.soundPlay(Finish);
+        document.getElementById('Finish').play();
         setTimeout(function () {
           $(".EndingUser").eq(0).addClass("AnimationEndingUser");
         }, 1000);
@@ -159,13 +160,13 @@ class ContentVD extends Component {
         $(".bar").css("background-color", "#428bca");
         progress(time, time, $("#progressBar"));
         if (time == 10) {
-          this.soundPlay(s10);
+          document.getElementById('s10').play();
         } else if (time == 15) {
-          this.soundPlay(s15);
+          document.getElementById('s15').play();
         } else if (time == 20) {
-          this.soundPlay(s20);
+          document.getElementById('s20').play();
         } else if (time == 5) {
-          this.soundPlay(s5);
+          document.getElementById('s5').play();
         }
         check = false;
       }
@@ -180,9 +181,22 @@ class ContentVD extends Component {
     });
   }
   //qweg
+
   render() {
     return (
       <div className="App row">
+        <div className="full-control">
+          <ReactAudioPlayer id="s10" src={s10} />
+          <ReactAudioPlayer id="s15" src={s15} />
+          <ReactAudioPlayer id="s20" src={s20} />
+          <ReactAudioPlayer id="s5" src={s5} />
+          <ReactAudioPlayer id="star" src={star} />
+          <ReactAudioPlayer id="Finish" src={Finish} />
+          <ReactAudioPlayer id="Tick"  src={Tick} />
+          <ReactAudioPlayer id="FinishWrongAnswer" src={FinishWrongAnswer} />
+          <ReactAudioPlayer id="FinishRightAnswer" src={FinishRightAnswer} />
+          <ReactAudioPlayer id="Granted" src={Granted} />
+        </div>
         <div className="App-header">
           {/* 
           <table id="NameList">
@@ -298,7 +312,9 @@ class ContentVD extends Component {
                     <h3>{this.state.question}</h3>
                   </Col>
                   <Col xs={2}>
-                    <h3>{this.state.score}</h3>
+                    <h3>  {this.state.data[this.state.examUser]
+                ? this.state.data[this.state.examUser].score
+                : 0}</h3>
                   </Col>
                 </Row>
               </Container>

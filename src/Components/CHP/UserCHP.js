@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import "../../App.css";
 import port from "../../port.json";
 import $ from "jquery";
-import "./VD.css";
+import "./CHP.css";
 const socket = io.connect(port.port); //change when change wifi
 let check = true;
 class UserCHP extends Component {
