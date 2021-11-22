@@ -111,7 +111,7 @@ class Signin extends Component {
           </ListGroup.Item>
           <ListGroup.Item>
             <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
-            <Card.Link href="#">KC Olympia Square</Card.Link>
+            <Card.Link href="#">KC Olympia Squad</Card.Link>
           </ListGroup.Item>
         </Card>
       </div>

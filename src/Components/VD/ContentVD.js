@@ -285,11 +285,8 @@ class ContentVD extends Component {
             style={{ width: "90%", borderRadius: "20px" }}
           >
             <ListGroup.Item>
-              <h5>Vòng Khởi Động</h5>
-              Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
-              các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
-              được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
-              phần thi này dù còn thời gian.
+              <h5>Vòng về đích</h5>
+              Mỗi gói sẽ có 3 câu hỏi. Thí sinh kết hợp các câu hỏi 10, 20, 30 điểm tạo thành một gói câu hỏi. Vì thế tổng điểm của gói câu hỏi có thể nằm trong khoảng từ 30 đến 90 điểm. Thời gian suy nghĩ và trả lời của câu 10, 20 và 30 điểm lần lượt là 10, 15 và 20 giây.
               <Table style={{ marginTop: "10px" }} striped bordered hover>
                 <tbody>
                   <tr>
@@ -326,7 +323,7 @@ class ContentVD extends Component {
             </ListGroup.Item>
             <ListGroup.Item>
               <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
-              <Card.Link href="#">KC Olympia Square</Card.Link>
+              <Card.Link href="#">KC Olympia Squad</Card.Link>
             </ListGroup.Item>
           </Card>
           <div className="ChoosePointVD">

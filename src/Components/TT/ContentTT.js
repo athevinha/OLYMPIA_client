@@ -76,7 +76,7 @@ class ContentTT extends Component {
     });
     socket.on("play sound TT", (crr) => {
       if (oneMusic == 0) {
-        document.getElementById('OnVCNV').play();
+        document.getElementById("OnVCNV").play();
         oneMusic = 1;
       }
     });
@@ -129,7 +129,7 @@ class ContentTT extends Component {
       //========================================
       $(ques.src).show(500);
       console.log(ques.src);
-      document.getElementById('ImgShow').play();
+      document.getElementById("ImgShow").play();
       let thisd = this;
       this.setState({
         question: ques.ques,
@@ -159,13 +159,13 @@ class ContentTT extends Component {
       }
     });
     socket.on("on VCNV", (data) => {
-      document.getElementById('ObsGranted').play();
+      document.getElementById("ObsGranted").play();
       $(".names").addClass("label danger");
       alert(data ? data.name : "ngu");
     });
     socket.on("TongKetDiem", (data) => {
       if (OnlyOne == 0) {
-        document.getElementById('AccelerationRightAnswer').play();
+        document.getElementById("AccelerationRightAnswer").play();
 
         OnlyOne = 1;
       }
@@ -199,14 +199,16 @@ class ContentTT extends Component {
     // $(".names").eq(this.state.crrent).addClass("CrName");
     return (
       <div className="App">
-                   <div className="full-control">
-          <ReactAudioPlayer id="AccelerationRightAnswer" src={AccelerationRightAnswer} />
+        <div className="full-control">
+          <ReactAudioPlayer
+            id="AccelerationRightAnswer"
+            src={AccelerationRightAnswer}
+          />
           <ReactAudioPlayer id="OnVCNV" src={OnVCNV} />
           <ReactAudioPlayer id="second" src={second} />
           <ReactAudioPlayer id="ObsGranted" src={ObsGranted} />
           <ReactAudioPlayer id="RowShow" src={RowShow} />
           <ReactAudioPlayer id="ImgShow" src={ImgShow} />
-       
         </div>
         {/* <div className="App-header">
           <div className="backgroundTT"></div>
@@ -287,10 +289,12 @@ class ContentTT extends Component {
         >
           <ListGroup.Item>
             <h5>Vòng tăng tốc</h5>
-            Mỗi gói sẽ có 3 câu hỏi. Thí sinh kết hợp các câu hỏi 10, 20, 30
-            điểm tạo thành một gói câu hỏi. Vì thế tổng điểm của gói câu hỏi có
-            thể nằm trong khoảng từ 30 đến 90 điểm. Thời gian suy nghĩ và trả
-            lời của câu 10, 20 và 30 điểm lần lượt là 10, 15 và 20 giây.
+            Có 4 câu hỏi dưới dạng tư duy logic, câu hỏi bằng hình ảnh. Thời
+            gian suy nghĩ cho mỗi câu hỏi là 30 giây. Bốn thí sinh cùng trả lời
+            bằng máy tính. Thí sinh trả lời đúng và nhanh nhất được 40 điểm. Thí
+            sinh trả lời đúng và nhanh thứ 2 được 30 điểm. Thí sinh trả lời đúng
+            và nhanh thứ 3 được 20 điểm. Thí sinh trả lời đúng và nhanh thứ 4
+            được 10 điểm.
             <Table style={{ marginTop: "10px" }} striped bordered hover>
               <tbody>
                 <tr>
@@ -356,7 +360,7 @@ class ContentTT extends Component {
           </ListGroup.Item> */}
           <ListGroup.Item>
             <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
-            <Card.Link href="#">KC Olympia Square</Card.Link>
+            <Card.Link href="#">KC Olympia Squad</Card.Link>
             {/* <Card.Link href="#">Nguyen The Vinh</Card.Link> */}
           </ListGroup.Item>
         </Card>

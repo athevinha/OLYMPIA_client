@@ -42,7 +42,7 @@ class Content extends Component {
     thisd = this;
     $(".TongKetBar").hide();
     this.setState({
-      data: this.props.data,
+      data: this.props.data ? this.props.data : [],
       current: this.props.current[0] ? this.props.current[0].current : 0,
     });
     // this.setState({
@@ -113,21 +113,26 @@ class Content extends Component {
   render() {
     $(".names").removeClass("CrName");
     $(".names").eq(this.state.current).addClass("CrName");
-    return (
-      <div className="App">
-        <div className="full-control">
-          <ReactAudioPlayer id="StartFinish" src={StartFinish} />
-          <ReactAudioPlayer
-            id="StartFinish2"
-            src={StartFinish2}
-            controls
-            style={{ display: "none" }}
-          />
-          <ReactAudioPlayer id="StartWrong" src={StartWrong} />
-          <ReactAudioPlayer id="StartRight" src={StartRight} />
-          <ReactAudioPlayer id="second" src={second} />
-        </div>
-        {/* <div className="App-header">
+    if (typeof this.state.data != "array") {
+      // console.log(this.state.data)
+      // console.log(typeof this.state.data )
+      return "??";
+    }
+      return (
+        <div className="App">
+          <div className="full-control">
+            <ReactAudioPlayer id="StartFinish" src={StartFinish} />
+            <ReactAudioPlayer
+              id="StartFinish2"
+              src={StartFinish2}
+              controls
+              style={{ display: "none" }}
+            />
+            <ReactAudioPlayer id="StartWrong" src={StartWrong} />
+            <ReactAudioPlayer id="StartRight" src={StartRight} />
+            <ReactAudioPlayer id="second" src={second} />
+          </div>
+          {/* <div className="App-header">
           <table id="NameList">
             <tbody>
               <tr>
@@ -166,52 +171,55 @@ class Content extends Component {
             </div>
           </div>
         </div> */}
-        <Card className="text-center" style={{ width: "90%",borderRadius:"20px" }}>
-          <ListGroup.Item>
-            <h5>Vòng Khởi Động</h5>
-            Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
-            các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
-            được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
-            phần thi này dù còn thời gian.
-            <Table style={{ marginTop: "10px" }} striped bordered hover>
-              <tbody>
-                <tr>
-                  {this.state.data.map((user, id) => {
-                    if (id <= 3)
-                      return (
-                        <td key={id} className="names">
-                          {user.name} ({user.score})
-                        </td>
-                      );
-                  })}
-                </tr>
-              </tbody>
-            </Table>
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <Container>
-              <Row>
-                <Col xs={10}>
-                  <h3>{this.state.question}</h3>
-                </Col>
-                <Col xs={2}>
-                  <h3>{this.state.score}</h3>
-                </Col>
-              </Row>
-            </Container>
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <div style={{ borderRadius: "50px" }} id="progressBar">
-              <div className="bar" style={{ borderRadius: "50px" }}></div>
-            </div>
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
-            <Card.Link href="#">KC Olympia Square</Card.Link>
-          </ListGroup.Item>
-        </Card>
+          <Card
+            className="text-center"
+            style={{ width: "90%", borderRadius: "20px" }}
+          >
+            <ListGroup.Item>
+              <h5>Vòng Khởi Động</h5>
+              Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
+              các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
+              được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
+              phần thi này dù còn thời gian.
+              <Table style={{ marginTop: "10px" }} striped bordered hover>
+                <tbody>
+                  <tr>
+                    {this.state.data.map((user, id) => {
+                      if (id <= 3)
+                        return (
+                          <td key={id} className="names">
+                            {user.name} ({user.score})
+                          </td>
+                        );
+                    })}
+                  </tr>
+                </tbody>
+              </Table>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Container>
+                <Row>
+                  <Col xs={10}>
+                    <h3>{this.state.question}</h3>
+                  </Col>
+                  <Col xs={2}>
+                    <h3>{this.state.score}</h3>
+                  </Col>
+                </Row>
+              </Container>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <div style={{ borderRadius: "50px" }} id="progressBar">
+                <div className="bar" style={{ borderRadius: "50px" }}></div>
+              </div>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Card.Link href="#">THPT Chuyên Đại Học Vinh</Card.Link>
+              <Card.Link href="#">KC Olympia Squad</Card.Link>
+            </ListGroup.Item>
+          </Card>
 
-        <div className="TongKetBar">
+          <div className="TongKetBar">
             <ul>
               {this.state.Ending.map((user, id) => {
                 return (
@@ -221,9 +229,9 @@ class Content extends Component {
                 );
               })}
             </ul>
+          </div>
         </div>
-      </div>
-    );
+      );
   }
 }
 
