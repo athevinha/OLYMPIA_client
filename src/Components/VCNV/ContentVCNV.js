@@ -342,11 +342,7 @@ class ContentVCNV extends Component {
         >
           <ListGroup.Item>
             <h5>Vòng vượt chướng ngại vật</h5>
-            Có 4 từ hàng ngang – cũng chính là 4 gợi ý liên quan đến chướng ngại
-            vật mà các thí sinh phải đi tìm. Có 1 gợi ý thứ 5 – là 1 hình ảnh
-            liên quan đến chướng ngại vật hoặc chính là chướng ngại vật. Hình
-            ảnh được chia thành 5 ô đánh số thứ tự từ 1 đến 4 và một ô trung
-            tâm.
+            Mỗi thí sinh chọn 1 trong 4 câu hỏi là gợi ý  của chướng ngại vật. Cả 4 thí sinh có 15s để trả lời. Đúng được 10 điểm và mở 1 góc ảnh của chương ngại vật. Trả lời sai chướng ngại vật hoặc bấm nhầm không trả lời được thì sẽ bị loại khỏi vòng này. Người trả lời nhanh và đúng nhất được điểm.
             <Table style={{ marginTop: "10px" }} striped bordered hover>
               <tbody>
                 <tr>

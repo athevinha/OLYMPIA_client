@@ -192,7 +192,10 @@ class ContentVD extends Component {
           <ReactAudioPlayer id="s5" src={s5} />
           <ReactAudioPlayer id="star" src={star} />
           <ReactAudioPlayer id="Finish" src={Finish} />
-          <ReactAudioPlayer id="Tick"  src={Tick} />
+          <ReactAudioPlayer id="Tick"  src={Tick} 
+          // controls
+              // style={{ display: "none" }}
+              />
           <ReactAudioPlayer id="FinishWrongAnswer" src={FinishWrongAnswer} />
           <ReactAudioPlayer id="FinishRightAnswer" src={FinishRightAnswer} />
           <ReactAudioPlayer id="Granted" src={Granted} />
@@ -286,7 +289,7 @@ class ContentVD extends Component {
           >
             <ListGroup.Item>
               <h5>Vòng về đích</h5>
-              Mỗi gói sẽ có 3 câu hỏi. Thí sinh kết hợp các câu hỏi 10, 20, 30 điểm tạo thành một gói câu hỏi. Vì thế tổng điểm của gói câu hỏi có thể nằm trong khoảng từ 30 đến 90 điểm. Thời gian suy nghĩ và trả lời của câu 10, 20 và 30 điểm lần lượt là 10, 15 và 20 giây.
+              Mỗi gói sẽ có 3 câu hỏi. Thí sinh kết hợp các câu hỏi 10, 20, 30 điểm tạo thành một gói câu hỏi. Thời gian suy nghĩ và trả lời của câu 10, 20 và 30 điểm lần lượt là 10, 15 và 20 giây.
               <Table style={{ marginTop: "10px" }} striped bordered hover>
                 <tbody>
                   <tr>

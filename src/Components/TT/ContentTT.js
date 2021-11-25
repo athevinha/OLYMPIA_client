@@ -15,11 +15,11 @@ import FormQues from "./Img/FormQuestion.png";
 import Show from "./Img/ShowPoint.png";
 import $, { data } from "jquery";
 import Ques1 from "./Video/Ques1.mp4";
-import Ques2 from "./Img/Ques2.PNG";
+import Ques2 from "./Video/Ques2.mp4";
 import Ques3 from "./Video/Ques3.mp4";
+import Ques4 from "./Video/Ques4.mp4";
 import ReactAudioPlayer from "react-audio-player";
 // import Ques32 from "./Img/Ques32.PNG";
-import Ques4 from "./Img/Ques4.PNG";
 import {
   Card,
   Button,
@@ -37,8 +37,10 @@ const socket = io.connect(port.port); //change when change wifi
 let check = true;
 let oneMusic = 0,
   OnlyOne = 0,
-  players,
-  players3;
+  players1,
+  players2,
+  players3,
+  players4;
 class ContentTT extends Component {
   constructor(props) {
     super(props);
@@ -141,12 +143,14 @@ class ContentTT extends Component {
         .addClass("CircleActive");
       setTimeout(function () {
         if (check) {
-          players.play();
+          players1.play();
+          players2.play();
           players3.play();
+          players4.play();
           //===========================================
           $("#progressBar").css("background-color", "#cfd6d9");
           $(".bar").css("background-color", "#428bca");
-          thisd.soundPlay(second);
+          document.getElementById("second").play();
           progress(30, 30, $("#progressBar"));
           console.log("ok");
           check = false;
@@ -203,6 +207,7 @@ class ContentTT extends Component {
           <ReactAudioPlayer
             id="AccelerationRightAnswer"
             src={AccelerationRightAnswer}
+            // controls
           />
           <ReactAudioPlayer id="OnVCNV" src={OnVCNV} />
           <ReactAudioPlayer id="second" src={second} />
@@ -219,7 +224,7 @@ class ContentTT extends Component {
                 players = player;
                 console.log(players);
               }}
-              src={Ques1}
+              src={Ques1
               className="QuesImgTT Ques1"
               muted
             />
@@ -289,12 +294,7 @@ class ContentTT extends Component {
         >
           <ListGroup.Item>
             <h5>Vòng tăng tốc</h5>
-            Có 4 câu hỏi dưới dạng tư duy logic, câu hỏi bằng hình ảnh. Thời
-            gian suy nghĩ cho mỗi câu hỏi là 30 giây. Bốn thí sinh cùng trả lời
-            bằng máy tính. Thí sinh trả lời đúng và nhanh nhất được 40 điểm. Thí
-            sinh trả lời đúng và nhanh thứ 2 được 30 điểm. Thí sinh trả lời đúng
-            và nhanh thứ 3 được 20 điểm. Thí sinh trả lời đúng và nhanh thứ 4
-            được 10 điểm.
+            Cả 4 thí sinh sẽ trả lời 4 câu hỏi. Các câu hỏi có thời gian trả lời là 30s.Sau mỗi câu hỏi, thí sinh trả lời đúng và nhanh nhất được 40 điểm, thứ 2 được 30 điểm thứ 3 được 20 điểm thứ 4 được 10 điểm.
             <Table style={{ marginTop: "10px" }} striped bordered hover>
               <tbody>
                 <tr>
@@ -316,7 +316,7 @@ class ContentTT extends Component {
                 <div className="aroundTT">
                   <Player
                     ref={(player) => {
-                      players = player;
+                      players1 = player;
                     }}
                     src={Ques1}
                     className="QuesImgTT Ques1"
@@ -324,7 +324,15 @@ class ContentTT extends Component {
                   />
                 </div>
                 <div className="aroundTT">
-                  <img src={Ques2} className="QuesImgTT Ques2" alt=""></img>
+                  {/* <img src={Ques2} className="QuesImgTT Ques2" alt=""></img> */}
+                  <Player
+                    ref={(player) => {
+                      players2 = player;
+                    }}
+                    src={Ques2}
+                    className="QuesImgTT Ques2"
+                    muted
+                  />
                 </div>
                 <div className="aroundTT">
                   <Player
@@ -337,7 +345,15 @@ class ContentTT extends Component {
                   />
                 </div>
                 <div className="aroundTT">
-                  <img src={Ques4} className="QuesImgTT Ques4" alt=""></img>
+                  {/* <img src={Ques4} className="QuesImgTT Ques4" alt=""></img> */}
+                  <Player
+                    ref={(player) => {
+                      players4 = player;
+                    }}
+                    src={Ques4}
+                    className="QuesImgTT Ques4"
+                    muted
+                  />
                 </div>
               </Col>
               <Col xs={5} className="her_cen">

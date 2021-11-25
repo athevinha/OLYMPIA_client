@@ -116,7 +116,7 @@ class Content extends Component {
     if (typeof this.state.data != "array") {
       // console.log(this.state.data)
       // console.log(typeof this.state.data )
-      return "??";
+      // return "??";
     }
       return (
         <div className="App">
@@ -177,10 +177,7 @@ class Content extends Component {
           >
             <ListGroup.Item>
               <h5>Vòng Khởi Động</h5>
-              Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh
-              các câu hỏi. Số lượng câu hỏi không hạn chế. Mỗi câu trả lời đúng
-              được 10 điểm, trả lời sai hoặc bỏ qua liên tiếp 5 câu sẽ bị dừng
-              phần thi này dù còn thời gian.
+              Trong vòng 1 phút, mỗi thí sinh khởi động bằng cách trả lời nhanh các câu hỏi. Số lượng câu hỏi không bị hạn chế. Đúng được 10 điểm. Sai không bị mất điểm.
               <Table style={{ marginTop: "10px" }} striped bordered hover>
                 <tbody>
                   <tr>
