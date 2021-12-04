@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import "../../App.css";
 import $, { data } from "jquery";
 import port from "../../port.json";
+import usersService from "../../service/users.service";
 import "./TT.css";
 const socket = io.connect(port.port); //change when change wifi
 
@@ -35,14 +36,17 @@ class AdminTT extends Component {
       //console.log(ListShowContentVCNV.length);
       if (ListShowContentVCNV.length == 0) {
         for (let i = 0; i < this.state.data.length; i++) {
+          // let 
           ListShowContentVCNV.push({
             name: this.state.data[i].name,
+            // tooken
             answer: "",
             time: 0,
+            id:i
           });
         }
         this.setState({ ListShowContentVCNV: ListShowContentVCNV });
-        //if (UserAns) console.log(UserAns.time);
+        // if (UserAns) console.log(UserAns.time);
       }
 
       let Ans = this.state.questions[this.state.currentQues]
@@ -52,9 +56,16 @@ class AdminTT extends Component {
       if (Ans != "") {
         if (UserAns.answer == Ans) {
           //alert(UserAns.answer);
-          let name = this.state.data[UserAns.id]
-            ? this.state.data[UserAns.id].name
-            : " ";
+          // let name = this.state.data[UserAns.id]
+          //   ? this.state.data[UserAns.id].name
+          //   : " ";
+          let name = ''
+          for (let i = 0; i < this.state.data.length; i++) {
+            if (this.state.data[i].tooken == UserAns.tooken) {
+              name = this.state.data[i].name
+              console.log('name:',name)
+            }
+          }
           //==========================================
           //==============q=========================
           for (let i = 0; i < ListShowContentVCNV.length; i++) {
@@ -70,10 +81,14 @@ class AdminTT extends Component {
           });
           //=======================================
         } else {
-          //alert(UserAns.answer);
-          let name = this.state.data[UserAns.id]
-            ? this.state.data[UserAns.id].name
-            : " ";
+          alert(UserAns.answer);
+          let name = ''
+          for (let i = 0; i < this.state.data.length; i++) {
+            if (this.state.data[i].tooken == UserAns.tooken) {
+              name = this.state.data[i].name
+              console.log('name:',name)
+            }
+          }
           //==========================================
           let { ListShowContentVCNV } = this.state;
           //=======================================
@@ -132,6 +147,7 @@ class AdminTT extends Component {
       socket.emit("Open Picture", ".pieCen");
     } else if (e.keyCode == "112") {
       this.ChooseQuesTT(1, ".Ques1");
+      // $('.Ques1').hide(300)
     } //==============================================================================================================
     else if (e.keyCode == "113") {
       this.ChooseQuesTT(2, ".Ques2");
@@ -190,8 +206,8 @@ class AdminTT extends Component {
           ListShowContentVCNV: ListShowContentVCNV,
           data: data,
         });
-        console.log(data);
-        console.log(ListShowContentVCNV);
+        // console.log(data);
+        // console.log(ListShowContentVCNV);
         //==========================================Add=====
       }
       // let arr = [];
@@ -257,6 +273,13 @@ class AdminTT extends Component {
         this.setState({ problem: problem });
       }
     }
+    
+    // let myData = [].concat(this.state.data)
+    // .sort((a, b) => parseInt(a.pass) > parseInt(b.pass) ? 1 : -1)
+    // .map((item, i) => item
+    // );
+    // console.log('sort by pass', myData)
+    // this.setState({data:myData})
     console.log(this.state.data);
   };
   //=================================================================================================================

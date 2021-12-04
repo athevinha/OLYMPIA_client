@@ -239,6 +239,10 @@ function progress(timeleft, timetotal, $element) {
     .find("div")
     .animate({ width: progressBarWidth }, 500)
     .html(Math.floor(timeleft / 60) + ":" + (timeleft % 60));
+  console.log(timeleft)
+  if(timeleft<6){
+    $element.find("div").html('')
+  }
   if (timeleft > 0) {
     setTimeout(function () {
       progress(timeleft - 1, timetotal, $element);

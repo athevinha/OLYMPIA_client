@@ -17,7 +17,7 @@ import Show from "./Img/show.png";
 import WrongMusic from "./Music/ExitAdvenSec.mp3";
 import ReactAudioPlayer from "react-audio-player";
 import $ from "jquery";
-//==============import img==================
+// ==============import img==================
 import {
   Card,
   Button,
@@ -215,7 +215,9 @@ class ContentVCNV extends Component {
     return (
       <div className="App">
            <div className="full-control">
-          <ReactAudioPlayer id="OnVCNV" src={OnVCNV} />
+          <ReactAudioPlayer id="OnVCNV" src={OnVCNV} 
+          // controls
+          />
           <ReactAudioPlayer id="OnVCNV2" src={OnVCNV2} />
           <ReactAudioPlayer id="second" src={second} />
           <ReactAudioPlayer id="ObsGranted" src={ObsGranted} />
@@ -345,7 +347,7 @@ class ContentVCNV extends Component {
             Mỗi thí sinh chọn 1 trong 4 câu hỏi là gợi ý  của chướng ngại vật. Cả 4 thí sinh có 15s để trả lời. Đúng được 10 điểm và mở 1 góc ảnh của chương ngại vật. Trả lời sai chướng ngại vật hoặc bấm nhầm không trả lời được thì sẽ bị loại khỏi vòng này. Người trả lời nhanh và đúng nhất được điểm.
             <Table style={{ marginTop: "10px" }} striped bordered hover>
               <tbody>
-                <tr>
+                <tr>  
                   {this.state.data.map((user, id) => {
                     if (id <= 3)
                       return (
@@ -357,10 +359,10 @@ class ContentVCNV extends Component {
                 </tr>
               </tbody>
             </Table>
-            Chướng ngoại vật gồm:{" "}
+            Chướng ngại vật gồm:{" "}
             <b>
               {this.state.questions[0]
-                ? this.state.questions[0].answer.length
+                ? this.state.questions[0].answer.replaceAll(' ','').length
                 : "..."}{" "}
               ký tự{" "}
             </b>
@@ -368,7 +370,7 @@ class ContentVCNV extends Component {
           <ListGroup.Item>
             <Container>
               <Row>
-                <Col xs={8}>
+                <Col xs={7}>
                   {/* <ul className="circle">
                     <div className="around">
                       <li className="black-circle">◉</li>
@@ -392,20 +394,23 @@ class ContentVCNV extends Component {
                       <li className="black-circle">◉</li>
                     </div>
                   </ul> */}
+                  {/* <br/> */}
+                  {/* <br/> */}
+                  {/* <br/> */}
                   <ul className="circle" style={{ marginTop: "5%" }}>
                     {this.state.questions.map((ques, id) => {
-                      if (id !== 5 && id !== 0)
+                      if (id !== 0 && id !==5)
                         return (
                           <div className="around">
-                            {ques.answer.split("").map((string, ids) => {
-                              return <li className="black-circle">◉</li>;
+                            {ques.answer.replaceAll(" ","").split("").map((string, ids) => {
+                              return <li className="black-circle" style={{fontSize:'35px'}}>◉</li>;
                             })}
                           </div>
                         );
                     })}
                   </ul>
                 </Col>
-                <Col xs={4} style={{ padding: 0 }}>
+                <Col xs={5} style={{ padding: 0 }}>
                   <img className="VCNVimgContent" src={Img}></img>
                   <p className="pie1 pie" src={Pie1} alt="">
                     1
@@ -429,32 +434,33 @@ class ContentVCNV extends Component {
           <ListGroup.Item>
             <Container>
               <Row>
-                <Col xs={8}>
+                <Col xs={7} style = {{borderRight: "1px solid #cccccc"}}>
                   <h3>
                     {this.state.question ? this.state.question.ques : ""}{" "}
                   </h3>
                 </Col>
-                <Col xs={4}>
-                  <table id="NameList" className="ListFasterVCNV">
+                <Col xs={5}>
+                  {/* <table id="NameList" className="ListFasterVCNV">
                     <tbody>
-                      <tr>
-                        {this.state.WhoIsFaster.map((user, id) => {
+                      <tr> */}
+                        {this.state.WhoIsFaster
+                        .map((user, id) => {
                           return (
-                            <td className="names FasterVCNV" key={id}>
-                              <div>
+                            <p className="names FasterVCNV" key={id}>
+                              {/* <div> */}
                                 <span
-                                  style={{ position: "relative", top: "-5px" }}
+                                  style={{ position: "relative", top: "-5px",display:"inline"}}
                                 >
                                   {user.name + "[" + id + "]"}{" "}
                                 </span>
                                 <Spinner animation="grow" variant="danger" />
-                              </div>
-                            </td>
+                              {/* </div> */}
+                            </p>
                           );
                         })}
-                      </tr>
+                      {/* </tr>
                     </tbody>
-                  </table>
+                  </table> */}
                 </Col>
               </Row>
             </Container>
@@ -481,7 +487,8 @@ class ContentVCNV extends Component {
           </ul>
         </div>
         <ul className="ShowAns">
-          {this.state.ListShowContentVCNV.map((user, id) => {
+          {this.state.ListShowContentVCNV
+          .map((user, id) => {
             return (
               <li className={"ShowVCNV diffTT" + id} key={id}>
                 <span className={"nameTT eTT" + id + "1"}>{user.name}</span>
@@ -503,6 +510,9 @@ function progress(timeleft, timetotal, $element) {
     .find("div")
     .animate({ width: progressBarWidth }, 500)
     .html(Math.floor(timeleft / 60) + ":" + (timeleft % 60));
+    if(timeleft<3){
+      $element.find("div").html('')
+    }
   if (timeleft > 0) {
     setTimeout(function () {
       progress(timeleft - 1, timetotal, $element);

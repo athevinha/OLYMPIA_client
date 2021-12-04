@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import "../../App.css";
 import $ from "jquery";
 import port from "../../port.json";
-import AdminService from "../../service/admin.service"
+import AdminService from "../../service/admin.service";
 import adminService from "../../service/admin.service";
 const socket = io.connect(port.port); //change when change wifi
 class Admin extends Component {
@@ -23,7 +23,7 @@ class Admin extends Component {
     this.setState({
       questions: this.props.questions,
       data: this.props.data,
-      currentUser: 0
+      currentUser: 0,
       // this.props.current[0] ? this.props.current[0].current : 0,
     });
   }
@@ -32,17 +32,17 @@ class Admin extends Component {
     e = e || window.event;
     let { currentQues } = this.state;
     if (e.keyCode == "38") {
-      console.log("gihihiuhui")
+      console.log("gihihiuhui");
       currentQues--;
       this.setState({ currentQues: currentQues });
       socket.emit("choose ques", this.state.questions[currentQues].ques);
-      $(document).scrollTop($(document).scrollTop() - 50);
+      $(document).scrollTop($(document).scrollTop() - 40);
     } //=============================================================================================================
     else if (e.keyCode == "40") {
       // down arrow
       currentQues++;
       this.setState({ currentQues: currentQues });
-      $(document).scrollTop($(document).scrollTop() + 50);
+      $(document).scrollTop($(document).scrollTop() + 40);
 
       socket.emit("choose ques", this.state.questions[currentQues].ques);
     } //==============================================================================================================
@@ -123,11 +123,15 @@ class Admin extends Component {
     $(".ques").eq(this.state.currentQues).addClass("active");
 
     return (
-      <div className="App">
-        <form className="App-header" onSubmit={this.onSubmit}>
+      <div className="">
+        <form className="" onSubmit={this.onSubmit} style={{textAlign:"center"}}>
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <p></p>
-          <input onKeyDown={this.handleKeyDown} />
+          <input
+            onKeyDown={this.handleKeyDown}
+            style={{left:'40vw',position:"fixed",top:'50vh'}}
+          />
+          <br/> <br/> <br/> <br/> <br/> <br/>
+          {/* <p></p> */}
           <div>
             {this.state.questions.map((ques, id) => {
               return (
@@ -137,6 +141,7 @@ class Admin extends Component {
               );
             })}
           </div>
+
           <button
             onClick={this.TongKet}
             className="btn btn-danger TongKetButton"

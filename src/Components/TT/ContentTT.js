@@ -84,9 +84,14 @@ class ContentTT extends Component {
     });
     socket.on("Add score TT", (crr) => {
       if (crr != []) {
+          let myData = [].concat(crr.data)
+      .sort((a, b) => parseInt(a.pass) > parseInt(b.pass) ? 1 : -1)
+      .map((item, i) => item
+      );
+        // console.log('ListShowContentVCNV', this.state.ListShowContentVCNV)
         this.setState({ data: crr.data });
         oneMusic = 0;
-        console.log(crr.data);
+        // console.log(crr.data);
       }
     });
     socket.on("show list TT", (show) => {
@@ -123,13 +128,17 @@ class ContentTT extends Component {
     });
 
     socket.on("choose ques", (ques) => {
+      // alert(ques.id)
+      $('.white_TT').show()
+      $('.aroundTT').hide()
+      $('.aroundTT').eq(ques.id-1).show()
       $(".QuesImgTT").hide();
-      //===========================HIDE BUTTON==============
+      //==================HIDE BUTTON==============
       $(".video-react-control-bar").hide();
       $(".video-react-control-text").hide();
       $(".video-react-big-play-button").hide();
       //========================================
-      $(ques.src).show(500);
+      $(ques.src).show();
       console.log(ques.src);
       document.getElementById("ImgShow").play();
       let thisd = this;
@@ -141,8 +150,10 @@ class ContentTT extends Component {
       $(".around")
         .eq(ques.id - 1)
         .addClass("CircleActive");
+        
       setTimeout(function () {
         if (check) {
+          $('.white_TT').hide()
           players1.play();
           players2.play();
           players3.play();
@@ -314,27 +325,32 @@ class ContentTT extends Component {
             <Row>
               <Col xs={7}>
                 <div className="aroundTT">
+                <div className="white_TT" style={{position:'absolute',background:'gray',width:'100%',height:'100%'}}></div>
                   <Player
                     ref={(player) => {
                       players1 = player;
                     }}
+                    
                     src={Ques1}
                     className="QuesImgTT Ques1"
                     muted
                   />
                 </div>
                 <div className="aroundTT">
+                <div className="white_TT" style={{position:'absolute',background:'gray',width:'100%',height:'100%'}}></div>
                   {/* <img src={Ques2} className="QuesImgTT Ques2" alt=""></img> */}
                   <Player
                     ref={(player) => {
                       players2 = player;
                     }}
+                    // currentTime = "10"
                     src={Ques2}
                     className="QuesImgTT Ques2"
                     muted
                   />
                 </div>
                 <div className="aroundTT">
+                <div className="white_TT" style={{position:'absolute',background:'gray',width:'100%',height:'100%'}}></div>
                   <Player
                     ref={(player) => {
                       players3 = player;
@@ -345,6 +361,7 @@ class ContentTT extends Component {
                   />
                 </div>
                 <div className="aroundTT">
+                <div className="white_TT" style={{position:'absolute',background:'gray',width:'100%',height:'100%'}}></div>
                   {/* <img src={Ques4} className="QuesImgTT Ques4" alt=""></img> */}
                   <Player
                     ref={(player) => {
@@ -416,7 +433,9 @@ function progress(timeleft, timetotal, $element) {
     .find("div")
     .animate({ width: progressBarWidth }, 500)
     .html(Math.floor(timeleft / 60) + ":" + (timeleft % 60));
-
+    if(timeleft<6){
+      $element.find("div").html('')
+    }
   if (timeleft > 0) {
     setTimeout(function () {
       progress(timeleft - 1, timetotal, $element);

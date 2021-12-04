@@ -70,7 +70,9 @@ li {
 }
 
 .active {
-  background-color: gainsboro;
+  background-color: gainsboro ;
+  /* font-size: 52px; */
+  /* background-color: #428bca; */
 }
 #NameList{
 }

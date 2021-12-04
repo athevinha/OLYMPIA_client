@@ -371,7 +371,6 @@ class ContentVD extends Component {
             </div>
           </div>
         </div>
-        
       </div>
     );
   }
@@ -383,6 +382,9 @@ function progress(timeleft, timetotal, $element) {
     .find("div")
     .animate({ width: progressBarWidth }, 500)
     .html(timeleft % 60);
+    if(timeleft<4){
+      $element.find("div").html('')
+    }
   if (timeleft > 0) {
     setTimeout(function () {
       progress(timeleft - 1, timetotal, $element);

@@ -149,6 +149,7 @@ class UserTT extends Component {
       });
       socket.emit("on send answer", {
         id: localStorage.tooken_id ? localStorage.tooken_id : 0,
+        tooken: localStorage.tooken,
         answer: answerVCNV,
         time: this.state.time,
       });
